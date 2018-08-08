@@ -1,8 +1,8 @@
 /***************************************************************************************************
   Stochastic simulation of the Notch chemical reaction system using the Gillespie algorithm
-  
+
   Version 0.01: Implement Deterministic equations stochastically, print to screen # of each species
-  	
+
 ***************************************************************************************************/
 
 #ifdef HAVE_CONFIG_H
@@ -120,7 +120,7 @@ int RP_RNa3_Hr=0;
 int RP_RNa3_Hr2=0;
 int RP_RNa3_Hr3=0;
 
-
+//skasdhjfk
 map<double, int> delayedRxnList;
 
 bool delayedRxnReady(double timeOfRxn) {
@@ -128,22 +128,22 @@ bool delayedRxnReady(double timeOfRxn) {
 	//merely check if a delayed rxn occurs before or at timeOfRxn
 	//if yes return true
 	map<double,int>::iterator mi=delayedRxnList.begin();
-	
+
 	if(delayedRxnList.size()==0) {
 		return false;
 	}
-	
+
 	//for(map<double, int>::iterator iter = delayedRxnList.begin(); iter != delayedRxnList.end(); iter++ ) {
 	//	double tim = (*iter).first;
 	//	int j = (*iter).second;
 	//}
-	
+
 	double firstDelayedRxn = (*mi).first;
-	
+
 	if( firstDelayedRxn <= timeOfRxn) {
 		return true;
 	}
-	
+
 	return false;
 
 }
@@ -290,7 +290,7 @@ int main(int argc, char *argv[]) {
     	for(j=0;j<numRxns+1;j++){
     		a[j]=0;
     	}
-    
+
 		long int seed = time(0);
 
 		//random seed
@@ -1056,798 +1056,798 @@ int main(int argc, char *argv[]) {
 						Rnp--;
 						NP_Rr2_Hr++;
 						break;
-	
+
 					//30. NP_Rr_Hr     + Nnp  --> NP_RNa_Hr
 					case 30:
 						NP_Rr_Hr--;
 						Nnp--;
 						NP_RNa_Hr++;
 						break;
-	
+
 					//31. NP_RNa       + Rnp  --> NP_RNa_Rr
 					case 31:
 						NP_RNa--;
 						Rnp--;
 						NP_RNa_Rr++;
 						break;
-	
+
 					//32. NP_RNa       + H2np --> NP_RNa_Hr
 					case 32:
 						NP_RNa--;
 						H2np--;
 						NP_RNa_Hr++;
 						break;
-	
+
 					//33. NP_Rr2       + Nnp  --> NP_RNa_Rr
 					case 33:
 						NP_Rr2--;
 						Nnp--;
 						NP_RNa_Rr++;
 						break;
-	
+
 					//34. NP_Rr2       + H2np --> NP_Rr2_Hr
 					case 34:
 						NP_Rr2--;
 						H2np--;
 						NP_Rr2_Hr++;
 						break;
-	
+
 					//35. NP_Rr2_Hr    + Nnp  --> NP_RNa_Rr_Hr
 					case 35:
 						NP_Rr2_Hr--;
 						Nnp--;
 						NP_RNa_Rr_Hr++;
 						break;
-	
+
 					//36. NP_RNa_Hr    + Rnp  --> NP_RNa_Rr_Hr
 					case 36:
 						NP_RNa_Hr--;
 						Rnp--;
 						NP_RNa_Rr_Hr++;
 						break;
-	
+
 					//37. NP_RNa_Rr    + Nnp  --> NP_RNa2
 					case 37:
 						NP_RNa_Rr--;
 						Nnp--;
 						NP_RNa2++;
 						break;
-	
+
 					//38. NP_RNa_Rr    + H2np --> NP_RNa_Rr_Hr
 					case 38:
 						NP_RNa_Rr--;
 						H2np--;
 						NP_RNa_Rr_Hr++;
 						break;
-	
+
 				//39. NP_RNa_Rr_Hr + Nnp  --> NP_RNa2_Hr
 					case 39:
 						NP_RNa_Rr_Hr--;
 						Nnp--;
 						NP_RNa2_Hr++;
 						break;
-	
+
 					//40. NP_RNa2      + H2np --> NP_RNa2_Hr
 					case 40:
 						NP_RNa2--;
 						H2np--;
 						NP_RNa2_Hr++;
 						break;
-	
+
 					//41. NP_Rr        --> NP_free      + Rnp
 					case 41:
 						NP_Rr--;
 						NP_free++;
 						Rnp++;
 						break;
-	
+
 					//42. NP_RNa       --> NP_Rr        + Nnp
 					case 42:
 						NP_RNa--;
 						NP_Rr++;
 						Nnp++;
 						break;
-	
+
 					//43. NP_RNa_Rr    --> NP_RNa       + Rnp
 					case 43:
 						NP_RNa_Rr--;
 						NP_RNa++;
 						Rnp++;
 						break;
-	
+
 					//44. NP_RNa_Rr    --> NP_Rr2       + Nnp
 					case 44:
 						NP_RNa_Rr--;
 						NP_Rr2++;
 						Nnp++;
 						break;
-	
+
 					//45. NP_Rr2       --> NP_Rr        + Rnp
 					case 45:
 						NP_Rr2--;
 						NP_Rr++;
 						Rnp++;
 						break;
-	
+
 					//46. NP_RNa2      --> NP_RNa_Rr    + Nnp
 					case 46:
 						NP_RNa2--;
 						NP_RNa_Rr++;
 						Nnp++;
 						break;
-	
+
 					//47. NP_Hr        --> NP_free      + H2np
 					case 47:
 						NP_Hr--;
 						NP_free++;
 						H2np++;
 						break;
-	
+
 					//48. NP_Rr_Hr     --> NP_Rr        + H2np
 					case 48:
 						NP_Rr_Hr--;
 						NP_Rr++;
 						H2np++;
 						break;
-	
+
 					//49. NP_Rr_Hr     --> NP_Hr        + Rnp
 					case 49:
 						NP_Rr_Hr--;
 						NP_Hr++;
 						Rnp++;
 						break;
-	
+
 				//50. NP_RNa_Hr    --> NP_Rr_Hr     + Nnp
 					case 50:
 						NP_RNa_Hr--;
 						NP_Rr_Hr++;
 						Nnp++;
 						break;
-	
+
 					//51. NP_RNa_Hr    --> NP_RNa       + H2np
 					case 51:
 						NP_RNa_Hr--;
 						NP_RNa++;
 						H2np++;
 						break;
-	
+
 				//52. NP_RNa_Rr_Hr --> NP_RNa_Hr    + Rnp
 					case 52:
 						NP_RNa_Rr_Hr--;
 						NP_RNa_Hr++;
 						Rnp++;
 						break;
-	
+
 				//53. NP_RNa_Rr_Hr --> NP_Rr2_Hr    + Nnp
 					case 53:
 						NP_RNa_Rr_Hr--;
 						NP_Rr2_Hr++;
 						Nnp++;
 						break;
-	
+
 					//54. NP_RNa_Rr_Hr --> NP_RNa_Rr    + H2np
 					case 54:
 						NP_RNa_Rr_Hr--;
 						NP_RNa_Rr++;
 						H2np++;
 						break;
-	
+
 					//55. NP_Rr2_Hr    --> NP_Rr_Hr     + Rnp
 					case 55:
 						NP_Rr2_Hr--;
 						NP_Rr_Hr++;
 						Rnp++;
 						break;
-	
+
 					//56. NP_Rr2_Hr    --> NP_Rr2       + H2np
 					case 56:
 						NP_Rr2_Hr--;
 						NP_Rr2++;
 						H2np++;
 						break;
-	
+
 					//57. NP_RNa2_Hr   --> NP_RNa_Rr_Hr + Nnp
 					case 57:
 						NP_RNa2_Hr--;
 						NP_RNa_Rr_Hr++;
 						Nnp++;
 						break;
-	
+
 					//58. NP_RNa2_Hr   --> NP_RNa2      + H2np
 					case 58:
 						NP_RNa2_Hr--;
 						NP_RNa2++;
 						H2np++;
 						break;
-	
+
 					//59. HP_free       + Rnp  --> HP_Rr
 					case 59:
 						HP_free--;
 						Rnp--;
 						HP_Rr++;
 						break;
-	
+
 					//60. HP_free       + H2np --> HP_Hr
 					case 60:
 						HP_free--;
 						H2np--;
 						HP_Hr++;
 						break;
-	
+
 							//61. HP_Hr         + Rnp  --> HP_Rr_Hr
 					case 61:
 						HP_Hr--;
 						Rnp--;
 						HP_Rr_Hr++;
 						break;
-	
+
 							//62. HP_Hr         + H2np --> HP_Hr2
 					case 62:
 						HP_Hr--;
 						H2np--;
 						HP_Hr2++;
 						break;
-	
+
 					//63. HP_Hr2        + Rnp  --> HP_Rr_Hr2
 					case 63:
 						HP_Hr2--;
 						Rnp--;
 						HP_Rr_Hr2++;
 						break;
-	
+
 						//64. HP_Hr2        + H2np --> HP_Hr3
 					case 64:
 						HP_Hr2--;
 						H2np--;
 						HP_Hr3++;
 						break;
-	
+
 					//65. HP_Hr3        + Rnp  --> HP_Rr_Hr3
 					case 65:
 						HP_Hr3--;
 						Rnp--;
 						HP_Rr_Hr3++;
 						break;
-	
+
 					//66. HP_Rr         + Rnp  --> HP_Rr2
 					case 66:
 						HP_Rr--;
 						Rnp--;
 						HP_Rr2++;
 						break;
-	
+
 					//67. HP_Rr         + Nnp  --> HP_RNa
 					case 67:
 						HP_Rr--;
 						Nnp--;
 						HP_RNa++;
 						break;
-	
+
 					//68. HP_Rr         + H2np --> HP_Rr_Hr
 					case 68:
 						HP_Rr--;
 						H2np--;
 						HP_Rr_Hr++;
 						break;
-	
+
 					//69. HP_Rr_Hr      + Rnp  --> HP_Rr2_Hr
 					case 69:
 						HP_Rr_Hr--;
 						Rnp--;
 						HP_Rr2_Hr++;
 						break;
-	
+
 					//70. HP_Rr_Hr      + Nnp  --> HP_RNa_Hr
 					case 70:
 						HP_Rr_Hr--;
 						Nnp--;
 						HP_RNa_Hr++;
 						break;
-	
+
 					//71. HP_Rr_Hr      + H2np --> HP_Rr_Hr2
 					case 71:
 						HP_Rr_Hr--;
 						H2np--;
 						HP_Rr_Hr2++;
 						break;
-	
+
 					//72. HP_Rr_Hr2     + Rnp  --> HP_Rr2_Hr2
 					case 72:
 						HP_Rr_Hr2--;
 						Rnp--;
 						HP_Rr2_Hr2++;
 						break;
-	
+
 					//73. HP_Rr_Hr2     + Nnp  --> HP_RNa_Hr2
 					case 73:
 						HP_Rr_Hr2--;
 						Nnp--;
 						HP_RNa_Hr2++;
 						break;
-	
+
 					//74. HP_Rr_Hr2     + H2np --> HP_Rr_Hr3
 					case 74:
 						HP_Rr_Hr2--;
 						H2np--;
 						HP_Rr_Hr3++;
 						break;
-	
+
 					//75. HP_Rr_Hr3     + Rnp  --> HP_Rr2_Hr3
 					case 75:
 						HP_Rr_Hr3--;
 						Rnp--;
 						HP_Rr2_Hr3++;
 						break;
-	
+
 					//76. HP_Rr_Hr3     + Nnp  --> HP_RNa_Hr3
 					case 76:
 						HP_Rr_Hr3--;
 						Nnp--;
 						HP_RNa_Hr3++;
 						break;
-	
+
 					//77. HP_RNa        + Rnp  --> HP_RNa_Rr
 					case 77:
 						HP_RNa--;
 						Rnp--;
 						HP_RNa_Rr++;
 						break;
-	
+
 					//78. HP_RNa        + H2np --> HP_RNa_Hr
 					case 78:
 						HP_RNa--;
 						H2np--;
 						HP_RNa_Hr++;
 						break;
-	
+
 					//79. HP_RNa_Hr     + Rnp  --> HP_RNa_Rr_Hr
 					case 79:
 						HP_RNa_Hr--;
 						Rnp--;
 						HP_RNa_Rr_Hr++;
 						break;
-	
+
 					//80. HP_RNa_Hr     + H2np --> HP_RNa_Hr2
 					case 80:
 						HP_RNa_Hr--;
 						H2np--;
 						HP_RNa_Hr2++;
 						break;
-	
+
 					//81. HP_RNa_Hr2    + Rnp  --> HP_RNa_Rr_Hr2
 					case 81:
 						HP_RNa_Hr2--;
 						Rnp--;
 						HP_RNa_Rr_Hr2++;
 						break;
-	
+
 						//82. HP_RNa_Hr2    + H2np --> HP_RNa_Hr3
 					case 82:
 						HP_RNa_Hr2--;
 						H2np--;
 						HP_RNa_Hr3++;
 						break;
-	
+
 					//83. HP_RNa_Hr3    + Rnp  --> HP_RNa_Rr_Hr3
 					case 83:
 						HP_RNa_Hr3--;
 						Rnp--;
 						HP_RNa_Rr_Hr3++;
 						break;
-	
+
 					//85. HP_RNa_Rr     + Nnp  --> HP_RNa2
 					case 84:
 						HP_RNa_Rr--;
 						Nnp--;
 						HP_RNa2++;
 						break;
-	
+
 					//86. HP_RNa_Rr     + H2np --> HP_RNa_Rr_Hr
 					case 85:
 						HP_RNa_Rr--;
 						H2np--;
 						HP_RNa_Rr_Hr++;
 						break;
-	
+
 					//88. HP_RNa_Rr_HR  + Nnp  --> HP_RNa2_Hr
 					case 86:
 						HP_RNa_Rr_Hr--;
 						Nnp--;
 						HP_RNa2_Hr++;
 						break;
-	
+
 					//89. HP_RNa_Rr_HR  + H2np --> HP_RNa_Rr_Hr2
 					case 87:
 						HP_RNa_Rr_Hr--;
 						H2np--;
 						HP_RNa_Rr_Hr2++;
 						break;
-	
+
 					//91. HP_RNa_Rr_HR2 + Nnp  --> HP_RNa2_Hr2
 					case 88:
 						HP_RNa_Rr_Hr2--;
 						Nnp--;
 						HP_RNa2_Hr2++;
 						break;
-	
+
 					//92. HP_RNa_Rr_HR2 + H2np --> HP_RNa_Rr_Hr3
 					case 89:
 						HP_RNa_Rr_Hr2--;
 						H2np--;
 						HP_RNa_Rr_Hr3++;
 						break;
-	
+
 					//94. HP_RNa_Rr_HR3 + Nnp  --> HP_RNa2_Hr3
 					case 90:
 						HP_RNa_Rr_Hr3--;
 						Nnp--;
 						HP_RNa2_Hr3++;
 						break;
-	
+
 					//96. HP_Rr2        + Nnp  --> HP_RNa_Rr
 					case 91:
 						HP_Rr2--;
 						Nnp--;
 						HP_RNa_Rr++;
 						break;
-	
+
 					//97. HP_Rr2        + H2np --> HP_Rr2_Hr
 					case 92:
 						HP_Rr2--;
 						H2np--;
 						HP_Rr2_Hr++;
 						break;
-	
+
 					//99. HP_Rr2_Hr     + Nnp  --> HP_RNa_Rr_Hr
 					case 93:
 						HP_Rr2_Hr--;
 						Nnp--;
 						HP_RNa_Rr_Hr++;
 						break;
-	
+
 					//100. HP_Rr2_Hr     + H2np --> HP_Rr2_Hr2
 					case 94:
 						HP_Rr2_Hr--;
 						H2np--;
 						HP_Rr2_Hr2++;
 						break;
-	
+
 					//102. HP_Rr2_Hr2    + Nnp  --> HP_RNa_Rr_Hr2
 					case 95:
 						HP_Rr2_Hr2--;
 						Nnp--;
 						HP_RNa_Rr_Hr2++;
 						break;
-	
+
 					//103. HP_Rr2_Hr2    + H2np --> HP_Rr2_Hr3
 					case 96:
 						HP_Rr2_Hr2--;
 						H2np--;
 						HP_Rr2_Hr3++;
 						break;
-	
+
 					//105. HP_Rr2_Hr3    + Nnp  --> HP_RNa_Rr_Hr3
 					case 97:
 						HP_Rr2_Hr3--;
 						Nnp--;
 						HP_RNa_Rr_Hr3++;
 						break;
-	
+
 					//106. HP_RNa2       + H2np --> HP_RNa2_Hr
 					case 98:
 						HP_RNa2--;
 						H2np--;
 						HP_RNa2_Hr++;
 						break;
-	
+
 					//107. HP_RNa2_Hr    + H2np --> HP_RNa2_Hr2
 					case 99:
 						HP_RNa2_Hr--;
 						H2np--;
 						HP_RNa2_Hr2++;
 						break;
-	
+
 					//108. HP_RNa2_Hr2   + H2np --> HP_RNa2_Hr3
 					case 100:
 						HP_RNa2_Hr2--;
 						H2np--;
 						HP_RNa2_Hr3++;
 						break;
-	
+
 					//109. HP_Hr         --> HP_free       + H2np
 					case 101:
 						HP_Hr--;
 						HP_free++;
 						H2np++;
 						break;
-	
+
 					//110. HP_Hr2        --> HP_Hr         + H2np
 					case 102:
 						HP_Hr2--;
 						HP_Hr++;
 						H2np++;
 						break;
-	
+
 					//111. HP_Hr3        --> HP_Hr2        + H2np
 					case 103:
 						HP_Hr3--;
 						HP_Hr2++;
 						H2np++;
 						break;
-	
+
 					//112. HP_Rr         --> HP_free       + Rnp
 					case 104:
 						HP_Rr--;
 						HP_free++;
 						Rnp++;
 						break;
-	
+
 					//113. HP_Rr_Hr      --> HP_Hr         + Rnp
 					case 105:
 						HP_Rr_Hr--;
 						HP_Hr++;
 						Rnp++;
 						break;
-	
+
 					//114. HP_Rr_Hr      --> HP_Rr         + H2np
 					case 106:
 						HP_Rr_Hr--;
 						HP_Rr++;
 						H2np++;
 						break;
-	
+
 					//115. HP_Rr_Hr2     --> HP_Hr2        + Rnp
 					case 107:
 						HP_Rr_Hr2--;
 						HP_Hr2++;
 						Rnp++;
 						break;
-	
+
 					//116. HP_Rr_Hr2     --> HP_Rr_Hr      + H2np
 					case 108:
 						HP_Rr_Hr2--;
 						HP_Rr_Hr++;
 						H2np++;
 						break;
-	
+
 					//117. HP_Rr_Hr3     --> HP_Hr3        + Rnp
 					case 109:
 						HP_Rr_Hr3--;
 						HP_Hr3++;
 						Rnp++;
 						break;
-	
+
 					//118. HP_Rr_Hr3     --> HP_Rr_Hr2     + H2np
 					case 110:
 						HP_Rr_Hr3--;
 						HP_Rr_Hr2++;
 						H2np++;
 						break;
-	
+
 					//119. HP_RNa        --> HP_Rr         + Nnp
 					case 111:
 						HP_RNa--;
 						HP_Rr++;
 						Nnp++;
 						break;
-	
+
 					//120. HP_RNa_Hr     --> HP_Rr_Hr      + Nnp
 					case 112:
 						HP_RNa_Hr--;
 						HP_Rr_Hr++;
 						Nnp++;
 						break;
-	
+
 					//121. HP_RNa_Hr     --> HP_RNa        + H2np
 					case 113:
 						HP_RNa_Hr--;
 						HP_RNa++;
 						H2np++;
 						break;
-	
+
 					//122. HP_RNa_Hr2    --> HP_Rr_Hr2     + Nnp
 					case 114:
 						HP_RNa_Hr2--;
 						HP_Rr_Hr2++;
 						Nnp++;
 						break;
-	
+
 					//123. HP_RNa_Hr2    --> HP_RNa_Hr     + H2np
 					case 115:
 						HP_RNa_Hr2--;
 						HP_RNa_Hr++;
 						H2np++;
 						break;
-	
+
 					//124. HP_RNa_Hr3    --> HP_Rr_Hr3     + Nnp
 					case 116:
 						HP_RNa_Hr3--;
 						HP_Rr_Hr3++;
 						Nnp++;
 						break;
-	
+
 					//125. HP_RNa_Hr3    --> HP_RNa_Hr2    + H2np
 					case 117:
 						HP_RNa_Hr3--;
 						HP_RNa_Hr2++;
 						H2np++;
 						break;
-	
+
 					//126. HP_RNa_Rr     --> HP_RNa        + Rnp
 					case 118:
 						HP_RNa_Rr--;
 						HP_RNa++;
 						Rnp++;
 						break;
-	
+
 					//127. HP_RNa_Rr     --> HP_Rr2        + Nnp
 					case 119:
 						HP_RNa_Rr--;
 						HP_Rr2++;
 						Nnp++;
 						break;
-	
+
 					//128. HP_RNa_Rr_Hr  --> HP_RNa_Hr     + Rnp
 					case 120:
 						HP_RNa_Rr_Hr--;
 						HP_RNa_Hr++;
 						Rnp++;
 						break;
-	
+
 					//129. HP_RNa_Rr_Hr  --> HP_Rr2_Hr     + Nnp
 					case 121:
 						HP_RNa_Rr_Hr--;
 						HP_Rr2_Hr++;
 						Nnp++;
 						break;
-	
+
 					//130. HP_RNa_Rr_Hr  --> HP_RNa_Rr     + H2np
 					case 122:
 						HP_RNa_Rr_Hr--;
 						HP_RNa_Rr++;
 						H2np++;
 						break;
-	
+
 					//131. HP_RNa_Rr_Hr2 --> HP_RNa_Hr2    + Rnp
 					case 123:
 						HP_RNa_Rr_Hr2--;
 						HP_RNa_Hr2++;
 						Rnp++;
 						break;
-	
+
 					//132. HP_RNa_Rr_Hr2 --> HP_Rr2_Hr2    + Nnp
 					case 124:
 						HP_RNa_Rr_Hr2--;
 						HP_Rr2_Hr2++;
 						Nnp++;
 						break;
-	
+
 					//133. HP_RNa_Rr_Hr2 --> HP_RNa_Rr_Hr  + H2np
 					case 125:
 						HP_RNa_Rr_Hr2--;
 						HP_RNa_Rr_Hr++;
 						H2np++;
 						break;
-	
+
 					//134. HP_RNa_Rr_Hr3 --> HP_RNa_Hr3    + Rnp
 					case 126:
 						HP_RNa_Rr_Hr3--;
 						HP_RNa_Hr3++;
 						Rnp++;
 						break;
-	
+
 					//135. HP_RNa_Rr_Hr3 --> HP_Rr2_Hr3    + Nnp
 					case 127:
 						HP_RNa_Rr_Hr3--;
 						HP_Rr2_Hr3++;
 						Nnp++;
 						break;
-	
+
 					//136. HP_RNa_Rr_Hr3 --> HP_RNa_Rr_Hr2 + H2np
 					case 128:
 						HP_RNa_Rr_Hr3--;
 						HP_RNa_Rr_Hr2++;
 						H2np++;
 						break;
-	
+
 					//137. HP_Rr2        --> HP_Rr         + Rnp
 					case 129:
 						HP_Rr2--;
 						HP_Rr++;
 						Rnp++;
 						break;
-	
+
 					//138. HP_Rr2_Hr     --> HP_Rr_Hr      + Rnp
 					case 130:
 						HP_Rr2_Hr--;
 						HP_Rr_Hr++;
 						Rnp++;
 						break;
-	
+
 					//139. HP_Rr2_Hr     --> HP_Rr2        + H2np
 					case 131:
 						HP_Rr2_Hr--;
 						HP_Rr2++;
 						H2np++;
 						break;
-	
+
 					//140. HP_Rr2_Hr2    --> HP_Rr_Hr2     + Rnp
 					case 132:
 						HP_Rr2_Hr2--;
 						HP_Rr_Hr2++;
 						Rnp++;
 						break;
-	
+
 					//141. HP_Rr2_Hr2    --> HP_Rr2_Hr     + H2np
 					case 133:
 						HP_Rr2_Hr2--;
 						HP_Rr2_Hr++;
 						H2np++;
 						break;
-	
+
 					//142. HP_Rr2_Hr3    --> HP_Rr_Hr3     + Rnp
 					case 134:
 						HP_Rr2_Hr3--;
 						HP_Rr_Hr3++;
 						Rnp++;
 						break;
-	
+
 					//143. HP_Rr2_Hr3    --> HP_Rr2_Hr2    + H2np
 					case 135:
 						HP_Rr2_Hr3--;
 						HP_Rr2_Hr2++;
 						H2np++;
 						break;
-	
+
 					//144. HP_RNa2       --> HP_RNa_Rr     + Nnp
 					case 136:
 						HP_RNa2--;
 						HP_RNa_Rr++;
 						Nnp++;
 						break;
-	
+
 					//145. HP_RNa2_Hr    --> HP_RNa_Rr_Hr     + Nnp
 					case 137:
 						HP_RNa2_Hr--;
 						HP_RNa_Rr_Hr++;
 						Nnp++;
 						break;
-	
+
 					//146. HP_RNa2_Hr    --> HP_RNa2       + H2np
 					case 138:
 						HP_RNa2_Hr--;
 						HP_RNa2++;
 						H2np++;
 						break;
-	
+
 					//147. HP_RNa2_Hr2   --> HP_RNa_Rr_Hr2 + Nnp
 					case 139:
 						HP_RNa2_Hr2--;
 						HP_RNa_Rr_Hr2++;
 						Nnp++;
 						break;
-	
+
 					//148. HP_RNa2_Hr2   --> HP_RNa2_Hr    + H2np
 					case 140:
 						HP_RNa2_Hr2--;
 						HP_RNa2_Hr++;
 						H2np++;
 						break;
-	
+
 					//149. HP_RNa2_Hr3   --> HP_RNa_Rr_Hr3 + Nnp
 					case 141:
 						HP_RNa2_Hr3--;
 						HP_RNa_Rr_Hr3++;
 						Nnp++;
 						break;
-	
+
 					//150. HP_RNa2_Hr3   --> HP_RNa2_Hr2   + H2np
 					case 142:
 						HP_RNa2_Hr3--;
 						HP_RNa2_Hr2++;
 						H2np++;
 						break;
-	
+
 				//CBF1 promoter binding
 					//151. RP_free + Rnp         --> RP_Rr
 					case 143:
@@ -1855,546 +1855,546 @@ int main(int argc, char *argv[]) {
 						Rnp--;
 						RP_Rr++;
 						break;
-	
+
 					//152. RP_free + H2np        --> RP_Hr
 					case 144:
 						RP_free--;
 						H2np--;
 						RP_Hr++;
 						break;
-	
+
 					//153. RP_Hr + Rnp           --> RP_Rr_Hr
 					case 145:
 						RP_Hr--;
 						Rnp--;
 						RP_Rr_Hr++;
 						break;
-	
+
 					//154. RP_Hr + H2np          --> RP_Hr2
 					case 146:
 						RP_Hr--;
 						H2np--;
 						RP_Hr2++;
 						break;
-	
+
 					//155. RP_Hr2 + Rnp          --> RP_Rr_Hr2
 					case 147:
 						RP_Hr2--;
 						Rnp--;
 						RP_Rr_Hr2++;
 						break;
-	
+
 					//156. RP_Hr2 + H2np         --> RP_Hr3
 					case 148:
 						RP_Hr2--;
 						H2np--;
 						RP_Hr3++;
 						break;
-	
+
 					//157. RP_Hr3 + Rnp          --> RP_Rr_Hr3
 					case 149:
 						RP_Hr3--;
 						Rnp--;
 						RP_Rr_Hr3++;
 						break;
-	
+
 					//158. RP_Rr + Rnp           --> RP_Rr2
 					case 150:
 						RP_Rr--;
 						Rnp--;
 						RP_Rr2++;
 						break;
-	
+
 					//159. RP_Rr + Nnp           --> RP_RNa
 					case 151:
 						RP_Rr--;
 						Nnp--;
 						RP_RNa++;
 						break;
-	
+
 					//160. RP_Rr + H2np          --> RP_Rr_Hr
 					case 152:
 						RP_Rr--;
 						H2np--;
 						RP_Rr_Hr++;
 						break;
-	
+
 					//161. RP_Rr_Hr + Rnp        --> RP_Rr2_Hr
 					case 153:
 						RP_Rr_Hr--;
 						Rnp--;
 						RP_Rr2_Hr++;
 						break;
-	
+
 					//162. RP_Rr_Hr + Nnp        --> RP_RNa_Hr
 					case 154:
 						RP_Rr_Hr--;
 						Nnp--;
 						RP_RNa_Hr++;
 						break;
-	
+
 					//163. RP_Rr_Hr + H2np       --> RP_Rr_Hr2
 					case 155:
 						RP_Rr_Hr--;
 						H2np--;
 						RP_Rr_Hr2++;
 						break;
-	
+
 					//164. RP_Rr_Hr2 + Rnp       --> RP_Rr2_Hr2
 					case 156:
 						RP_Rr_Hr2--;
 						Rnp--;
 						RP_Rr2_Hr2++;
 						break;
-	
+
 					//165. RP_Rr_Hr2 + Nnp       --> RP_RNa_Hr2
 					case 157:
 						RP_Rr_Hr2--;
 						Nnp--;
 						RP_RNa_Hr2++;
 						break;
-	
+
 					//166. RP_Rr_Hr2 + H2np      --> RP_Rr_Hr3
 					case 158:
 						RP_Rr_Hr2--;
 						H2np--;
 						RP_Rr_Hr3++;
 						break;
-	
+
 					//167. RP_Rr_Hr3 + Rnp       --> RP_Rr2_Hr3
 					case 159:
 						RP_Rr_Hr3--;
 						Rnp--;
 						RP_Rr2_Hr3++;
 						break;
-	
+
 					//168. RP_Rr_Hr3 + Nnp       --> RP_RNa_Hr3
 					case 160:
 						RP_Rr_Hr3--;
 						Nnp--;
 						RP_RNa_Hr3++;
 						break;
-	
+
 					//169. RP_RNa + Rnp          --> RP_RNa_Rr
 					case 161:
 						RP_RNa--;
 						Rnp--;
 						RP_RNa_Rr++;
 						break;
-	
+
 					//170. RP_RNa + H2np         --> RP_RNa_Hr
 					case 162:
 						RP_RNa--;
 						H2np--;
 						RP_RNa_Hr++;
 						break;
-	
+
 					//171. RP_RNa_Hr + Rnp       --> RP_RNa_Rr_Hr
 					case 163:
 						RP_RNa_Hr--;
 						Rnp--;
 						RP_RNa_Rr_Hr++;
 						break;
-	
+
 					//172. RP_RNa_Hr + H2np      --> RP_RNa_Hr2
 					case 164:
 						RP_RNa_Hr--;
 						H2np--;
 						RP_RNa_Hr2++;
 						break;
-	
+
 					//173. RP_RNa_Hr2 + Rnp      --> RP_RNa_Rr_Hr2
 					case 165:
 						RP_RNa_Hr2--;
 						Rnp--;
 						RP_RNa_Rr_Hr2++;
 						break;
-	
+
 					//174. RP_RNa_Hr2 + H2np     --> RP_RNa_Hr3
 					case 166:
 						RP_RNa_Hr2--;
 						H2np--;
 						RP_RNa_Hr3++;
 						break;
-	
+
 					//175. RP_RNa_Hr3 + Rnp      --> RP_RNa_Rr_Hr3
 					case 167:
 						RP_RNa_Hr3--;
 						Rnp--;
 						RP_RNa_Rr_Hr3++;
 						break;
-	
+
 					//176. RP_Rr2 + Rnp          --> RP_Rr3
 					case 168:
 						RP_Rr2--;
 						Rnp--;
 						RP_Rr3++;
 						break;
-	
+
 					//177. RP_Rr2 + Nnp          --> RP_RNa_Rr
 					case 169:
 						RP_Rr2--;
 						Nnp--;
 						RP_RNa_Rr++;
 						break;
-	
+
 					//178. RP_Rr2 + H2np         --> RP_Rr2_Hr
 					case 170:
 						RP_Rr2--;
 						H2np--;
 						RP_Rr2_Hr++;
 						break;
-	
+
 					//179. RP_Rr2_Hr + Rnp       --> RP_Rr3_Hr
 					case 171:
 						RP_Rr2_Hr--;
 						Rnp--;
 						RP_Rr3_Hr++;
 						break;
-	
+
 					//180. RP_Rr2_Hr + Nnp       --> RP_RNa_Rr_Hr
 					case 172:
 						RP_Rr2_Hr--;
 						Nnp--;
 						RP_RNa_Rr_Hr++;
 						break;
-	
+
 					//181. RP_Rr2_Hr + H2np      --> RP_Rr2_Hr2
 					case 173:
 						RP_Rr2_Hr--;
 						H2np--;
 						RP_Rr2_Hr2++;
 						break;
-	
+
 					//182. RP_Rr2_Hr2 + Rnp      --> RP_Rr3_Hr2
 					case 174:
 						RP_Rr2_Hr2--;
 						Rnp--;
 						RP_Rr3_Hr2++;
 						break;
-	
+
 					//183. RP_Rr2_Hr2 + Nnp      --> RP_RNa_Rr_Hr2
 					case 175:
 						RP_Rr2_Hr2--;
 						Nnp--;
 						RP_RNa_Rr_Hr2++;
 						break;
-	
+
 					//184. RP_Rr2_Hr2 + H2np     --> RP_Rr2_Hr3
 					case 176:
 						RP_Rr2_Hr2--;
 						H2np--;
 						RP_Rr2_Hr3++;
 						break;
-	
+
 					//185. RP_Rr2_Hr3 + Rnp      --> RP_Rr3_Hr3
 					case 177:
 						RP_Rr2_Hr3--;
 						Rnp--;
 						RP_Rr3_Hr3++;
 						break;
-	
+
 					//186. RP_Rr2_Hr3 + Nnp      --> RP_RNa_Rr_Hr3
 					case 178:
 						RP_Rr2_Hr3--;
 						Nnp--;
 						RP_RNa_Rr_Hr3++;
 						break;
-	
+
 					//187. RP_RNa_Rr + Rnp       --> RP_RNa_Rr2
 					case 179:
 						RP_RNa_Rr--;
 						Rnp--;
 						RP_RNa_Rr2++;
 						break;
-	
+
 					//188. RP_RNa_Rr + Nnp       --> RP_RNa2
 					case 180:
 						RP_RNa_Rr--;
 						Nnp--;
 						RP_RNa2++;
 						break;
-	
+
 					//189. RP_RNa_Rr + H2np      --> RP_RNa_Rr_Hr
 					case 181:
 						RP_RNa_Rr--;
 						H2np--;
 						RP_RNa_Rr_Hr++;
 						break;
-	
+
 					//190. RP_RNa_Rr_Hr + Rnp    --> RP_Rr2_Hr
 					case 182:
 						RP_RNa_Rr_Hr--;
 						Rnp--;
 						RP_Rr2_Hr++;
 						break;
-	
+
 					//191. RP_RNa_Rr_Hr + Nnp    --> RP_RNa2_Hr
 					case 183:
 						RP_RNa_Rr_Hr--;
 						Nnp--;
 						RP_RNa2_Hr++;
 						break;
-	
+
 					//192. RP_RNa_Rr_Hr + H2np   --> RP_RNa_Rr_Hr2
 					case 184:
 						RP_RNa_Rr_Hr--;
 						H2np--;
 						RP_RNa_Rr_Hr2++;
 						break;
-	
+
 					//193. RP_RNa_Rr_Hr2 + Rnp   --> RP_RNa_Rr2_Hr2
 					case 185:
 						RP_RNa_Rr_Hr2--;
 						Rnp--;
 						RP_RNa_Rr2_Hr2++;
 						break;
-	
+
 					//194. RP_RNa_Rr_Hr2 + Nnp   --> RP_RNa2_Hr2
 					case 186:
 						RP_RNa_Rr_Hr2--;
 						Nnp--;
 						RP_RNa2_Hr2++;
 						break;
-	
+
 					//195. RP_RNa_Rr_Hr2 + H2np  --> RP_RNa_Rr_Hr3
 					case 187:
 						RP_RNa_Rr_Hr2--;
 						H2np--;
 						RP_RNa_Rr_Hr3++;
 						break;
-	
+
 					//196. RP_RNa_Rr_Hr3 + Rnp   --> RP_RNa_Rr2_Hr3
 					case 188:
 						RP_RNa_Rr_Hr3--;
 						Rnp--;
 						RP_RNa_Rr2_Hr3++;
 						break;
-	
+
 					//197. RP_RNa_Rr_Hr3 + Nnp   --> RP_RNa2_Hr3
 					case 189:
 						RP_RNa_Rr_Hr3--;
 						Nnp--;
 						RP_RNa2_Hr3++;
 						break;
-	
+
 					//198. RP_Rr3 + Nnp          --> RP_RNa_Rr2
 					case 190:
 						RP_Rr3--;
 						Nnp--;
 						RP_RNa_Rr2++;
 						break;
-	
+
 					//199. RP_Rr3 + H2np         --> RP_Rr3_Hr
 					case 191:
 						RP_Rr3--;
 						H2np--;
 						RP_Rr3_Hr++;
 						break;
-	
+
 					//200. RP_Rr3_Hr + Nnp       --> RP_RNa_Rr2_Hr
 					case 192:
 						RP_Rr3_Hr--;
 						Nnp--;
 						RP_RNa_Rr2_Hr++;
 						break;
-	
+
 					//201. RP_Rr3_Hr + H2np      --> RP_Rr3_Hr2
 					case 193:
 						RP_Rr3_Hr--;
 						H2np--;
 						RP_Rr3_Hr2++;
 						break;
-	
+
 					//202. RP_Rr3_Hr2 + Nnp      --> RP_RNa_Rr2_Hr2
 					case 194:
 						RP_Rr3_Hr2--;
 						Nnp--;
 						RP_RNa_Rr2_Hr2++;
 						break;
-	
+
 					//203. RP_Rr3_Hr2 + H2np     --> RP_Rr3_Hr3
 					case 195:
 						RP_Rr3_Hr2--;
 							H2np--;
 							RP_Rr3_Hr3++;
 						break;
-	
+
 					//204. RP_Rr3_Hr3 + Nnp      --> RP_RNa_Rr2_Hr3
 					case 196:
 						RP_Rr3_Hr3--;
 						Nnp--;
 						RP_RNa_Rr2_Hr3++;
 						break;
-	
+
 					//205. RP_RNa_Rr2 + Nnp      --> RP_RNa2_Rr
 					case 197:
 						RP_RNa_Rr2--;
 						Nnp--;
 						RP_RNa2_Rr++;
 						break;
-	
+
 					//206. RP_RNa_Rr2 + H2np     --> RP_RNa_Rr2_Hr
 					case 198:
 						RP_RNa_Rr2--;
 						H2np--;
 						RP_RNa_Rr2_Hr++;
 						break;
-	
+
 					//207. RP_RNa_Rr2_Hr + Nnp   --> RP_RNa2_Rr_Hr
 					case 199:
 						RP_RNa_Rr2_Hr--;
 						Nnp--;
 						RP_RNa2_Rr_Hr++;
 						break;
-	
+
 					//208. RP_RNa_Rr2_Hr + H2np  --> RP_RNa_Rr2_Hr2
 					case 200:
 						RP_RNa_Rr2_Hr--;
 						H2np--;
 						RP_RNa_Rr2_Hr2++;
 						break;
-	
+
 					//209. RP_RNa_Rr2_Hr2 + Nnp  --> RP_RNa2_Rr_Hr2
 					case 201:
 						RP_RNa_Rr2_Hr2--;
 						Nnp--;
 						RP_RNa_Rr_Hr2++;
 						break;
-	
+
 					//210. RP_RNa_Rr2_Hr2 + H2np --> RP_RNa_Rr2_Hr3
 					case 202:
 						RP_RNa_Rr2_Hr2--;
 						H2np--;
 						RP_RNa_Rr2_Hr3++;
 						break;
-	
+
 					//211. RP_RNa_Rr2_Hr3 + Nnp  --> RP_RNa2_Rr_Hr3
 					case 203:
 						RP_RNa_Rr2_Hr3--;
 						Nnp--;
 						RP_RNa2_Rr_Hr3++;
 						break;
-	
+
 					//212. RP_RNa2 + Rnp         --> RP_RNa2_Rr
 					case 204:
 						RP_RNa2--;
 						Rnp--;
 						RP_RNa2_Rr++;
 						break;
-	
+
 					//213. RP_RNa2 + H2np        --> RP_RNa2_Hr
 					case 205:
 						RP_RNa2--;
 						H2np--;
 						RP_RNa2_Hr++;
 						break;
-	
+
 					//214. RP_RNa2_Hr + Rnp      --> RP_RNa2_Rr_Hr
 					case 206:
 						RP_RNa2_Hr--;
 						Rnp--;
 						RP_RNa2_Rr_Hr++;
 						break;
-	
+
 					//215. RP_RNa2_Hr + H2np     --> RP_RNa2_Hr2
 					case 207:
 						RP_RNa2_Hr--;
 						H2np--;
 						RP_RNa2_Hr2++;
 						break;
-	
+
 					//216. RP_RNa2_Hr2 + Rnp     --> RP_RNa2_Rr_Hr2
 					case 208:
 						RP_RNa2_Hr2--;
 						Rnp--;
 						RP_RNa2_Rr_Hr2++;
 						break;
-	
+
 					//217. RP_RNa2_Hr2 + H2np    --> RP_RNa2_Hr3
 					case 209:
 						RP_RNa2_Hr2--;
 						H2np--;
 						RP_RNa2_Hr3++;
 						break;
-	
+
 					//218. RP_RNa2_Hr3 + Rnp     --> RP_RNa2_Rr_Hr3
 					case 210:
 						RP_RNa2_Hr3--;
 						Rnp--;
 						RP_RNa2_Rr_Hr3++;
 						break;
-	
+
 					//219. RP_RNa2_Rr + Nnp      --> RP_RNa3
 					case 211:
 						RP_RNa2_Rr--;
 						Nnp--;
 						RP_RNa3++;
 						break;
-	
+
 					//220. RP_RNa2_Rr + H2np     --> RP_RNa2_Rr_Hr
 					case 212:
 						RP_RNa2_Rr--;
 						H2np--;
 						RP_RNa2_Rr_Hr++;
 						break;
-	
+
 					//221. RP_RNa2_Rr_Hr + Nnp   --> RP_RNa3_Hr
 					case 213:
 						RP_RNa2_Rr_Hr--;
 						Nnp--;
 						RP_RNa3_Hr++;
 						break;
-	
+
 					//222. RP_RNa2_Rr_Hr + H2np  --> RP_RNa2_Rr_Hr2
 					case 214:
 						RP_RNa2_Rr_Hr--;
 						H2np--;
 						RP_RNa2_Rr_Hr2++;
 						break;
-	
+
 					//223. RP_RNa2_Rr_Hr2 + Nnp  --> RP_RNa3_Hr2
 					case 215:
 						RP_RNa2_Rr_Hr2--;
 						Nnp--;
 						RP_RNa3_Hr3++;
 						break;
-	
+
 					//224. RP_RNa2_Rr_Hr2 + H2np --> RP_RNa2_Rr_Hr3
 					case 216:
 						RP_RNa2_Rr_Hr2--;
 						H2np--;
 						RP_RNa2_Rr_Hr3++;
 						break;
-	
+
 					//225. RP_RNa2_Rr_Hr3 + Nnp  --> RP_RNa3_Hr3
 					case 217:
 						RP_RNa2_Rr_Hr3--;
 						Nnp--;
 						RP_RNa3_Hr3++;
 						break;
-	
+
 					//226. RP_RNa3 + H2np        --> RP_RNa3_Hr
 					case 218:
 						RP_RNa3--;
 						H2np--;
 						RP_RNa3_Hr++;
 						break;
-	
+
 					//227. RP_RNa3_Hr + H2np     --> RP_RNa3_Hr2
 					case 219:
 						RP_RNa3_Hr--;
 						H2np--;
 						RP_RNa3_Hr2++;
 						break;
-	
+
 					//228. RP_RNa3_Hr2 + H2np    --> RP_RNa3_Hr3
 					case 220:
 						RP_RNa3_Hr2--;
 						H2np--;
 						RP_RNa3_Hr3++;
 						break;
-	
+
 				//CBF1 promoter disassociation
 					//229. RP_Hr			--> RP_free + H2np
 					case 221:
@@ -2402,574 +2402,572 @@ int main(int argc, char *argv[]) {
 						RP_free++;
 						H2np++;
 						break;
-	
+
 					//230. RP_Hr2			--> RP_Hr + H2np
 					case 222:
 						RP_Hr2--;
 						RP_Hr++;
 						H2np++;
 						break;
-	
+
 					//231. RP_Hr3			--> RP_Hr2 + H2np
 					case 223:
 						RP_Hr3--;
 						RP_Hr2++;
 						H2np++;
 						break;
-	
+
 					//232. RP_Rr			--> RP_free + Rnp
 					case 224:
 						RP_Rr--;
 						RP_free++;
 						Rnp++;
 						break;
-	
+
 					//233. RP_Rr_Hr			--> RP_Hr + Rnp
 					case 225:
 						RP_Rr_Hr--;
 						RP_Hr++;
 						Rnp++;
 						break;
-	
+
 					//234. RP_Rr_Hr			--> RP_Rr + H2np
 					case 226:
 						RP_Rr_Hr--;
 						RP_Rr++;
 						H2np++;
 						break;
-	
+
 					//235. RP_Rr_Hr2		--> RP_Hr2 + Rnp
 					case 227:
 						RP_Rr_Hr2--;
 						RP_Hr2++;
 						Rnp++;
 						break;
-	
+
 					//236. RP_Rr_Hr2		--> RP_Rr_Hr + H2np
 					case 228:
 						RP_Rr_Hr2--;
 						RP_Rr_Hr++;
 						H2np++;
 						break;
-	
+
 					//237. RP_Rr_Hr3		--> RP_Hr3 + Rnp
 					case 229:
 						RP_Rr_Hr3--;
 						RP_Hr3++;
 						Rnp++;
 						break;
-	
+
 					//238. RP_Rr_Hr3		--> RP_Rr_Hr2 + H2np
 					case 230:
 						RP_Rr_Hr3--;
 						RP_Rr_Hr2++;
 						H2np++;
 						break;
-	
+
 					//239. RP_RNa			--> RP_Rr + Nnp
 					case 231:
 						RP_RNa--;
 						RP_Rr++;
 						Nnp++;
 						break;
-	
+
 					//240. RP_RNa_Hr		--> RP_Rr_Hr + Nnp
 					case 232:
 						RP_RNa_Hr--;
 						RP_Rr_Hr++;
 						Nnp++;
 						break;
-	
+
 					//241. RP_RNa_Hr		--> RP_RNa + H2np
 					case 233:
 						RP_RNa_Hr--;
 						RP_RNa++;
 						H2np++;
 						break;
-	
+
 					//242. RP_RNa_Hr2		--> RP_Rr_Hr2 + Nnp
 					case 234:
 						RP_RNa_Hr2--;
 						RP_Rr_Hr2++;
 						Nnp++;
 						break;
-	
+
 					//243. RP_RNa_Hr2		--> RP_RNa_Hr + H2np
 					case 235:
 						RP_RNa_Hr2--;
 						RP_RNa_Hr++;
 						H2np++;
 						break;
-	
+
 					//244. RP_RNa_Hr3		--> RP_Rr_Hr3 + Nnp
 					case 236:
 						RP_RNa_Hr3--;
 						RP_Rr_Hr3++;
 						Nnp++;
 						break;
-	
+
 					//245. RP_RNa_Hr3		--> RP_RNa_Hr2 + H2np
 					case 237:
 						RP_RNa_Hr3--;
 						RP_RNa_Hr2++;
 						H2np++;
 						break;
-	
+
 					//246. RP_Rr2			--> RP_Rr + Rnp
 					case 238:
 						RP_Rr2--;
 						RP_Rr++;
 						Rnp++;
 						break;
-	
+
 					//247. RP_Rr2_Hr		--> RP_Rr_Hr + Rnp
 					case 239:
 						RP_Rr_Hr--;
 						RP_Rr_Hr++;
 						Rnp++;
 						break;
-	
+
 					//248. RP_Rr2_Hr		--> RP_Rr2 + H2np
 					case 240:
 						RP_Rr2_Hr--;
 						RP_Rr2++;
 						H2np++;
 						break;
-	
+
 					//249. RP_Rr2_Hr2		--> RP_Rr_Hr2 + Rnp
 					case 241:
 						RP_Rr2_Hr2--;
 						RP_Rr_Hr2++;
 						Rnp++;
 						break;
-	
+
 					//250. RP_Rr2_Hr2		--> RP_Rr2_Hr + H2np
 					case 242:
 						RP_Rr2_Hr2--;
 						RP_Rr2_Hr++;
 						H2np++;
 						break;
-	
+
 					//251. RP_Rr2_Hr3		--> RP_Rr_Hr3 + Rnp
 					case 243:
 						RP_Rr2_Hr3--;
 						RP_Rr_Hr3++;
 						Rnp++;
 						break;
-	
+
 					//252. RP_Rr2_Hr3		--> RP_Rr2_Hr2 + H2np
 					case 244:
 						RP_Rr2_Hr3--;
 						RP_Rr2_Hr2++;
 						H2np++;
 						break;
-	
+
 					//253. RP_RNa_Rr		--> RP_RNa + Rnp
 					case 245:
 						RP_RNa_Rr--;
 						RP_RNa++;
 						Nnp++;
 						break;
-	
+
 					//254. RP_RNa_Rr		--> RP_Rr2 + Nnp
 					case 246:
 						RP_RNa_Rr--;
 						RP_Rr2++;
 						Nnp++;
 						break;
-	
+
 					//255. RP_RNa_Rr_Hr		--> RP_RNa_Hr + Rnp
 					case 247:
 						RP_RNa_Rr_Hr--;
 						RP_RNa_Hr++;
 						Rnp++;
 						break;
-	
+
 					//256. RP_RNa_Rr_Hr		--> RP_Rr2_Hr + Nnp
 					case 248:
 						RP_RNa_Rr_Hr--;
 						RP_Rr2_Hr++;
 						Nnp++;
 						break;
-	
+
 					//257. RP_RNa_Rr_Hr		--> RP_RNa_Rr + H2np
 					case 249:
 						RP_RNa_Rr_Hr--;
 						RP_RNa_Rr++;
 						H2np++;
 						break;
-	
+
 					//258. RP_RNa_Rr_Hr2	--> RP_RNa_Hr2 + Rnp
 					case 250:
 						RP_RNa_Rr_Hr2--;
 						RP_RNa_Hr2++;
 						Rnp++;
 						break;
-	
+
 					//259. RP_RNa_Rr_Hr2	--> RP_Rr2_Hr2 + Nnp
 					case 251:
 						RP_RNa_Rr_Hr2--;
 						RP_Rr2_Hr2++;
 						Nnp++;
 						break;
-	
+
 					//260. RP_RNa_Rr_Hr2	--> RP_RNa_Rr_Hr+ H2np
 					case 252:
 						RP_RNa_Rr_Hr2--;
 						RP_RNa_Rr_Hr++;
 						H2np++;
 						break;
-	
+
 					//261. RP_RNa_Rr_Hr3	--> RP_RNa_Hr3 + Rnp
 					case 253:
 						RP_RNa_Rr_Hr3--;
 						RP_RNa_Hr3++;
 						Rnp++;
 						break;
-	
+
 					//262. RP_RNa_Rr_Hr3	--> RP_Rr2_Hr3 + Nnp
 					case 254:
 						RP_RNa_Rr_Hr3--;
 						RP_Rr2_Hr3++;
 						Nnp++;
 						break;
-	
+
 					//263. RP_RNa_Rr_Hr3	--> RP_RNa_Rr_Hr2 + H2np
 					case 255:
 						RP_RNa_Rr_Hr3--;
 						RP_RNa_Rr_Hr2++;
 						H2np++;
 						break;
-	
+
 					//264. RP_Rr3			--> RP_Rr2 + Rnp
 					case 256:
 						RP_Rr3--;
 						RP_Rr2++;
 						Rnp++;
 						break;
-	
+
 					//265. RP_Rr3_Hr		--> RP_Rr2_Hr + Rnp
 					case 257:
 						RP_Rr3_Hr--;
 						RP_Rr2_Hr++;
 						Rnp++;
 						break;
-	
+
 					//266. RP_Rr3_Hr		--> RP_Rr3 + H2np
 					case 258:
 						RP_Rr3_Hr--;
 						RP_Rr3++;
 						H2np++;
 						break;
-	
+
 					//267. RP_Rr3_Hr2		--> RP_Rr2_Hr2 + Rnp
 					case 259:
 						RP_Rr3_Hr2--;
 						RP_Rr2_Hr2++;
 						Rnp++;
 						break;
-	
+
 					//268. RP_Rr3_Hr2		--> RP_Rr3_Hr + H2np
 					case 260:
 						RP_Rr3_Hr2--;
 						RP_Rr3_Hr++;
 						H2np++;
 						break;
-	
+
 					//269. RP_Rr3_Hr3		--> RP_Rr2_Hr3 + Rnp
 					case 261:
 						RP_Rr3_Hr3--;
 						RP_Rr2_Hr3++;
 						Rnp++;
 						break;
-	
+
 					//270. RP_Rr3_Hr3		--> RP_Rr3_Hr2 + H2np
 					case 262:
 						RP_Rr3_Hr3--;
 						RP_Rr3_Hr2++;
 						H2np++;
 						break;
-	
+
 					//271. RP_RNa_Rr2		--> RP_RNa_Rr + Rnp
 					case 263:
 						RP_RNa_Rr2--;
 						RP_RNa_Rr++;
 						Rnp++;
 						break;
-	
+
 					//272. RP_RNa_Rr2		--> RP_Rr3 + Nnp
 					case 264:
 						RP_RNa_Rr2--;
 						RP_Rr3++;
 						Nnp++;
 						break;
-	
+
 					//273. RP_RNa_Rr2_Hr	--> RP_RNa_Rr_Hr + Rnp
 					case 265:
 						RP_RNa_Rr2_Hr--;
 						RP_RNa_Rr_Hr++;
 						Rnp++;
 						break;
-	
+
 					//274. RP_RNa_Rr2_Hr	--> RP_Rr3_Hr + Nnp
 					case 266:
 						RP_RNa_Rr2_Hr--;
 						RP_Rr3_Hr++;
 						Nnp++;
 						break;
-	
+
 					//275. RP_RNa_Rr2_Hr	--> RP_RNa_Rr2 + H2np
 					case 267:
 						RP_RNa_Rr2_Hr--;
 						RP_RNa_Rr2++;
 						H2np++;
 						break;
-	
+
 					//276. RP_RNa_Rr2_Hr2	--> RP_RNa_Rr_Hr2 + Rnp
 					case 268:
 						RP_RNa_Rr2_Hr2--;
 						RP_RNa_Rr_Hr2++;
 						Rnp++;
 						break;
-	
+
 					//277. RP_RNa_Rr2_Hr2	--> RP_Rr3_Hr2 + Nnp
 					case 269:
 						RP_RNa_Rr2_Hr2--;
 						RP_Rr3_Hr2++;
 						Nnp++;
 						break;
-	
+
 					//278. RP_RNa_Rr2_Hr2	--> RP_RNa_Rr2_Hr + H2np
 					case 270:
 						RP_RNa_Rr2_Hr2--;
 						RP_RNa_Rr2_Hr++;
 						H2np++;
 						break;
-	
+
 					//279. RP_RNa_Rr2_Hr3	--> RP_RNa_Rr_Hr3 + Rnp
 					case 271:
 						RP_RNa_Rr2_Hr3--;
 						RP_RNa_Rr_Hr3++;
 						Rnp++;
 						break;
-	
+
 					//280. RP_RNa_Rr2_Hr3	--> RP_Rr3_Hr3 + Nnp
 					case 272:
 						RP_RNa_Rr2_Hr3--;
 						RP_Rr3_Hr3++;
 						Nnp++;
 						break;
-	
+
 					//281. RP_RNa_Rr2_Hr3	--> RP_RNa_Rr2_Hr2 + H2np
 					case 273:
 						RP_RNa_Rr2_Hr3--;
 						RP_RNa_Rr2_Hr2++;
 						H2np++;
 						break;
-	
+
 					//282. RP_RNa2			--> RP_RNa_Rr + Nnp
 					case 274:
 						RP_RNa2--;
 						RP_RNa_Rr++;
 						Nnp++;
 						break;
-	
+
 					//283. RP_RNa2_Hr		--> RP_RNa_Rr_Hr + Nnp
 					case 275:
 						RP_RNa_Hr--;
 						RP_RNa_Rr_Hr++;
 						Nnp++;
 						break;
-	
+
 					//284. RP_RNa2_Hr		--> RP_RNa2 + H2np
 					case 276:
 						RP_RNa2_Hr--;
 						RP_RNa2++;
 						H2np++;
 						break;
-	
+
 					//285. RP_RNa2_Hr2		--> RP_RNa_Rr_Hr2 + Nnp
 					case 277:
 						RP_RNa2_Hr2--;
 						RP_RNa_Rr_Hr2++;
 						Nnp++;
 						break;
-	
+
 					//286. RP_RNa2_Hr2		--> RP_RNa2_Hr + H2np
 					case 278:
 						RP_RNa2_Hr2--;
 						RP_RNa2_Hr++;
 						H2np++;
 						break;
-	
+
 					//287. RP_RNa2_Hr3		--> RP_RNa_Rr_Hr3 + Nnp
 					case 279:
 						RP_RNa2_Hr3--;
 						RP_RNa_Rr_Hr3++;
 						Nnp++;
 						break;
-	
+
 					//288. RP_RNa2_Hr3		--> RP_RNa2_Hr2 + H2np
 					case 280:
 						RP_RNa2_Hr3--;
 						RP_RNa2_Hr2++;
 						H2np++;
 						break;
-	
+
 					//289. RP_RNa2_Rr 		--> RP_RNa2 + Rnp
 					case 281:
 						RP_RNa2_Rr--;
 						RP_RNa2++;
 						Rnp++;
 						break;
-	
+
 					//290. RP_RNa2_Rr 		--> RP_RNa_Rr2 + Nnp
 					case 282:
 						RP_RNa2_Rr--;
 						RP_RNa_Rr2++;
 						Nnp++;
 						break;
-	
+
 					//291. RP_RNa2_Rr_Hr 	--> RP_RNa2_Hr + Rnp
 					case 283:
 						RP_RNa2_Rr_Hr--;
 						RP_RNa2_Hr++;
 						Rnp++;
 						break;
-	
+
 					//292. RP_RNa2_Rr_Hr 	--> RP_RNa_Rr2_Hr + Nnp
 					case 284:
 						RP_RNa2_Rr_Hr--;
 						RP_RNa_Rr2_Hr++;
 						Nnp++;
 						break;
-	
+
 					//293. RP_RNa2_Rr_Hr 	--> RP_RNa2_Rr + H2np
 					case 285:
 						RP_RNa2_Rr_Hr--;
 						RP_RNa2_Rr++;
 						H2np++;
 						break;
-	
+
 					//294. RP_RNa2_Rr_Hr2	--> RP_RNa2_Hr + Rnp
 					case 286:
 						RP_RNa2_Rr_Hr2--;
 						RP_RNa2_Hr++;
 						Rnp++;
 						break;
-	
+
 					//295. RP_RNa2_Rr_Hr2	--> RP_RNa_Rr2_Hr2 + Nnp
 					case 287:
 						RP_RNa2_Rr_Hr2--;
 						RP_RNa_Rr2_Hr2++;
 						Nnp++;
 						break;
-	
+
 					//296. RP_RNa2_Rr_Hr2	--> RP_RNa2_Rr_Hr + H2np
 					case 288:
 						RP_RNa2_Rr_Hr2--;
 						RP_RNa2_Rr_Hr++;
 						H2np++;
 						break;
-	
+
 					//297. RP_RNa2_Rr_Hr3 	--> RP_RNa2_Hr3 + Rnp
 					case 289:
 						RP_RNa2_Rr_Hr3--;
 						RP_RNa2_Hr3++;
 						Rnp++;
 						break;
-	
+
 					//298. RP_RNa2_Rr_Hr3 	--> RP_RNa_Rr2_Hr3 + Nnp
 					case 290:
 						RP_RNa2_Rr_Hr3--;
 						RP_RNa_Rr2_Hr3++;
 						Nnp++;
 						break;
-	
+
 					//299. RP_RNa2_Rr_Hr3 	--> RP_RNa2_Rr_Hr2 + H2np
 					case 291:
 						RP_RNa2_Rr_Hr3--;
 						RP_RNa2_Rr_Hr2++;
 						H2np++;
 						break;
-	
+
 					//300. RP_RNa3 			--> RP_RNa2_Rr + Nnp
 					case 292:
 						RP_RNa3--;
 						RP_RNa2_Rr++;
 						Nnp++;
 						break;
-	
+
 					//301. RP_RNa3_Hr 		--> RP_RNa2_Rr_Hr + Nnp
 					case 293:
 						RP_RNa3_Hr--;
 						RP_RNa2_Rr_Hr++;
 						Nnp++;
 						break;
-	
+
 					//302. RP_RNa3_Hr 		--> RP_RNa3 + H2np
 					case 294:
 						RP_RNa3_Hr--;
 						RP_RNa3++;
 						H2np++;
 						break;
-	
+
 					//303. RP_RNa3_Hr2 		--> RP_RNa2_Rr_Hr2 + Nnp
 					case 295:
 						RP_RNa3_Hr2--;
 						RP_RNa2_Rr_Hr2++;
 						Nnp++;
 						break;
-	
+
 					//304. RP_RNa3_Hr2 		--> RP_RNa3_Hr + H2np
 					case 296:
 						RP_RNa3_Hr2--;
 						RP_RNa3_Hr++;
 						H2np++;
 						break;
-	
+
 					//305. RP_RNa3_Hr3 		--> RP_RNa2_Rr_Hr3 + Nnp
 					case 297:
 						RP_RNa3_Hr3--;
 						RP_RNa2_Rr_Hr3++;
 						Nnp++;
 						break;
-	
+
 					//306. RP_RNa3_Hr3 		--> RP_RNa3_Hr2 + H2np
 					case 298:
 						RP_RNa3_Hr3--;
 						RP_RNa3_Hr2++;
 						H2np++;
 						break;
-	
+
 				}
 			}
-		
+
 			if(t>tp) {
 				cout<<tp<<"\t"<<Rcm<<"\t"<<Hcm<<"\t"<<Nm<<"\t"<<Rnp<<"\t"<<Hnp<<"\t"<<Np<<"\t"<<Hnp<<"\t"<<endl;
 				tp++;
 			}
-			
+
 			//delta pulse at t=750
 			if(t>750 && t<760) {
 				delta=10000;
 			}
 		}
-	
-		
-		
-		
+
+
+
+
 	/*	for(i=0;i<species;i++){
 			cout<<"\t"<<X[i];
 		}
 				cout<<endl;
 		*/
 		//cout<<n<<endl;
-	
+
 	}
 
 	return 0;
 
 }
-
-
