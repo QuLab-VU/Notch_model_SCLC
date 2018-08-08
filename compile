@@ -1,0 +1,2 @@
+#!/bin/bash
+g++ notch_stochastic_model.cpp -o bin/notch_stochastic_model
