@@ -641,8 +641,8 @@ generate_equations(model, verbose=True)
 # print len([rxn for rxn in model.reactions if rxn['rule'][0] == 'dNotch_pRBPJ_bind_NICD_1' or rxn['rule'][0] == 'dNotch_pRBPJ_bind_NICD_2'])
 
 print
-print len(model.rules)
-print len(model.reactions)
+print(len(model.rules))
+print(len(model.reactions))
 
 # print 
 # for rxn in model.reactions:
