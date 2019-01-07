@@ -83,18 +83,18 @@ Parameter('Delta_0', 0)
 # Parameter('NICD_cyt_0', 0)
 # Parameter('NICD_nuc_0', 0)
 # get rid of ?? Parameter('NMD_0', fill)
-Parameter('mHes1_0', 1) 			# Hcm=1;			//3.64x10^(-12)
+Parameter('mHes1_0', 1) 		# Hcm=1;		//3.64x10^(-12)
 Parameter('pHes1_cyt_0', 35) 	# Hcp=35;		//1.25*10^(-10)
 Parameter('pHes1_nuc_0', 109) 	# Hnp=109;		//2.77*10^(-9)
-Parameter('dimHes1_nuc_0', 101) 	# H2np=101;		//2.5662*10^(-9)
-Parameter('mRBPJ_0', 1) 			# Rcm=1;			//1.2*10^(-12)
+Parameter('dimHes1_nuc_0', 101) # H2np=101;		//2.5662*10^(-9)
+Parameter('mRBPJ_0', 1) 		# Rcm=1;		//1.2*10^(-12)
 Parameter('pRBPJ_cyt_0', 11) 	# Rcp=11;		//3.74*10^(-11)
 Parameter('pRBPJ_nuc_0', 447) 	# Rnp=447;		//1.13*10^(-8)
-Parameter('mNotch_0', 70) 		# Nm=70;			//2.51*10^(-10)	//Notch mRNA
-Parameter('pNotch_0', 8130) 		#??# Np=8130;	//2.95*10^(-8)	//Notch protein in the cytoplasm
-Parameter('dNotch_0', 2) 		# NP_free=2;		//Notch promoter (diploid so start with 2 free promoter regions)
-Parameter('dHes1_0', 2) 			# HP_free=2;		//Hes1 promoter (diploid so start with 2 free promoter regions)
-Parameter('dRBPJ_0', 2) 			# RP_free=2;		//RPJK promoter (diploid so start with 2 free promoter regions)
+Parameter('mNotch_0', 70) 		# Nm=70;		//2.51*10^(-10)	//Notch mRNA
+Parameter('pNotch_0', 8130) 	#??# Np=8130;	//2.95*10^(-8)	//Notch protein in the cytoplasm
+Parameter('dNotch_0', 2) 		# NP_free=2;	//Notch promoter (diploid so start with 2 free promoter regions)
+Parameter('dHes1_0', 2) 		# HP_free=2;	//Hes1 promoter (diploid so start with 2 free promoter regions)
+Parameter('dRBPJ_0', 2) 		# RP_free=2;	//RPJK promoter (diploid so start with 2 free promoter regions)
 
 #How much should I specify in the initials ??
 #do i put location or no ??
@@ -210,8 +210,8 @@ Rule('mHes1_transcription',  None >> mHes1(),  Parameter('kHtr', 1))
 
 # //Translation channels (delay these if they occur in delay model)
 # a[3]=c[3]*Nm;		//4. Nm --> Np		3.KtrN
-# a[4]=c[4]*Rcm;		//5. Rcm --> Rcp		4.KtrRc
-# a[5]=c[5]*Hcm;		//6. Hcm --> Hcp		5.KtrHc
+# a[4]=c[4]*Rcm;	//5. Rcm --> Rcp		4.KtrRc
+# a[5]=c[5]*Hcm;	//6. Hcm --> Hcp		5.KtrHc
 
 Rule('mNotch_translation', mNotch() >> mNotch() + pNotch() , KtrN)
 Rule('mRBPJ_translation', mRBPJ() >> mRBPJ() + pRBPJ(nicd=None, Rbox=None, loc='cyt'), KtrRc)
@@ -270,18 +270,18 @@ Rule('RBPJ_nuclear_transport', pRBPJ(nicd=None, Rbox=None, loc='cyt') >> pRBPJ(n
 Rule('Hes1_nuclear_transport', pHes1(pHes1=None, Hbox=None, loc='cyt') >> pHes1(pHes1=None, Hbox=None, loc='nuc'), KniHcp)
 
 # //Notch Promoter binding / unbinding (18*2 reactions)
-# a[23]=c[22]*2*NP_free*Rnp;		//24. NP_free      + Rnp  --> NP_Rr
-# a[27]=c[22]*NP_Rr*Rnp;			//28. NP_Rr        + Rnp  --> NP_Rr2
+# a[23]=c[22]*2*NP_free*Rnp;	//24. NP_free      + Rnp  --> NP_Rr
+# a[27]=c[22]*NP_Rr*Rnp;		//28. NP_Rr        + Rnp  --> NP_Rr2
 # a[28]=c[22]*2*NP_Hr*Rnp;		//29. NP_Hr        + Rnp  --> NP_Rr_Hr
 # a[29]=c[22]*NP_Rr_Hr*Rnp;		//30. NP_Rr_Hr     + Rnp  --> NP_Rr2_Hr
 # a[31]=c[22]*NP_RNa*Rnp;		//32. NP_RNa       + Rnp  --> NP_RNa_Rr
-# a[36]=c[22]*NP_RNa_Hr*Rnp;		//37. NP_RNa_Hr    + Rnp  --> NP_RNa_Rr_Hr
+# a[36]=c[22]*NP_RNa_Hr*Rnp;	//37. NP_RNa_Hr    + Rnp  --> NP_RNa_Rr_Hr
 #
-# a[41]=c[23]*NP_Rr;				//42. NP_Rr        --> NP_free      + Rnp
+# a[41]=c[23]*NP_Rr;			//42. NP_Rr        --> NP_free      + Rnp
 # a[45]=c[25]*2*NP_Rr2;			//46. NP_Rr2       --> NP_Rr        + Rnp
 # a[49]=c[25]*NP_Rr_Hr;			//50. NP_Rr_Hr     --> NP_Hr        + Rnp
 # a[55]=c[25]*2*NP_Rr2_Hr;		//56. NP_Rr2_Hr    --> NP_Rr_Hr     + Rnp
-# a[43]=c[25]*NP_RNa_Rr;			//44. NP_RNa_Rr    --> NP_RNa       + Rnp
+# a[43]=c[25]*NP_RNa_Rr;		//44. NP_RNa_Rr    --> NP_RNa       + Rnp
 # a[52]=c[25]*NP_RNa_Rr_Hr;		//53. NP_RNa_Rr_Hr --> NP_RNa_Hr    + Rnp
 
 Rule('dNotch_bind_Rbox1', dNotch(Rbox1=None) + pRBPJ(nicd=None, Rbox=None, loc='nuc') |
@@ -297,26 +297,26 @@ Rule('dNotch_bind_Rbox2', dNotch(Rbox2=None) + pRBPJ(nicd=None, Rbox=None, loc='
 # a[38]=c[24]*NP_RNa_Rr*H2np;	//39. NP_RNa_Rr    + H2np --> NP_RNa_Rr_Hr
 # a[40]=c[24]*NP_RNa2*H2np;		//41. NP_RNa2      + H2np --> NP_RNa2_Hr
 #
-# a[47]=c[23]*NP_Hr;				//48. NP_Hr        --> NP_free      + H2np
+# a[47]=c[23]*NP_Hr;			//48. NP_Hr        --> NP_free      + H2np
 # a[48]=c[25]*NP_Rr_Hr;			//49. NP_Rr_Hr     --> NP_Rr        + H2np
-# a[51]=c[25]*NP_RNa_Hr;			//52. NP_RNa_Hr    --> NP_RNa       + H2np
-# a[56]=c[25]*NP_Rr2_Hr;			//57. NP_Rr2_Hr    --> NP_Rr2       + H2np
+# a[51]=c[25]*NP_RNa_Hr;		//52. NP_RNa_Hr    --> NP_RNa       + H2np
+# a[56]=c[25]*NP_Rr2_Hr;		//57. NP_Rr2_Hr    --> NP_Rr2       + H2np
 # a[54]=c[25]*NP_RNa_Rr_Hr;		//55. NP_RNa_Rr_Hr --> NP_RNa_Rr    + H2np
 # a[58]=c[25]*NP_RNa2_Hr;		//59. NP_RNa2_Hr   --> NP_RNa2      + H2np
 
 Rule('dNotch_bind_Hes1_dimer', dNotch(Hbox=None) + pHes1(pHes1=1, Hbox=None, loc='nuc') % pHes1(pHes1=1, Hbox=None, loc='nuc') |
 	dNotch(Hbox=[2,3]) % pHes1(pHes1=1, Hbox=2, loc='nuc') % pHes1(pHes1=1, Hbox=3, loc='nuc'), Kn,Kn_r)
 
-# a[26]=c[26]*NP_Rr*Nnp;			//27. NP_Rr        + Nnp  --> NP_RNa
+# a[26]=c[26]*NP_Rr*Nnp;		//27. NP_Rr        + Nnp  --> NP_RNa
 # a[30]=c[26]*NP_Rr_Hr*Nnp;		//31. NP_Rr_Hr     + Nnp  --> NP_RNa_Hr
 # a[33]=c[26]*2*NP_Rr2*Nnp;		//34. NP_Rr2       + Nnp  --> NP_RNa_Rr
 # a[35]=c[26]*2*NP_Rr2_Hr*Nnp;	//36. NP_Rr2_Hr    + Nnp  --> NP_RNA_Rr_Hr
-# a[37]=c[26]*NP_RNa_Rr*Nnp;		//38. NP_RNa_Rr    + Nnp  --> NP_RNa2
+# a[37]=c[26]*NP_RNa_Rr*Nnp;	//38. NP_RNa_Rr    + Nnp  --> NP_RNa2
 # a[39]=c[26]*NP_RNa_Rr_Hr*Nnp;	//40. NP_RNa_Rr_Hr + Nnp  --> NP_RNa2_Hr
 #
 # a[42]=c[25]*NP_RNa;			//43. NP_RNa       --> NP_Rr        + Nnp
-# a[50]=c[25]*NP_RNa_Hr;			//51. NP_RNa_Hr    --> NP_Rr_Hr     + Nnp
-# a[44]=c[25]*NP_RNa_Rr;			//45. NP_RNa_Rr    --> NP_Rr2       + Nnp
+# a[50]=c[25]*NP_RNa_Hr;		//51. NP_RNa_Hr    --> NP_Rr_Hr     + Nnp
+# a[44]=c[25]*NP_RNa_Rr;		//45. NP_RNa_Rr    --> NP_Rr2       + Nnp
 # a[53]=c[25]*NP_RNa_Rr_Hr;		//54. NP_RNa_Rr_Hr --> NP_Rr2_Hr    + Nnp
 # a[46]=c[25]*NP_RNa2;			//47. NP_RNa2      --> NP_RNa_Rr    + Nnp
 # a[57]=c[25]*2*NP_RNa2_Hr;		//58. NP_RNa2_Hr   --> NP_RNa_Rr_Hr + Nnp
@@ -328,28 +328,28 @@ Rule('dNotch_pRBPJ_bind_NICD_2', dNotch(Rbox2=1) % pRBPJ(nicd=None, Rbox=1, loc=
 	dNotch(Rbox2=1) % pRBPJ(nicd=2, Rbox=1, loc='nuc') % NICD(rbpj=2, loc='nuc'), Ka,Ka_r)
 
 # // Hes1 promoter binding / unbinding
-# a[59]=c[22]*2*HP_free*Rnp;			//60. HP_free       + Rnp  --> HP_Rr
+# a[59]=c[22]*2*HP_free*Rnp;		//60. HP_free       + Rnp  --> HP_Rr
 # a[61]=c[22]*2*HP_Hr*Rnp;			//62. HP_Hr         + Rnp  --> HP_Rr_Hr
 # a[63]=c[22]*2*HP_Hr2*Rnp;			//64. HP_Hr2        + Rnp  --> HP_Rr_Hr2
 # a[65]=c[22]*2*HP_Hr3*Rnp;			//66. HP_Hr3        + Rnp  --> HP_Rr_Hr3
-# a[66]=c[22]*HP_Rr*Rnp;				//67. HP_Rr         + Rnp  --> HP_Rr2
+# a[66]=c[22]*HP_Rr*Rnp;			//67. HP_Rr         + Rnp  --> HP_Rr2
 # a[69]=c[22]*HP_Rr_Hr*Rnp;			//70. HP_Rr_Hr      + Rnp  --> HP_Rr2_Hr
-# a[72]=c[22]*HP_Rr_Hr2*Rnp;			//73. HP_Rr_Hr2     + Rnp  --> HP_Rr2_Hr2
-# a[75]=c[22]*HP_Rr_Hr3*Rnp;			//76. HP_Rr_Hr3     + Rnp  --> HP_Rr2_Hr3
+# a[72]=c[22]*HP_Rr_Hr2*Rnp;		//73. HP_Rr_Hr2     + Rnp  --> HP_Rr2_Hr2
+# a[75]=c[22]*HP_Rr_Hr3*Rnp;		//76. HP_Rr_Hr3     + Rnp  --> HP_Rr2_Hr3
 # a[77]=c[22]*HP_RNa*Rnp;			//78. HP_RNa        + Rnp  --> HP_RNa_Rr
-# a[79]=c[22]*HP_RNa_Hr*Rnp;			//80. HP_RNa_Hr     + Rnp  --> HP_RNa_Rr_Hr
+# a[79]=c[22]*HP_RNa_Hr*Rnp;		//80. HP_RNa_Hr     + Rnp  --> HP_RNa_Rr_Hr
 # a[81]=c[22]*HP_RNa_Hr2*Rnp;		//82. HP_RNa_Hr2    + Rnp  --> HP_RNa_Rr_Hr2
 # a[83]=c[22]*HP_RNa_Hr3*Rnp;		//84. HP_RNa_Hr3    + Rnp  --> HP_RNa_Rr_Hr3
 #
 # a[104]=c[23]*HP_Rr;				//112. HP_Rr         --> HP_free       + Rnp
-# a[105]=c[25]*HP_Rr_Hr;				//113. HP_Rr_Hr      --> HP_Hr         + Rnp
+# a[105]=c[25]*HP_Rr_Hr;			//113. HP_Rr_Hr      --> HP_Hr         + Rnp
 # a[107]=c[25]*HP_Rr_Hr2;			//115. HP_Rr_Hr2     --> HP_Hr2        + Rnp
 # a[109]=c[25]*HP_Rr_Hr3;			//117. HP_Rr_Hr3     --> HP_Hr3        + Rnp
 # a[118]=c[25]*HP_RNa_Rr;			//126. HP_RNa_Rr     --> HP_RNa        + Rnp
-# a[120]=c[25]*HP_RNa_Rr_Hr;			//128. HP_RNa_Rr_Hr  --> HP_RNa_Hr     + Rnp
+# a[120]=c[25]*HP_RNa_Rr_Hr;		//128. HP_RNa_Rr_Hr  --> HP_RNa_Hr     + Rnp
 # a[123]=c[25]*HP_RNa_Rr_Hr2;		//131. HP_RNa_Rr_Hr2 --> HP_RNa_Hr2    + Rnp
 # a[126]=c[25]*HP_RNa_Rr_Hr3;		//134. HP_RNa_Rr_Hr3 --> HP_RNa_Hr3    + Rnp
-# a[129]=c[25]*2*HP_Rr2;				//137. HP_Rr2        --> HP_Rr         + Rnp
+# a[129]=c[25]*2*HP_Rr2;			//137. HP_Rr2        --> HP_Rr         + Rnp
 # a[130]=c[25]*HP_Rr2_Hr;			//138. HP_Rr2_Hr     --> HP_Rr_Hr      + Rnp
 # a[132]=c[25]*HP_Rr2_Hr2;			//140. HP_Rr2_Hr2    --> HP_Rr_Hr2     + Rnp
 # a[134]=c[25]*HP_Rr2_Hr3;			//142. HP_Rr2_Hr3    --> HP_Rr_Hr3     + Rnp
@@ -366,34 +366,34 @@ Rule('dHes1_bind_Rbox2', dHes1(Rbox2=None) + pRBPJ(nicd=None, Rbox=None, loc='nu
 # a[68]=c[24]*3*HP_Rr*H2np;			//69. HP_Rr         + H2np --> HP_Rr_Hr
 # a[71]=c[24]*2*HP_Rr_Hr*H2np;		//72. HP_Rr_Hr      + H2np --> HP_Rr_Hr2
 # a[74]=c[24]*HP_Rr_Hr2*H2np;		//75. HP_Rr_Hr2     + H2np --> HP_Rr_Hr3
-# a[78]=c[24]*3*HP_RNa*H2np;			//79. HP_RNa        + H2np --> HP_RNa_Hr
+# a[78]=c[24]*3*HP_RNa*H2np;		//79. HP_RNa        + H2np --> HP_RNa_Hr
 # a[80]=c[24]*2*HP_RNa_Hr*H2np;		//81. HP_RNa_Hr     + H2np --> HP_RNa_Hr2
 # a[82]=c[24]*HP_RNa_Hr2*H2np;		//83. HP_RNa_Hr2    + H2np --> HP_RNa_Hr3
 # a[85]=c[24]*3*HP_RNa_Rr*H2np;		//86. HP_RNa_Rr     + H2np --> HP_RNa_Rr_Hr
 # a[87]=c[24]*2*HP_RNa_Rr_Hr*H2np;	//89. HP_RNa_Rr_Hr  + H2np --> HP_RNa_Rr_Hr2
 # a[89]=c[24]*HP_RNa_Rr_Hr2*H2np;	//92. HP_RNa_Rr_Hr2 + H2np --> HP_RNa_Rr_Hr3
-# a[92]=c[24]*3*HP_Rr2*H2np;			//97. HP_Rr2        + H2np --> HP_Rr2_Hr
+# a[92]=c[24]*3*HP_Rr2*H2np;		//97. HP_Rr2        + H2np --> HP_Rr2_Hr
 # a[94]=c[24]*2*HP_Rr2_Hr*H2np;		//100. HP_Rr2_Hr     + H2np --> HP_Rr2_Hr2
 # a[96]=c[24]*HP_Rr2_Hr2*H2np;		//103. HP_Rr2_Hr2    + H2np --> HP_Rr2_Hr3
 # a[98]=c[24]*3*HP_RNa2*H2np;		//106. HP_RNa2       + H2np --> HP_RNa2_Hr
-# a[99]=c[24]*2*HP_RNa2_Hr*H2np;		//107. HP_RNa2_Hr    + H2np --> HP_RNa2_Hr2
-# a[100]=c[24]*HP_RNa2_Hr2*H2np;		//108. HP_RNa2_Hr2   + H2np --> HP_RNa2_Hr3
+# a[99]=c[24]*2*HP_RNa2_Hr*H2np;	//107. HP_RNa2_Hr    + H2np --> HP_RNa2_Hr2
+# a[100]=c[24]*HP_RNa2_Hr2*H2np;	//108. HP_RNa2_Hr2   + H2np --> HP_RNa2_Hr3
 #
 # a[101]=c[23]*HP_Hr;				//109. HP_Hr         --> HP_free       + H2np
-# a[102]=c[25]*2*HP_Hr2;				//110. HP_Hr2        --> HP_Hr         + H2np
-# a[103]=c[25]*3*HP_Hr3;				//111. HP_Hr3        --> HP_Hr2        + H2np
-# a[106]=c[25]*HP_Rr_Hr;				//114. HP_Rr_Hr      --> HP_Rr         + H2np
+# a[102]=c[25]*2*HP_Hr2;			//110. HP_Hr2        --> HP_Hr         + H2np
+# a[103]=c[25]*3*HP_Hr3;			//111. HP_Hr3        --> HP_Hr2        + H2np
+# a[106]=c[25]*HP_Rr_Hr;			//114. HP_Rr_Hr      --> HP_Rr         + H2np
 # a[108]=c[25]*2*HP_Rr_Hr2;			//116. HP_Rr_Hr2     --> HP_Rr_Hr      + H2np
 # a[110]=c[25]*3*HP_Rr_Hr3;			//118. HP_Rr_Hr3     --> HP_Rr_Hr2     + H2np
 # a[113]=c[25]*HP_RNa_Hr;			//121. HP_RNa_Hr     --> HP_RNa        + H2np
-# a[115]=c[25]*2*HP_RNa_Hr2;			//123. HP_RNa_Hr2    --> HP_RNa_Hr     + H2np
-# a[117]=c[25]*3*HP_RNa_Hr3;			//125. HP_RNa_Hr3    --> HP_RNa_Hr2    + H2np
-# a[122]=c[25]*HP_RNa_Rr_Hr;			//130. HP_RNa_Rr_Hr  --> HP_RNa_Rr     + H2np
+# a[115]=c[25]*2*HP_RNa_Hr2;		//123. HP_RNa_Hr2    --> HP_RNa_Hr     + H2np
+# a[117]=c[25]*3*HP_RNa_Hr3;		//125. HP_RNa_Hr3    --> HP_RNa_Hr2    + H2np
+# a[122]=c[25]*HP_RNa_Rr_Hr;		//130. HP_RNa_Rr_Hr  --> HP_RNa_Rr     + H2np
 # a[125]=c[25]*2*HP_RNa_Rr_Hr2;		//133. HP_RNa_Rr_Hr2 --> HP_RNa_Rr_Hr  + H2np
 # a[128]=c[25]*3*HP_RNa_Rr_Hr3;		//136. HP_RNa_Rr_Hr3 --> HP_RNa_Rr_Hr2 + H2np
 # a[131]=c[25]*HP_Rr2_Hr;			//139. HP_Rr2_Hr     --> HP_Rr2        + H2np
-# a[133]=c[25]*2*HP_Rr2_Hr2;			//141. HP_Rr2_Hr2    --> HP_Rr2_Hr     + H2np
-# a[135]=c[25]*3*HP_Rr2_Hr3;			//143. HP_Rr2_Hr3    --> HP_Rr2_Hr2    + H2np
+# a[133]=c[25]*2*HP_Rr2_Hr2;		//141. HP_Rr2_Hr2    --> HP_Rr2_Hr     + H2np
+# a[135]=c[25]*3*HP_Rr2_Hr3;		//143. HP_Rr2_Hr3    --> HP_Rr2_Hr2    + H2np
 # a[138]=c[25]*HP_RNa2_Hr;			//146. HP_RNa2_Hr    --> HP_RNa2       + H2np
 # a[140]=c[25]*2*HP_RNa2_Hr2;		//148. HP_RNa2_Hr2   --> HP_RNa2_Hr    + H2np
 # a[142]=c[25]*3*HP_RNa2_Hr3;		//150. HP_RNa2_Hr3   --> HP_RNa2_Hr2   + H2np
@@ -407,14 +407,14 @@ Rule('dHes1_bind_Hes1_dimer_2', dHes1(Hbox2=None) + pHes1(pHes1=1, Hbox=None, lo
 Rule('dHes1_bind_Hes1_dimer_3', dHes1(Hbox3=None) + pHes1(pHes1=1, Hbox=None, loc='nuc') % pHes1(pHes1=1, Hbox=None, loc='nuc') |
 	dHes1(Hbox3=[2,3]) % pHes1(pHes1=1, Hbox=2, loc='nuc') % pHes1(pHes1=1, Hbox=3, loc='nuc'), Kn,Kn_r)
 
-# a[67]=c[22]*HP_Rr*Nnp;				//68. HP_Rr         + Nnp  --> HP_RNa
+# a[67]=c[22]*HP_Rr*Nnp;			//68. HP_Rr         + Nnp  --> HP_RNa
 # a[70]=c[26]*HP_Rr_Hr*Nnp;			//71. HP_Rr_Hr      + Nnp  --> HP_RNa_Hr
-# a[73]=c[26]*HP_Rr_Hr2*Nnp;			//74. HP_Rr_Hr2     + Nnp  --> HP_RNa_Hr2
-# a[76]=c[26]*HP_Rr_Hr3*Nnp;			//77. HP_Rr_Hr3     + Nnp  --> HP_RNa_Hr3
-# a[84]=c[26]*HP_RNa_Rr*Nnp;			//85. HP_RNa_Rr     + Nnp  --> HP_RNa2
+# a[73]=c[26]*HP_Rr_Hr2*Nnp;		//74. HP_Rr_Hr2     + Nnp  --> HP_RNa_Hr2
+# a[76]=c[26]*HP_Rr_Hr3*Nnp;		//77. HP_Rr_Hr3     + Nnp  --> HP_RNa_Hr3
+# a[84]=c[26]*HP_RNa_Rr*Nnp;		//85. HP_RNa_Rr     + Nnp  --> HP_RNa2
 # a[86]=c[26]*HP_RNa_Rr_Hr*Nnp;		//88. HP_RNa_Rr_Hr  + Nnp  --> HP_RNa2_Hr
-# a[88]=c[26]*HP_RNa_Rr_Hr2*Nnp;		//91. HP_RNa_Rr_Hr2 + Nnp  --> HP_RNa2_Hr2
-# a[90]=c[26]*HP_RNa_Rr_Hr3*Nnp;		//94. HP_RNa_Rr_Hr3 + Nnp  --> HP_RNa2_Hr3
+# a[88]=c[26]*HP_RNa_Rr_Hr2*Nnp;	//91. HP_RNa_Rr_Hr2 + Nnp  --> HP_RNa2_Hr2
+# a[90]=c[26]*HP_RNa_Rr_Hr3*Nnp;	//94. HP_RNa_Rr_Hr3 + Nnp  --> HP_RNa2_Hr3
 # a[91]=c[26]*2*HP_Rr2*Nnp;			//96. HP_Rr2        + Nnp  --> HP_RNa_Rr
 # a[93]=c[26]*2*HP_Rr2_Hr*Nnp;		//99. HP_Rr2_Hr     + Nnp  --> HP_RNa_Rr_Hr
 # a[95]=c[26]*2*HP_Rr2_Hr2*Nnp;		//102. HP_Rr2_Hr2    + Nnp  --> HP_RNa_Rr_Hr2
@@ -425,11 +425,11 @@ Rule('dHes1_bind_Hes1_dimer_3', dHes1(Hbox3=None) + pHes1(pHes1=1, Hbox=None, lo
 # a[114]=c[25]*HP_RNa_Hr2;			//122. HP_RNa_Hr2    --> HP_Rr_Hr2     + Nnp
 # a[116]=c[25]*HP_RNa_Hr3;			//124. HP_RNa_Hr3    --> HP_Rr_Hr3     + Nnp
 # a[119]=c[25]*HP_RNa_Rr;			//127. HP_RNa_Rr     --> HP_Rr2        + Nnp
-# a[121]=c[25]*HP_RNa_Rr_Hr;			//129. HP_RNa_Rr_Hr  --> HP_Rr2_Hr     + Nnp
+# a[121]=c[25]*HP_RNa_Rr_Hr;		//129. HP_RNa_Rr_Hr  --> HP_Rr2_Hr     + Nnp
 # a[124]=c[25]*HP_RNa_Rr_Hr2;		//132. HP_RNa_Rr_Hr2 --> HP_Rr2_Hr2    + Nnp
 # a[127]=c[25]*HP_RNa_Rr_Hr3;		//135. HP_RNa_Rr_Hr3 --> HP_Rr2_Hr3    + Nnp
 # a[136]=c[25]*2*HP_RNa2;			//144. HP_RNa2       --> HP_RNa_Rr     + Nnp
-# a[137]=c[25]*2*HP_RNa2_Hr;			//145. HP_RNa2_Hr    --> HP_RNa_Rr_Hr  + Nnp
+# a[137]=c[25]*2*HP_RNa2_Hr;		//145. HP_RNa2_Hr    --> HP_RNa_Rr_Hr  + Nnp
 # a[139]=c[25]*2*HP_RNa2_Hr2;		//147. HP_RNa2_Hr2   --> HP_RNa_Rr_Hr2 + Nnp
 # a[141]=c[25]*2*HP_RNa2_Hr3;		//149. HP_RNa2_Hr3   --> HP_RNa_Rr_Hr3 + Nnp
 
@@ -442,22 +442,22 @@ Rule('dHes1_pRBPJ_bind_NICD_2', dHes1(Rbox2=1) % pRBPJ(nicd=None, Rbox=1, loc='n
 # //CBF1 promoter binding / unbinding
 # a[143]=c[22]*3*RP_free*Rnp;		//151. RP_free + Rnp         --> RP_Rr
 # a[145]=c[22]*3*RP_Hr*Rnp;			//153. RP_Hr + Rnp           --> RP_Rr_Hr
-# a[147]=c[22]*3*RP_Hr2*Rnp;			//155. RP_Hr2 + Rnp          --> RP_Rr_Hr2
-# a[149]=c[22]*3*RP_Hr3*Rnp;			//157. RP_Hr3 + Rnp          --> RP_Rr_Hr3
+# a[147]=c[22]*3*RP_Hr2*Rnp;		//155. RP_Hr2 + Rnp          --> RP_Rr_Hr2
+# a[149]=c[22]*3*RP_Hr3*Rnp;		//157. RP_Hr3 + Rnp          --> RP_Rr_Hr3
 # a[150]=c[22]*2*RP_Rr*Rnp;			//158. RP_Rr + Rnp           --> RP_Rr2
 # a[153]=c[22]*2*RP_Rr_Hr*Rnp;		//161. RP_Rr_Hr + Rnp        --> RP_Rr2_Hr
 # a[156]=c[22]*2*RP_Rr_Hr2*Rnp;		//164. RP_Rr_Hr2 + Rnp       --> RP_Rr2_Hr2
 # a[159]=c[22]*2*RP_Rr_Hr3*Rnp;		//167. RP_Rr_Hr3 + Rnp       --> RP_Rr2_Hr3
-# a[161]=c[22]*2*RP_RNa*Rnp;			//169. RP_RNa + Rnp          --> RP_RNa_Rr
+# a[161]=c[22]*2*RP_RNa*Rnp;		//169. RP_RNa + Rnp          --> RP_RNa_Rr
 # a[163]=c[22]*2*RP_RNa_Hr*Rnp;		//171. RP_RNa_Hr + Rnp       --> RP_RNa_Rr_Hr
-# a[165]=c[22]*2*RP_RNa_Hr2*Rnp;		//173. RP_RNa_Hr2 + Rnp      --> RP_RNa_Rr_Hr2
-# a[167]=c[22]*2*RP_RNa_Hr3*Rnp;		//175. RP_RNa_Hr3 + Rnp      --> RP_RNa_Rr_Hr3
+# a[165]=c[22]*2*RP_RNa_Hr2*Rnp;	//173. RP_RNa_Hr2 + Rnp      --> RP_RNa_Rr_Hr2
+# a[167]=c[22]*2*RP_RNa_Hr3*Rnp;	//175. RP_RNa_Hr3 + Rnp      --> RP_RNa_Rr_Hr3
 # a[168]=c[22]*RP_Rr2*Rnp;			//176. RP_Rr2 + Rnp          --> RP_Rr3
 # a[171]=c[24]*RP_Rr2_Hr*Rnp;		//179. RP_Rr2_Hr + Rnp       --> RP_Rr3_Hr
 # a[174]=c[22]*RP_Rr2_Hr2*Rnp;		//182. RP_Rr2_Hr2 + Rnp      --> RP_Rr3_Hr2
 # a[177]=c[22]*RP_Rr2_Hr3*Rnp;		//185. RP_Rr2_Hr3 + Rnp      --> RP_Rr3_Hr3
 # a[179]=c[22]*RP_RNa_Rr*Rnp;		//187. RP_RNa_Rr + Rnp       --> RP_RNa_Rr2
-# a[182]=c[22]*RP_RNa_Rr_Hr*Rnp;		//190. RP_RNa_Rr_Hr + Rnp    --> RP_Rr2_Hr
+# a[182]=c[22]*RP_RNa_Rr_Hr*Rnp;	//190. RP_RNa_Rr_Hr + Rnp    --> RP_Rr2_Hr
 # a[185]=c[22]*RP_RNa_Rr_Hr2*Rnp;	//193. RP_RNa_Rr_Hr2 + Rnp   --> RP_RNa_Rr2_Hr2
 # a[188]=c[22]*RP_RNa_Rr_Hr3*Rnp;	//196. RP_RNa_Rr_Hr3 + Rnp   --> RP_RNa_Rr2_Hr3
 # a[204]=c[22]*RP_RNa2*Rnp;			//212. RP_RNa2 + Rnp         --> RP_RNa2_Rr
@@ -466,25 +466,25 @@ Rule('dHes1_pRBPJ_bind_NICD_2', dHes1(Rbox2=1) % pRBPJ(nicd=None, Rbox=1, loc='n
 # a[210]=c[22]*RP_RNa2_Hr3*Rnp;		//218. RP_RNa2_Hr3 + Rnp     --> RP_RNa2_Rr_Hr3
 #
 # a[224]=c[23]*RP_Rr;				//232. RP_Rr					--> RP_free + Rnp
-# a[225]=c[25]*RP_Rr_Hr;				//233. RP_Rr_Hr				--> RP_Hr + Rnp
+# a[225]=c[25]*RP_Rr_Hr;			//233. RP_Rr_Hr				--> RP_Hr + Rnp
 # a[227]=c[25]*RP_Rr_Hr2;			//235. RP_Rr_Hr2				--> RP_Hr2 + Rnp
 # a[229]=c[25]*RP_Rr_Hr3;			//237. RP_Rr_Hr3				--> RP_Hr3 + Rnp
-# a[238]=c[25]*2*RP_Rr2;				//246. RP_Rr2				--> RP_Rr + Rnp
+# a[238]=c[25]*2*RP_Rr2;			//246. RP_Rr2				--> RP_Rr + Rnp
 # a[239]=c[25]*2*RP_Rr2_Hr;			//247. RP_Rr2_Hr				--> RP_Rr_Hr + Rnp
-# a[241]=c[25]*2*RP_Rr2_Hr2;			//249. RP_Rr2_Hr2			--> RP_Rr_Hr2 + Rnp
-# a[243]=c[25]*2*RP_Rr2_Hr3;			//251. RP_Rr2_Hr3			--> RP_Rr_Hr3 + Rnp
+# a[241]=c[25]*2*RP_Rr2_Hr2;		//249. RP_Rr2_Hr2			--> RP_Rr_Hr2 + Rnp
+# a[243]=c[25]*2*RP_Rr2_Hr3;		//251. RP_Rr2_Hr3			--> RP_Rr_Hr3 + Rnp
 # a[245]=c[25]*RP_RNa_Rr;			//253. RP_RNa_Rr				--> RP_RNa + Rnp
-# a[247]=c[25]*RP_RNa_Rr_Hr;			//255. RP_RNa_Rr_Hr			--> RP_RNa_Hr + Rnp
+# a[247]=c[25]*RP_RNa_Rr_Hr;		//255. RP_RNa_Rr_Hr			--> RP_RNa_Hr + Rnp
 # a[250]=c[25]*RP_RNa_Rr_Hr2;		//258. RP_RNa_Rr_Hr2			--> RP_RNa_Hr2 + Rnp
 # a[253]=c[25]*RP_RNa_Rr_Hr3;		//261. RP_RNa_Rr_Hr3			--> RP_RNa_Hr3 + Rnp
-# a[256]=c[25]*3*RP_Rr3;				//264. RP_Rr3				--> RP_Rr2 + Rnp
+# a[256]=c[25]*3*RP_Rr3;			//264. RP_Rr3				--> RP_Rr2 + Rnp
 # a[257]=c[25]*3*RP_Rr3_Hr;			//265. RP_Rr3_Hr				--> RP_Rr2_Hr + Rnp
-# a[259]=c[25]*3*RP_Rr3_Hr2;			//267. RP_Rr3_Hr2			--> RP_Rr2_Hr2 + Rnp
-# a[261]=c[25]*3*RP_Rr3_Hr3;			//269. RP_Rr3_Hr3			--> RP_Rr2_Hr3 + Rnp
-# a[263]=c[25]*2*RP_RNa_Rr2;			//271. RP_RNa_Rr2			--> RP_RNa_Rr + Rnp
+# a[259]=c[25]*3*RP_Rr3_Hr2;		//267. RP_Rr3_Hr2			--> RP_Rr2_Hr2 + Rnp
+# a[261]=c[25]*3*RP_Rr3_Hr3;		//269. RP_Rr3_Hr3			--> RP_Rr2_Hr3 + Rnp
+# a[263]=c[25]*2*RP_RNa_Rr2;		//271. RP_RNa_Rr2			--> RP_RNa_Rr + Rnp
 # a[265]=c[25]*2*RP_RNa_Rr2_Hr;		//273. RP_RNa_Rr2_Hr			--> RP_RNa_Rr_Hr + Rnp
-# a[268]=c[25]*2*RP_RNa_Rr2_Hr2;		//276. RP_RNa_Rr2_Hr2		--> RP_RNa_Rr_Hr2 + Rnp
-# a[271]=c[25]*2*RP_RNa_Rr2_Hr3;		//279. RP_RNa_Rr2_Hr3		--> RP_RNa_Rr_Hr3 + Rnp
+# a[268]=c[25]*2*RP_RNa_Rr2_Hr2;	//276. RP_RNa_Rr2_Hr2		--> RP_RNa_Rr_Hr2 + Rnp
+# a[271]=c[25]*2*RP_RNa_Rr2_Hr3;	//279. RP_RNa_Rr2_Hr3		--> RP_RNa_Rr_Hr3 + Rnp
 # a[281]=c[25]*RP_RNa2_Rr;			//289. RP_RNa2_Rr 			--> RP_RNa2 + Rnp
 # a[283]=c[25]*RP_RNa2_Rr_Hr;		//291. RP_RNa2_Rr_Hr 		--> RP_RNa2_Hr + Rnp
 # a[286]=c[25]*RP_RNa2_Rr_Hr2;		//294. RP_RNa2_Rr_Hr2		--> RP_RNa2_Hr + Rnp
@@ -500,63 +500,63 @@ Rule('dRBPJ_bind_Rbox3', dRBPJ(Rbox3=None) + pRBPJ(nicd=None, Rbox=None, loc='nu
 	dRBPJ(Rbox3=1) % pRBPJ(nicd=None, Rbox=1, loc='nuc'), Kr,Kr_r)
 
 # a[144]=c[24]*3*RP_free*H2np;		//152. RP_free + H2np        --> RP_Hr
-# a[146]=c[24]*2*RP_Hr*H2np;			//154. RP_Hr + H2np          --> RP_Hr2
+# a[146]=c[24]*2*RP_Hr*H2np;		//154. RP_Hr + H2np          --> RP_Hr2
 # a[148]=c[24]*RP_Hr2*H2np;			//156. RP_Hr2 + H2np         --> RP_Hr3
-# a[152]=c[24]*3*RP_Rr*H2np;			//160. RP_Rr + H2np          --> RP_Rr_Hr
+# a[152]=c[24]*3*RP_Rr*H2np;		//160. RP_Rr + H2np          --> RP_Rr_Hr
 # a[155]=c[24]*2*RP_Rr_Hr*H2np;		//163. RP_Rr_Hr + H2np       --> RP_Rr_Hr2
 # a[158]=c[24]*RP_Rr_Hr2*H2np;		//166. RP_Rr_Hr2 + H2np      --> RP_Rr_Hr3
 # a[162]=c[24]*3*RP_RNa*H2np;		//170. RP_RNa + H2np         --> RP_RNa_Hr
-# a[164]=c[24]*2*RP_RNa_Hr*H2np;		//172. RP_RNa_Hr + H2np      --> RP_RNa_Hr2
+# a[164]=c[24]*2*RP_RNa_Hr*H2np;	//172. RP_RNa_Hr + H2np      --> RP_RNa_Hr2
 # a[166]=c[24]*RP_RNa_Hr2*H2np;		//174. RP_RNa_Hr2 + H2np     --> RP_RNa_Hr3
 # a[170]=c[24]*3*RP_Rr2*H2np;		//178. RP_Rr2 + H2np         --> RP_Rr2_Hr
-# a[173]=c[24]*2*RP_Rr2_Hr*H2np;		//181. RP_Rr2_Hr + H2np      --> RP_Rr2_Hr2
+# a[173]=c[24]*2*RP_Rr2_Hr*H2np;	//181. RP_Rr2_Hr + H2np      --> RP_Rr2_Hr2
 # a[176]=c[24]*RP_Rr2_Hr2*H2np;		//184. RP_Rr2_Hr2 + H2np     --> RP_Rr2_Hr3
-# a[181]=c[24]*3*RP_RNa_Rr*H2np;		//189. RP_RNa_Rr + H2np      --> RP_RNa_Rr_Hr
+# a[181]=c[24]*3*RP_RNa_Rr*H2np;	//189. RP_RNa_Rr + H2np      --> RP_RNa_Rr_Hr
 # a[184]=c[24]*2*RP_RNa_Rr_Hr*H2np;	//192. RP_RNa_Rr_Hr + H2np   --> RP_RNa_Rr_Hr2
 # a[187]=c[24]*RP_RNa_Rr_Hr2*H2np;	//195. RP_RNa_Rr_Hr2 + H2np  --> RP_RNa_Rr_Hr3
 # a[191]=c[24]*3*RP_Rr3*H2np;		//199. RP_Rr3 + H2np         --> RP_Rr3_Hr
-# a[193]=c[24]*2*RP_Rr3_Hr*H2np;		//201. RP_Rr3_Hr + H2np      --> RP_Rr3_Hr2
+# a[193]=c[24]*2*RP_Rr3_Hr*H2np;	//201. RP_Rr3_Hr + H2np      --> RP_Rr3_Hr2
 # a[195]=c[24]*RP_Rr3_Hr2*H2np;		//203. RP_Rr3_Hr2 + H2np     --> RP_Rr3_Hr3
 # a[198]=c[24]*3*RP_RNa_Rr2*H2np;	//206. RP_RNa_Rr2 + H2np     --> RP_RNa_Rr2_Hr
-# a[200]=c[24]*2*RP_RNa_Rr2_Hr*H2np;	//208. RP_RNa_Rr2_Hr + H2np  --> RP_RNa_Rr2_Hr2
+# a[200]=c[24]*2*RP_RNa_Rr2_Hr*H2np;//208. RP_RNa_Rr2_Hr + H2np  --> RP_RNa_Rr2_Hr2
 # a[202]=c[24]*RP_RNa_Rr2_Hr2*H2np;	//210. RP_RNa_Rr2_Hr2 + H2np --> RP_RNa_Rr2_Hr3
 # a[205]=c[24]*3*RP_RNa2*H2np;		//213. RP_RNa2 + H2np        --> RP_RNa2_Hr
 # a[207]=c[24]*2*RP_RNa2_Hr*H2np;	//215. RP_RNa2_Hr + H2np     --> RP_RNa2_Hr2
-# a[209]=c[24]*RP_RNa2_Hr2*H2np;		//217. RP_RNa2_Hr2 + H2np    --> RP_RNa2_Hr3
+# a[209]=c[24]*RP_RNa2_Hr2*H2np;	//217. RP_RNa2_Hr2 + H2np    --> RP_RNa2_Hr3
 # a[212]=c[24]*3*RP_RNa2_Rr*H2np;	//220. RP_RNa2_Rr + H2np     --> RP_RNa2_Rr_Hr
-# a[214]=c[24]*2*RP_RNa2_Rr_Hr*H2np;	//222. RP_RNa2_Rr_Hr + H2np  --> RP_RNa2_Rr_Hr2
+# a[214]=c[24]*2*RP_RNa2_Rr_Hr*H2np;//222. RP_RNa2_Rr_Hr + H2np  --> RP_RNa2_Rr_Hr2
 # a[216]=c[24]*RP_RNa2_Rr_Hr2*H2np;	//224. RP_RNa2_Rr_Hr2 + H2np --> RP_RNa2_Rr_Hr3
 # a[218]=c[24]*3*RP_RNa3*H2np;		//226. RP_RNa3 + H2np        --> RP_RNa3_Hr
 # a[219]=c[24]*2*RP_RNa3_Hr*H2np;	//227. RP_RNa3_Hr + H2np     --> RP_RNa3_Hr2
-# a[220]=c[24]*RP_RNa3_Hr2*H2np;		//228. RP_RNa3_Hr2 + H2np    --> RP_RNa3_Hr3
+# a[220]=c[24]*RP_RNa3_Hr2*H2np;	//228. RP_RNa3_Hr2 + H2np    --> RP_RNa3_Hr3
 #
 # a[221]=c[23]*RP_Hr;				//229. RP_Hr					--> RP_free + H2np
-# a[222]=c[25]*2*RP_Hr2;				//230. RP_Hr2				--> RP_Hr + H2np
-# a[223]=c[25]*3*RP_Hr3;				//231. RP_Hr3				--> RP_Hr2 + H2np
-# a[226]=c[25]*RP_Rr_Hr;				//234. RP_Rr_Hr				--> RP_Rr + H2np
+# a[222]=c[25]*2*RP_Hr2;			//230. RP_Hr2				--> RP_Hr + H2np
+# a[223]=c[25]*3*RP_Hr3;			//231. RP_Hr3				--> RP_Hr2 + H2np
+# a[226]=c[25]*RP_Rr_Hr;			//234. RP_Rr_Hr				--> RP_Rr + H2np
 # a[228]=c[25]*2*RP_Rr_Hr2;			//236. RP_Rr_Hr2				--> RP_Rr_Hr + H2np
 # a[230]=c[25]*3*RP_Rr_Hr3;			//238. RP_Rr_Hr3				--> RP_Rr_Hr2 + H2np
 # a[233]=c[25]*RP_RNa_Hr;			//241. RP_RNa_Hr				--> RP_RNa + H2np
-# a[235]=c[25]*2*RP_RNa_Hr2;			//243. RP_RNa_Hr2			--> RP_RNa_Hr + H2np
-# a[237]=c[25]*3*RP_RNa_Hr3;			//245. RP_RNa_Hr3			--> RP_RNa_Hr2 + H2np
+# a[235]=c[25]*2*RP_RNa_Hr2;		//243. RP_RNa_Hr2			--> RP_RNa_Hr + H2np
+# a[237]=c[25]*3*RP_RNa_Hr3;		//245. RP_RNa_Hr3			--> RP_RNa_Hr2 + H2np
 # a[240]=c[25]*RP_Rr2_Hr;			//248. RP_Rr2_Hr				--> RP_Rr2 + H2np
-# a[242]=c[25]*2*RP_Rr2_Hr2;			//250. RP_Rr2_Hr2			--> RP_Rr2_Hr + H2np
-# a[244]=c[25]*3*RP_Rr2_Hr3;			//252. RP_Rr2_Hr3			--> RP_Rr2_Hr2 + H2np
-# a[249]=c[25]*RP_RNa_Rr_Hr;			//257. RP_RNa_Rr_Hr			--> RP_RNa_Rr + H2np
+# a[242]=c[25]*2*RP_Rr2_Hr2;		//250. RP_Rr2_Hr2			--> RP_Rr2_Hr + H2np
+# a[244]=c[25]*3*RP_Rr2_Hr3;		//252. RP_Rr2_Hr3			--> RP_Rr2_Hr2 + H2np
+# a[249]=c[25]*RP_RNa_Rr_Hr;		//257. RP_RNa_Rr_Hr			--> RP_RNa_Rr + H2np
 # a[252]=c[25]*2*RP_RNa_Rr_Hr2;		//260. RP_RNa_Rr_Hr2			--> RP_RNa_Rr_Hr+ H2np
 # a[255]=c[25]*3*RP_RNa_Rr_Hr3;		//263. RP_RNa_Rr_Hr3			--> RP_RNa_Rr_Hr2 + H2np
 # a[258]=c[25]*RP_Rr3_Hr;			//266. RP_Rr3_Hr				--> RP_Rr3 + H2np
-# a[260]=c[25]*2*RP_Rr3_Hr2;			//268. RP_Rr3_Hr2			--> RP_Rr3_Hr + H2np
-# a[262]=c[25]*3*RP_Rr3_Hr3;			//270. RP_Rr3_Hr3			--> RP_Rr3_Hr2 + H2np
+# a[260]=c[25]*2*RP_Rr3_Hr2;		//268. RP_Rr3_Hr2			--> RP_Rr3_Hr + H2np
+# a[262]=c[25]*3*RP_Rr3_Hr3;		//270. RP_Rr3_Hr3			--> RP_Rr3_Hr2 + H2np
 # a[267]=c[25]*RP_RNa_Rr2_Hr;		//275. RP_RNa_Rr2_Hr			--> RP_RNa_Rr2 + H2np
-# a[270]=c[25]*2*RP_RNa_Rr2_Hr2;		//278. RP_RNa_Rr2_Hr2		--> RP_RNa_Rr2_Hr + H2np
-# a[273]=c[25]*3*RP_RNa_Rr2_Hr3;		//281. RP_RNa_Rr2_Hr3		--> RP_RNa_Rr2_Hr2 + H2np
+# a[270]=c[25]*2*RP_RNa_Rr2_Hr2;	//278. RP_RNa_Rr2_Hr2		--> RP_RNa_Rr2_Hr + H2np
+# a[273]=c[25]*3*RP_RNa_Rr2_Hr3;	//281. RP_RNa_Rr2_Hr3		--> RP_RNa_Rr2_Hr2 + H2np
 # a[276]=c[25]*RP_RNa2_Hr;			//284. RP_RNa2_Hr			--> RP_RNa2 + H2np
 # a[278]=c[25]*2*RP_RNa2_Hr2;		//286. RP_RNa2_Hr2			--> RP_RNa2_Hr + H2np
 # a[280]=c[25]*3*RP_RNa2_Hr3;		//288. RP_RNa2_Hr3			--> RP_RNa2_Hr2 + H2np
 # a[285]=c[25]*RP_RNa2_Rr_Hr;		//293. RP_RNa2_Rr_Hr 		--> RP_RNa2_Rr + H2np
-# a[288]=c[25]*2*RP_RNa2_Rr_Hr2;		//296. RP_RNa2_Rr_Hr2		--> RP_RNa2_Rr_Hr + H2np
-# a[291]=c[25]*3*RP_RNa2_Rr_Hr3;		//299. RP_RNa2_Rr_Hr3 		--> RP_RNa2_Rr_Hr2 + H2np
+# a[288]=c[25]*2*RP_RNa2_Rr_Hr2;	//296. RP_RNa2_Rr_Hr2		--> RP_RNa2_Rr_Hr + H2np
+# a[291]=c[25]*3*RP_RNa2_Rr_Hr3;	//299. RP_RNa2_Rr_Hr3 		--> RP_RNa2_Rr_Hr2 + H2np
 # a[294]=c[25]*RP_RNa3_Hr;			//302. RP_RNa3_Hr 			--> RP_RNa3 + H2np
 # a[296]=c[25]*2*RP_RNa3_Hr2;		//304. RP_RNa3_Hr2 			--> RP_RNa3_Hr + H2np
 # a[298]=c[25]*3*RP_RNa3_Hr3;		//306. RP_RNa3_Hr3 			--> RP_RNa3_Hr2 + H2np
@@ -571,25 +571,25 @@ Rule('dRBPJ_bind_Hes1_dimer_3', dRBPJ(Hbox3=None) + pHes1(pHes1=1, Hbox=None, lo
 	dRBPJ(Hbox3=[2,3]) % pHes1(pHes1=1, Hbox=2, loc='nuc') % pHes1(pHes1=1, Hbox=3, loc='nuc'), Kn,Kn_r)
 
 # a[151]=c[26]*RP_Rr*Nnp;			//159. RP_Rr + Nnp           --> RP_RNa
-# a[154]=c[26]*RP_Rr_Hr*Nnp;			//162. RP_Rr_Hr + Nnp        --> RP_RNa_Hr
+# a[154]=c[26]*RP_Rr_Hr*Nnp;		//162. RP_Rr_Hr + Nnp        --> RP_RNa_Hr
 # a[157]=c[26]*RP_Rr_Hr2*Nnp;		//165. RP_Rr_Hr2 + Nnp       --> RP_RNa_Hr2
 # a[160]=c[26]*RP_Rr_Hr3*Nnp;		//168. RP_Rr_Hr3 + Nnp       --> RP_RNa_Hr3
-# a[169]=c[26]*2*RP_Rr2*Nnp;			//177. RP_Rr2 + Nnp          --> RP_RNa_Rr
+# a[169]=c[26]*2*RP_Rr2*Nnp;		//177. RP_Rr2 + Nnp          --> RP_RNa_Rr
 # a[172]=c[26]*2*RP_Rr2_Hr*Nnp;		//180. RP_Rr2_Hr + Nnp       --> RP_RNa_Rr_Hr
-# a[175]=c[26]*2*RP_Rr2_Hr2*Nnp;		//183. RP_Rr2_Hr2 + Nnp      --> RP_RNa_Rr_Hr2
-# a[178]=c[26]*2*RP_Rr2_Hr3*Nnp;		//186. RP_Rr2_Hr3 + Nnp      --> RP_RNa_Rr_Hr3 
+# a[175]=c[26]*2*RP_Rr2_Hr2*Nnp;	//183. RP_Rr2_Hr2 + Nnp      --> RP_RNa_Rr_Hr2
+# a[178]=c[26]*2*RP_Rr2_Hr3*Nnp;	//186. RP_Rr2_Hr3 + Nnp      --> RP_RNa_Rr_Hr3 
 # a[180]=c[26]*RP_RNa_Rr*Nnp;		//188. RP_RNa_Rr + Nnp       --> RP_RNa2
-# a[183]=c[26]*RP_RNa_Rr_Hr*Nnp;		//191. RP_RNa_Rr_Hr + Nnp    --> RP_RNa2_Hr
+# a[183]=c[26]*RP_RNa_Rr_Hr*Nnp;	//191. RP_RNa_Rr_Hr + Nnp    --> RP_RNa2_Hr
 # a[186]=c[26]*RP_RNa_Rr_Hr2*Nnp;	//194. RP_RNa_Rr_Hr2 + Nnp   --> RP_RNa2_Hr2
 # a[189]=c[26]*RP_RNa_Rr_Hr3*Nnp;	//197. RP_RNa_Rr_Hr3 + Nnp   --> RP_RNa2_Hr3
-# a[190]=c[26]*3*RP_Rr3*Nnp;			//198. RP_Rr3 + Nnp          --> RP_RNa_Rr2
+# a[190]=c[26]*3*RP_Rr3*Nnp;		//198. RP_Rr3 + Nnp          --> RP_RNa_Rr2
 # a[192]=c[26]*3*RP_Rr3_Hr*Nnp;		//200. RP_Rr3_Hr + Nnp       --> RP_RNa_Rr2_Hr
-# a[194]=c[26]*3*RP_Rr3_Hr2*Nnp;		//202. RP_Rr3_Hr2 + Nnp      --> RP_RNa_Rr2_Hr2
-# a[196]=c[26]*3*RP_Rr3_Hr3*Nnp;		//204. RP_Rr3_Hr3 + Nnp      --> RP_RNa_Rr2_Hr3
-# a[197]=c[26]*2*RP_RNa_Rr2*Nnp;		//205. RP_RNa_Rr2 + Nnp      --> RP_RNa2_Rr
+# a[194]=c[26]*3*RP_Rr3_Hr2*Nnp;	//202. RP_Rr3_Hr2 + Nnp      --> RP_RNa_Rr2_Hr2
+# a[196]=c[26]*3*RP_Rr3_Hr3*Nnp;	//204. RP_Rr3_Hr3 + Nnp      --> RP_RNa_Rr2_Hr3
+# a[197]=c[26]*2*RP_RNa_Rr2*Nnp;	//205. RP_RNa_Rr2 + Nnp      --> RP_RNa2_Rr
 # a[199]=c[26]*2*RP_RNa_Rr2_Hr*Nnp;	//207. RP_RNa_Rr2_Hr + Nnp   --> RP_RNa2_Rr_Hr
-# a[201]=c[26]*2*RP_RNa_Rr2_Hr2*Nnp;	//209. RP_RNa_Rr2_Hr2 + Nnp  --> RP_RNa2_Rr_Hr2
-# a[203]=c[26]*2*RP_RNa_Rr2_Hr3*Nnp;	//211. RP_RNa_Rr2_Hr3 + Nnp  --> RP_RNa2_Rr_Hr3
+# a[201]=c[26]*2*RP_RNa_Rr2_Hr2*Nnp;//209. RP_RNa_Rr2_Hr2 + Nnp  --> RP_RNa2_Rr_Hr2
+# a[203]=c[26]*2*RP_RNa_Rr2_Hr3*Nnp;//211. RP_RNa_Rr2_Hr3 + Nnp  --> RP_RNa2_Rr_Hr3
 # a[211]=c[26]*RP_RNa2_Rr*Nnp;		//219. RP_RNa2_Rr + Nnp      --> RP_RNa3
 # a[213]=c[26]*RP_RNa2_Rr_Hr*Nnp;	//221. RP_RNa2_Rr_Hr + Nnp   --> RP_RNa3_Hr
 # a[215]=c[26]*RP_RNa2_Rr_Hr2*Nnp;	//223. RP_RNa2_Rr_Hr2 + Nnp  --> RP_RNa3_Hr2
@@ -600,7 +600,7 @@ Rule('dRBPJ_bind_Hes1_dimer_3', dRBPJ(Hbox3=None) + pHes1(pHes1=1, Hbox=None, lo
 # a[234]=c[25]*RP_RNa_Hr2;			//242. RP_RNa_Hr2			--> RP_Rr_Hr2 + Nnp
 # a[236]=c[25]*RP_RNa_Hr3;			//244. RP_RNa_Hr3			--> RP_Rr_Hr3 + Nnp
 # a[246]=c[25]*RP_RNa_Rr;			//254. RP_RNa_Rr				--> RP_Rr2 + Nnp
-# a[248]=c[25]*RP_RNa_Rr_Hr;			//256. RP_RNa_Rr_Hr			--> RP_Rr2_Hr + Nnp
+# a[248]=c[25]*RP_RNa_Rr_Hr;		//256. RP_RNa_Rr_Hr			--> RP_Rr2_Hr + Nnp
 # a[251]=c[25]*RP_RNa_Rr_Hr2;		//259. RP_RNa_Rr_Hr2			--> RP_Rr2_Hr2 + Nnp
 # a[254]=c[25]*RP_RNa_Rr_Hr3;		//262. RP_RNa_Rr_Hr3			--> RP_Rr2_Hr3 + Nnp
 # a[264]=c[25]*RP_RNa_Rr2;			//272. RP_RNa_Rr2			--> RP_Rr3 + Nnp
@@ -608,15 +608,15 @@ Rule('dRBPJ_bind_Hes1_dimer_3', dRBPJ(Hbox3=None) + pHes1(pHes1=1, Hbox=None, lo
 # a[269]=c[25]*RP_RNa_Rr2_Hr2;		//277. RP_RNa_Rr2_Hr2		--> RP_Rr3_Hr2 + Nnp
 # a[272]=c[25]*RP_RNa_Rr2_Hr3;		//280. RP_RNa_Rr2_Hr3		--> RP_Rr3_Hr3 + Nnp
 # a[274]=c[25]*2*RP_RNa2;			//282. RP_RNa2				--> RP_RNa_Rr + Nnp
-# a[275]=c[25]*2*RP_RNa2_Hr;			//283. RP_RNa2_Hr			--> RP_RNa_Rr_Hr + Nnp
+# a[275]=c[25]*2*RP_RNa2_Hr;		//283. RP_RNa2_Hr			--> RP_RNa_Rr_Hr + Nnp
 # a[277]=c[25]*2*RP_RNa2_Hr2;		//285. RP_RNa2_Hr2			--> RP_RNa_Rr_Hr2 + Nnp
 # a[279]=c[25]*2*RP_RNa2_Hr3;		//287. RP_RNa2_Hr3			--> RP_RNa_Rr_Hr3 + Nnp
-# a[282]=c[25]*2*RP_RNa2_Rr;			//290. RP_RNa2_Rr 			--> RP_RNa_Rr2 + Nnp
+# a[282]=c[25]*2*RP_RNa2_Rr;		//290. RP_RNa2_Rr 			--> RP_RNa_Rr2 + Nnp
 # a[284]=c[25]*2*RP_RNa2_Rr_Hr;		//292. RP_RNa2_Rr_Hr 		--> RP_RNa_Rr2_Hr + Nnp
-# a[287]=c[25]*2*RP_RNa2_Rr_Hr2;		//295. RP_RNa2_Rr_Hr2		--> RP_RNa_Rr2_Hr2 + Nnp
-# a[290]=c[25]*2*RP_RNa2_Rr_Hr3;		//298. RP_RNa2_Rr_Hr3 		--> RP_RNa_Rr2_Hr3 + Nnp
+# a[287]=c[25]*2*RP_RNa2_Rr_Hr2;	//295. RP_RNa2_Rr_Hr2		--> RP_RNa_Rr2_Hr2 + Nnp
+# a[290]=c[25]*2*RP_RNa2_Rr_Hr3;	//298. RP_RNa2_Rr_Hr3 		--> RP_RNa_Rr2_Hr3 + Nnp
 # a[292]=c[25]*3*RP_RNa3;			//300. RP_RNa3 				--> RP_RNa2_Rr + Nnp
-# a[293]=c[25]*3*RP_RNa3_Hr;			//301. RP_RNa3_Hr 			--> RP_RNa2_Rr_Hr + Nnp
+# a[293]=c[25]*3*RP_RNa3_Hr;		//301. RP_RNa3_Hr 			--> RP_RNa2_Rr_Hr + Nnp
 # a[295]=c[25]*3*RP_RNa3_Hr2;		//303. RP_RNa3_Hr2 			--> RP_RNa2_Rr_Hr2 + Nnp
 # a[297]=c[25]*3*RP_RNa3_Hr3;		//305. RP_RNa3_Hr3 			--> RP_RNa2_Rr_Hr3 + Nnp
 

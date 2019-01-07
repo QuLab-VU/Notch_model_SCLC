@@ -39,7 +39,7 @@ int Rcm;				//2.42085*10^(-11)
 int Rcp;				//7.57182*10^(-11)
 int Rnp;				//3.27784*10^(-9)
 int Nm;					//4.06075*10^(-9)	//Notch mRNA
-int Np;					//4.7729*10^(-8)		//Notch protein in the cytoplasm
+int Np;					//4.7729*10^(-8)	//Notch protein in the cytoplasm
 int Ncp;				//NICD protein in the cytoplasm
 int Nnp;				//NICD protein in the nucleus
 int delta;				//Delta protein
@@ -252,10 +252,10 @@ int main(int argc, char *argv[]) {
 	float KfNcp=0.000276;	//7.6*10^8 per molar per minute		//forward rate of NICD binding to Delta
 	float KaHp=0.02535;
 	float KrHp=0;			// disable disassociation of Hes1 dimer
-	float Kr=0.0410;    		//Keqr=8.19e-3
+	float Kr=0.0410;    	//Keqr=8.19e-3
 	//float Kr=0.001628;
 	float Kr_r=5;
-	float Kn=0.0254;    		//Keqn=5.07e-3
+	float Kn=0.0254;    	//Keqn=5.07e-3
 	//float Kn=0.00072;
 	float Kn_r=5;
 	float Ka=0.0127;   		//Keqa=2.54e-3
@@ -266,9 +266,9 @@ int main(int argc, char *argv[]) {
 	float Vmaxh=197;     //9.98;
 	float Vmaxr= 79;     //4.99
 	float Vmaxn=21.6;    //1.43
-	float Vbh=4.5;		 //2.53*10^(-12)M/min
-	float Vbr=1.7;		 //1.27*10^(-12)M/min
-	float Vbn=0.5;		 //3.6*10^(-13)M/min
+	float Vbh=4.5;		 //2.53*10^(-12) M/min
+	float Vbr=1.7;		 //1.27*10^(-12) M/min
+	float Vbn=0.5;		 //3.6*10^(-13) M/min
 	float rNbox=0.3;
 	float rRbox=0.2;
 	float tc=0.5;
