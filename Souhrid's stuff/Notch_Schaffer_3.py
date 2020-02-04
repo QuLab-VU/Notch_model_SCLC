@@ -24,19 +24,29 @@ import matplotlib.pyplot as plt
 # Ncp: NICD cytoplasmic protein
 # Nnp: NICD nuclear protein
 
-Vcyt = 4.581e-13 # liter
-Vnuc = 6.545e-14 # liter
+Vcyt = 4.581e-13  # liter
+Vnuc = 6.545e-14  # liter
+
+###NEW
+#    def __init__(self, name: object, parent: object = None, dimension: object = 3, size: object = None, _export: object = True) -> object:
+
+#Compartment('cytosol', dimension=3, size=cyto_vol, parent=ec_membrane)
+# Compartment('cyto_mem', dimension=2, size= 3.14e-10)
+# Compartment('cytosol', )
+
+###NEW
+
 
 Model()
-
 Monomer('Delta')
 Monomer('mNotch')
-Monomer('pNotch') 
-Monomer('NICD', ['rbpj', 'loc'], {'loc' : ['cyt', 'nuc']}) 
+Monomer('pNotch')
+Monomer('NICD', ['rbpj', 'loc'], {'loc': ['cyt', 'nuc']})
 Monomer('mRBPJ')
-Monomer('pRBPJ', ['nicd', 'Rbox', 'loc'], {'loc' : ['cyt', 'nuc']})
+Monomer('pRBPJ', ['nicd', 'Rbox', 'loc'], {'loc': ['cyt', 'nuc']})
 Monomer('mHes1')
-Monomer('pHes1', ['pHes1', 'Hbox', 'loc'], {'loc' : ['cyt', 'nuc']}) 
+# Hbox refers to Hes1 binding site. It's proper name is Nbox.
+Monomer('pHes1', ['pHes1', 'Hbox', 'loc'], {'loc': ['cyt', 'nuc']})
 Monomer('dNotch', ['Hbox', 'Rbox', 'Rbox'])
 Monomer('dHes1', ['Hbox', 'Hbox', 'Hbox', 'Rbox', 'Rbox'])
 Monomer('dRBPJ', ['Hbox', 'Hbox', 'Hbox', 'Rbox', 'Rbox', 'Rbox'])
@@ -49,62 +59,62 @@ Monomer('mHes1_delayed')
 Monomer('pHes1_delayed')
 
 Parameter('Delta_0', 0)
-Parameter('mHes1_0', 1) 		# Hcm=1;		//3.64x10^(-12)
-Parameter('pHes1_cyt_0', 35) 	# Hcp=35;		//1.25*10^(-10)
-Parameter('pHes1_nuc_0', 109) 	# Hnp=109;		//2.77*10^(-9)
-Parameter('dimHes1_nuc_0', int(0.02535*pHes1_nuc_0.value**2)) # 101) # H2np=101;		//2.5662*10^(-9)
-Parameter('mRBPJ_0', 1) 		# Rcm=1;		//1.2*10^(-12)
-Parameter('pRBPJ_cyt_0', 11) 	# Rcp=11;		//3.74*10^(-11)
-Parameter('pRBPJ_nuc_0', 447) 	# Rnp=447;		//1.13*10^(-8)
-Parameter('mNotch_0', 70) 		# Nm=70;		//2.51*10^(-10)	//Notch mRNA
-Parameter('pNotch_0', 8130) 	#??# Np=8130;	//2.95*10^(-8)	//Notch protein in the cytoplasm
-Parameter('dNotch_0', 2) 		# NP_free=2;	//Notch promoter (diploid so start with 2 free promoter regions)
-Parameter('dHes1_0', 2) 		# HP_free=2;	//Hes1 promoter (diploid so start with 2 free promoter regions)
-Parameter('dRBPJ_0', 2) 		# RP_free=2;	//RPJK promoter (diploid so start with 2 free promoter regions)
+Parameter('mHes1_0', 1)  # Hcm=1;		//3.64x10^(-12)
+Parameter('pHes1_cyt_0', 35)  # Hcp=35;		//1.25*10^(-10)
+Parameter('pHes1_nuc_0', 109)  # Hnp=109;		//2.77*10^(-9)
+Parameter('dimHes1_nuc_0', int(0.02535 * pHes1_nuc_0.value ** 2))  # 101) # H2np=101;		//2.5662*10^(-9)
+Parameter('mRBPJ_0', 1)  # Rcm=1;		//1.2*10^(-12)
+Parameter('pRBPJ_cyt_0', 11)  # Rcp=11;		//3.74*10^(-11)
+Parameter('pRBPJ_nuc_0', 447)  # Rnp=447;		//1.13*10^(-8)
+Parameter('mNotch_0', 70)  # Nm=70;		//2.51*10^(-10)	//Notch mRNA
+Parameter('pNotch_0', 8130)  # ??# Np=8130;	//2.95*10^(-8)	//Notch protein in the cytoplasm
+Parameter('dNotch_0', 2)  # NP_free=2;	//Notch promoter (diploid so start with 2 free promoter regions)
+Parameter('dHes1_0', 2)  # HP_free=2;	//Hes1 promoter (diploid so start with 2 free promoter regions)
+Parameter('dRBPJ_0', 2)  # RP_free=2;	//RPJK promoter (diploid so start with 2 free promoter regions)
 
 Initial(Delta(), Delta_0)
 Initial(mHes1(), mHes1_0)
 Initial(pHes1(pHes1=None, Hbox=None, loc='cyt'), pHes1_cyt_0)
 Initial(pHes1(pHes1=None, Hbox=None, loc='nuc'), pHes1_nuc_0)
-Initial(pHes1(pHes1=1, Hbox=None, loc='nuc') % pHes1(pHes1=1, Hbox= None, loc='nuc'), dimHes1_nuc_0)
+Initial(pHes1(pHes1=1, Hbox=None, loc='nuc') % pHes1(pHes1=1, Hbox=None, loc='nuc'), dimHes1_nuc_0)
 Initial(mRBPJ(), mRBPJ_0)
 Initial(pRBPJ(nicd=None, Rbox=None, loc='cyt'), pRBPJ_cyt_0)
 Initial(pRBPJ(nicd=None, Rbox=None, loc='nuc'), pRBPJ_nuc_0)
 Initial(mNotch(), mNotch_0)
 Initial(pNotch(), pNotch_0)
-Initial(dNotch(Hbox=None, Rbox=(None,None)), dNotch_0)
-Initial(dHes1(Hbox=(None,None,None), Rbox=(None,None)), dHes1_0)
-Initial(dRBPJ(Hbox=(None,None,None), Rbox=(None,None,None)), dRBPJ_0)
+Initial(dNotch(Hbox=None, Rbox=(None, None)), dNotch_0)
+Initial(dHes1(Hbox=(None, None, None), Rbox=(None, None)), dHes1_0)
+Initial(dRBPJ(Hbox=(None, None, None), Rbox=(None, None, None)), dRBPJ_0)
 
-delay=True	#//set true here if you want to implement delays
+delay = True  # //set true here if you want to implement delays
 
-#//Delay times for the 6 delayed reactions
-#//units here are minutes delayed
+# //Delay times for the 6 delayed reactions
+# //units here are minutes delayed
 
 # Degradation constant of Hes1 protein (min^-1) kdHcp, kdHnp 0.0315 [30]
-Parameter('KdHes1', 0.0315)		#//degradation Hes1 protein
+Parameter('KdHes1', 0.0315)  # //degradation Hes1 protein
 # Degradation constant of Hes1 mRNA (min^-1) kdHcm 0.029 [30]
-Parameter('KdHcm', 0.029) 		#// deg Hes1 mRNA
+Parameter('KdHcm', 0.029)  # // deg Hes1 mRNA
 # Degradation constant of RBP-Jk protein (min^-1) kdRcp 0.00231 [82]
-Parameter('KdRBPJ', 0.00231) 	#degradation RBPJ protein
+Parameter('KdRBPJ', 0.00231)  # degradation RBPJ protein
 # Degradation constant of RBP-JK mRNA (min^-1) kdRcm 0.0075 [82]
-Parameter('KdRcm', 0.0075) 		#degradation RBPJ mRNA
+Parameter('KdRcm', 0.0075)  # degradation RBPJ mRNA
 # Degradation constant of full-length Notch1 protein (min^-1) kdNp 0.017 [54], Text
-Parameter('KdNp', 0.017) 		#degradation Notch protein
+Parameter('KdNp', 0.017)  # degradation Notch protein
 # Degradation constant of NICD protein (min^-1) kdNcp,kdNnp 0.0014 or 0.00385 [55], Text
 Observable('pHes1_cyt', pHes1(loc='cyt'))
-Expression('KdNICD', 0.00385 + (0.0014-0.00385)*(pHes1_cyt > 100)) #degradation NICD protein
+Expression('KdNICD', 0.00385 + (0.0014 - 0.00385) * (pHes1_cyt > 100))  # degradation NICD protein
 # Degradation of Notch mRNA (min^-1) kdNm 0.0058 [83]
-Parameter('KdNm', 0.0058) #0.00035) 		#degradation Notch mRNA
+Parameter('KdNm', 0.0058)  # 0.00035) 		#degradation Notch mRNA
 # Cooperativity factor for Hes1-DNA binding Cn 1 Text
 # Cooperativity factor for RBP-Jk DNA binding Cr 1 Text
 # Cooperativity factor for RBP-Jk Hes1 DNA binding Cnr 1 Text
 # Rate of protein translation from Hes1 mRNA (min^-1) KtrHc 4.5 [45], Text
 Parameter('KtrHc', 4.5)
 # Rate of protein translation from RBP-Jk mRNA (min^-1) KtrRc 2.5 Text
-Parameter('KtrRc', 2.5) #3.2)
+Parameter('KtrRc', 2.5)  # 3.2)
 # Rate of protein translation from Notch1 mRNA (min^-1) KtrN 1 Text
-Parameter('KtrN', 1) #2)
+Parameter('KtrN', 1)  # 2)
 # RBP-Jk DNA association constant (M^-1) Kr 3.23x10^8 [84]
 Parameter('Kr', 0.0410)
 Parameter('Kr_r', 5)
@@ -115,32 +125,32 @@ Parameter('Kn_r', 5)
 Parameter('Ka', 0.0127)
 Parameter('Ka_r', 5)
 # Hes1 dimer association constant (M^-1) KaHp 1x10^9 Text
-Parameter('KaHp', 2*0.02535)
-Parameter('KrHp', 1) #0)
+Parameter('KaHp', 1 * 0.02535) # removed the factor of 2
+Parameter('KrHp', 1)  # 0)
 # Transcriptional time delay for Hes1 (min) TmHc 10 [52], Text
-TmHc = 10 
+TmHc = 10
 # Translational time delay for Hes1 (min) TpHc 2.35 [52], Text
-TpHc = 2.35 
+TpHc = 2.35
 # Transcriptional time delay for RBP-Jk (min) TmRc 20 [52], Text
-TmRc = 20 
+TmRc = 20
 # Translational time delay for RBP-Jk (min) TpRc 4.3 [52], Text
-TpRc = 4.3 
+TpRc = 4.3
 # Transcriptional time delay for Notch1 (min) TmNc 70 [52], Text
-TmNc = 70 
+TmNc = 70
 # Translational time delay for Notch1 (min) TpNc 21 [52], Text
-TpNc = 21 
+TpNc = 21
 # Basal transcriptional rate for Hes1 (M/min) Vbh 1.14x10^-10 [45], Text
-Parameter('Vbh', 4.5) 		#//2.53*10^(-12)M/min
+Parameter('Vbh', 4.5)  # //2.53*10^(-12)M/min
 # Basal transcriptional rate for RBP-Jk (M/min) Vbr 4.3x10^-11 Text
-Parameter('Vbr', 1.7) 		#//1.27*10^(-12)M/min
+Parameter('Vbr', 1.7)  # //1.27*10^(-12)M/min
 # Basal transcriptional rate for Notch1 (M/min) Vbn 1.23x10^-11 Text
-Parameter('Vbn', 0.5) 		#//3.6*10^(-13)M/min
+Parameter('Vbn', 0.5)  # //3.6*10^(-13)M/min
 # Maximal transcriptional rate for Hes1 (M/min) Vmaxh 5x10^-10 [53], Text
-Parameter('Vmaxh', 19.7) #197) 	#//9.98;
+Parameter('Vmaxh', 19.7)  # 197) 	#//9.98;
 # Maximal transcriptional rate for RBP-Jk (M/min) Vmaxr 2x10^-10 Text
-Parameter('Vmaxr', 7.9) #79) 		#//4.99
+Parameter('Vmaxr', 7.9)  # 79) 		#//4.99
 # Maximal transcriptional rate for Notch1 (M/min) Vmaxn 5.5x10^-11 Text
-Parameter('Vmaxn', 2.16) #21.6) 	#//1.43
+Parameter('Vmaxn', 2.16)  # 21.6) 	#//1.43
 # Nuclear import rate of Hes1 protein (min^-1) kniHcp 0.1 [85], Text
 Parameter('KniHcp', 0.1)
 # Nuclear import rate of RBP-Jk protein (min^-1) kniRcp 0.1 [85], Text
@@ -154,34 +164,34 @@ Parameter('rNbox', 0.03)
 # Repression constant of RBP-Jk alone bound to promoter rR 0.2 Text
 Parameter('rRbox', 0.2)
 
-#Degradation parameters
+# Degradation parameters
 #	//Units here are per minute
-Parameter('KdH2np', 0) 			#//disable Hes1 dimer degradation <-- I didn't write that -MS
+Parameter('KdH2np', 0)  # //disable Hes1 dimer degradation <-- I didn't write that -MS
 
 #	//units here are per minute
-#protein translation rates
+# protein translation rates
 
 # units here are per minute
-#nuclear rate of import
+# nuclear rate of import
 
-#//7.6*10^8 per molar per minute, forward rate of NICD binding to Delta
+# //7.6*10^8 per molar per minute, forward rate of NICD binding to Delta
 
 # Hes1 dimer association constant
 
-#RBPJ-DNA association constant; //Keqr=8.19e-3; //float Kr=0.001628;
+# RBPJ-DNA association constant; //Keqr=8.19e-3; //float Kr=0.001628;
 
-#Kn = Hes1-DNA association constant; // Keqn = 5.07e-3; // float Kn = 0.00072;
+# Kn = Hes1-DNA association constant; // Keqn = 5.07e-3; // float Kn = 0.00072;
 
-#Ka = RBPJ-NICD association constant; // Keqa = 2.54e-3;  // float Ka = 0.00036;
+# Ka = RBPJ-NICD association constant; // Keqa = 2.54e-3;  // float Ka = 0.00036;
 
-#//These generation rates are based on molecules generated per cell per minute <= from original code
+# //These generation rates are based on molecules generated per cell per minute <= from original code
 
 Parameter('tc', 0.5)
 
 # Hes1 dimerization
 # H2np = KaHp*Hnp*Hnp;  // THIS MIGHT NEED ADJUSTMENT
-Rule('Hes1_dimerization', pHes1(pHes1=None, Hbox=None, loc='nuc') + pHes1(pHes1=None, Hbox=None, loc='nuc') | 
-	pHes1(pHes1=1, Hbox=None, loc='nuc') % pHes1(pHes1=1, Hbox=None, loc='nuc'), KaHp, KrHp)
+Rule('Hes1_dimerization', pHes1(pHes1=None, Hbox=None, loc='nuc') + pHes1(pHes1=None, Hbox=None, loc='nuc') |
+     pHes1(pHes1=1, Hbox=None, loc='nuc') % pHes1(pHes1=1, Hbox=None, loc='nuc'), KaHp, KrHp)
 
 # //Generation reactions
 # a[0]=c[0];		//1. 0 --> Nm		0.RfNm
@@ -193,37 +203,43 @@ Tag('x')
 Observable('dNotch_pHes1', dNotch(Hbox=ANY))
 Observable('dNotch_pRBPJ', dNotch(Rbox=1) % pRBPJ(Rbox=1, nicd=None))
 Observable('dNotch_pNICD', dNotch(Rbox=1) % pRBPJ(Rbox=1, nicd=ANY))
-Expression('ktrN', rNbox**dNotch_pHes1(x) * rRbox**dNotch_pRBPJ(x) * ((dNotch_pNICD(x) > 0)*tc**(2-dNotch_pNICD(x))*Vmaxn + Vbn))
-Rule('mNotch_transcription', dNotch() @x >> dNotch() @x + mNotch_delayed(), ktrN)
-Rule('mNotch_appears', mNotch_delayed() >> mNotch(), Parameter('kmN_delay', 1./TmNc))
+Expression('testing', dNotch_pHes1(x))
+# print(model.observables)
+# quit()
+Expression('ktrN', rNbox ** dNotch_pHes1(x) * rRbox ** dNotch_pRBPJ(x) * (
+            (dNotch_pNICD(x) > 0) * tc ** (2 - dNotch_pNICD(x)) * Vmaxn + Vbn))
+Rule('mNotch_transcription', dNotch() @ x >> dNotch() @ x + mNotch_delayed(), ktrN)
+Rule('mNotch_appears', mNotch_delayed() >> mNotch(), Parameter('kmN_delay', 1. / TmNc))
 
 Observable('dRBPJ_pHes1', dRBPJ(Hbox=ANY))
 Observable('dRBPJ_pRBPJ', dRBPJ(Rbox=1) % pRBPJ(Rbox=1, nicd=None))
 Observable('dRBPJ_pNICD', dRBPJ(Rbox=1) % pRBPJ(Rbox=1, nicd=ANY))
-Expression('ktrR', rNbox**dRBPJ_pHes1(x) * rRbox**dRBPJ_pRBPJ(x) * ((dRBPJ_pNICD(x) > 0)*tc**(3-dRBPJ_pNICD(x))*Vmaxr + Vbr))
-Rule('mRBPJ_transcription',  dRBPJ() @x  >> dRBPJ() @x + mRBPJ_delayed(), ktrR)
-Rule('mRBPJ_appears', mRBPJ_delayed() >> mRBPJ(), Parameter('kmR_delay', 1./TmRc))
+Expression('ktrR', rNbox ** dRBPJ_pHes1(x) * rRbox ** dRBPJ_pRBPJ(x) * (
+            (dRBPJ_pNICD(x) > 0) * tc ** (3 - dRBPJ_pNICD(x)) * Vmaxr + Vbr))
+Rule('mRBPJ_transcription', dRBPJ() @ x >> dRBPJ() @ x + mRBPJ_delayed(), ktrR)
+Rule('mRBPJ_appears', mRBPJ_delayed() >> mRBPJ(), Parameter('kmR_delay', 1. / TmRc))
 
 Observable('dHes1_pHes1', dHes1(Hbox=ANY))
 Observable('dHes1_pRBPJ', dHes1(Rbox=1) % pRBPJ(Rbox=1, nicd=None))
 Observable('dHes1_pNICD', dHes1(Rbox=1) % pRBPJ(Rbox=1, nicd=ANY))
-Expression('ktrH', rNbox**dHes1_pHes1(x) * rRbox**dHes1_pRBPJ(x) * ((dHes1_pNICD(x) > 0)*tc**(2-dHes1_pNICD(x))*Vmaxh + Vbh))
-Rule('mHes1_transcription', dHes1() @x  >> dHes1() @x + mHes1_delayed(), ktrH)
-Rule('mHes1_appears', mHes1_delayed() >> mHes1(), Parameter('kmH_delay', 1./TmHc))
+Expression('ktrH', rNbox ** dHes1_pHes1(x) * rRbox ** dHes1_pRBPJ(x) * (
+            (dHes1_pNICD(x) > 0) * tc ** (2 - dHes1_pNICD(x)) * Vmaxh + Vbh))
+Rule('mHes1_transcription', dHes1() @ x >> dHes1() @ x + mHes1_delayed(), ktrH)
+Rule('mHes1_appears', mHes1_delayed() >> mHes1(), Parameter('kmH_delay', 1. / TmHc))
 
 # //Translation channels (delay these if they occur in delay model)
 # a[3]=c[3]*Nm;			//4. Nm --> Np		3.KtrN
 # a[4]=c[4]*Rcm;		//5. Rcm --> Rcp	4.KtrRc
 # a[5]=c[5]*Hcm;		//6. Hcm --> Hcp	5.KtrHc
 
-Rule('mNotch_translation', mNotch() >> mNotch() + pNotch_delayed() , KtrN)
+Rule('mNotch_translation', mNotch() >> mNotch() + pNotch_delayed(), KtrN)
 Rule('mRBPJ_translation', mRBPJ() >> mRBPJ() + pRBPJ_delayed(), KtrRc)
 Rule('mHes1_translation', mHes1() >> mHes1() + pHes1_delayed(), KtrHc)
- 
-Rule('pNotch_appears', pNotch_delayed() >> pNotch(), Parameter('kpN_delay', 1./TpNc))
-Rule('pRBPJ_appears',  pRBPJ_delayed()  >> pRBPJ(nicd=None, Rbox=None, loc='cyt'), Parameter('kpR_delay', 1./TpRc))
-Rule('pHes1_appears',  pHes1_delayed()  >> pHes1(pHes1=None, Hbox=None, loc='cyt'), Parameter('kpH_delay', 1./TpHc))
- 
+
+Rule('pNotch_appears', pNotch_delayed() >> pNotch(), Parameter('kpN_delay', 1. / TpNc))
+Rule('pRBPJ_appears', pRBPJ_delayed() >> pRBPJ(nicd=None, Rbox=None, loc='cyt'), Parameter('kpR_delay', 1. / TpRc))
+Rule('pHes1_appears', pHes1_delayed() >> pHes1(pHes1=None, Hbox=None, loc='cyt'), Parameter('kpH_delay', 1. / TpHc))
+
 # //Other reactions in the cytoplasm
 # //a[6]=c[6]*Hnp*Hnp;	//7. Hnp + Hnp --> H2np		6.KaHp
 # //a[7]=c[7]*H2np;		//8. H2np --> Hnp + Hnp		7.KrHp
@@ -232,7 +248,7 @@ Rule('pHes1_appears',  pHes1_delayed()  >> pHes1(pHes1=None, Hbox=None, loc='cyt
 Rule('Delta_Notch_to_NICD', Delta() + pNotch() >> Delta() + NICD(rbpj=None, loc='cyt'), KfNcp)
 
 # // Effect of GSK3b on NICD half life
-# 
+#
 # if(Hcp>100)
 # {
 #   c[12]=c[15]=0.0014;   // KdNnp = KdNcp = 0.0014 - 3hr half life
@@ -241,7 +257,7 @@ Rule('Delta_Notch_to_NICD', Delta() + pNotch() >> Delta() + NICD(rbpj=None, loc=
 # {
 #   c[12]=c[15]=0.00385;   // KdNnp = KdNcp = 0.00385 - 8hr half life
 # }
-# 
+#
 # //Degeneration channels
 # a[9]=c[9]*Nm;			//10. Nm --> 0		9.KdNm
 # a[10]=c[10]*Rcm;		//11. Rcm --> 0		10.KdRcm
@@ -255,17 +271,18 @@ Rule('Delta_Notch_to_NICD', Delta() + pNotch() >> Delta() + NICD(rbpj=None, loc=
 # a[18]=KdHnp*Hnp;		//19. Hnp --> 0		xx.KdHnp
 # //a[19]=0;			//20. H2np --> 0	18.KdH2np
 
-Rule('mNotch_degradation', mNotch() >> None, KdNm) # //10. Nm --> 0  KdNm
-Rule('pNotch_degradation', pNotch() >> None, KdNp) # //15. Np --> 0  KdNp
+Rule('mNotch_degradation', mNotch() >> None, KdNm)  # //10. Nm --> 0  KdNm
+Rule('pNotch_degradation', pNotch() >> None, KdNp)  # //15. Np --> 0  KdNp
 
-Rule('mHes1_degradation', mHes1() >> None, KdHcm) # //12. Hcm --> 0  KdHcm
-Rule('pHes1_monomer_degradation', pHes1(pHes1=None, Hbox=None) >> None, KdHes1) # //18. Hcp --> 0  KdHcp; //19. Hnp --> 0  KdHnp
-Rule('pHes1_dimer_degradation', pHes1(pHes1=ANY, Hbox=None, loc='nuc') >> None, KdH2np) # //20. H2np --> 0  KdH2np
+Rule('mHes1_degradation', mHes1() >> None, KdHcm)  # //12. Hcm --> 0  KdHcm
+Rule('pHes1_monomer_degradation', pHes1(pHes1=None, Hbox=None) >> None,
+     KdHes1)  # //18. Hcp --> 0  KdHcp; //19. Hnp --> 0  KdHnp
+Rule('pHes1_dimer_degradation', pHes1(pHes1=ANY, Hbox=None, loc='nuc') >> None, KdH2np)  # //20. H2np --> 0  KdH2np
 
-Rule('NICD_degradation', NICD(rbpj=None) >> None, KdNICD) # //13. Nnp --> 0  KdNnp; //16. Ncp --> 0  KdNcp 
+Rule('NICD_degradation', NICD(rbpj=None) >> None, KdNICD)  # //13. Nnp --> 0  KdNnp; //16. Ncp --> 0  KdNcp
 
-Rule('mRBPJ_degradation', mRBPJ() >> None, KdRcm) # //11. Rcm --> 0  KdRcm
-Rule('pRBPJ_degradation', pRBPJ(nicd=None, Rbox=None) >> None, KdRBPJ) # //14. Rnp --> 0  KdRnp; //17. Rcp --> 0  KdRcp
+Rule('mRBPJ_degradation', mRBPJ() >> None, KdRcm)  # //11. Rcm --> 0  KdRcm
+Rule('pRBPJ_degradation', pRBPJ(nicd=None, Rbox=None) >> None, KdRBPJ)  # //14. Rnp --> 0  KdRnp; //17. Rcp --> 0  KdRcp
 
 # //Protein transport channels cyt --> "nuc only transport into nucleus"
 # a[20]=c[19]*Ncp;		//21. Ncp --> Nnp			19.KniNcp
@@ -274,7 +291,8 @@ Rule('pRBPJ_degradation', pRBPJ(nicd=None, Rbox=None) >> None, KdRBPJ) # //14. R
 
 Rule('NICD_nuclear_transport', NICD(rbpj=None, loc='cyt') >> NICD(rbpj=None, loc='nuc'), KniNcp)
 Rule('RBPJ_nuclear_transport', pRBPJ(nicd=None, Rbox=None, loc='cyt') >> pRBPJ(nicd=None, Rbox=None, loc='nuc'), KniRcp)
-Rule('Hes1_nuclear_transport', pHes1(pHes1=None, Hbox=None, loc='cyt') >> pHes1(pHes1=None, Hbox=None, loc='nuc'), KniHcp)
+Rule('Hes1_nuclear_transport', pHes1(pHes1=None, Hbox=None, loc='cyt') >> pHes1(pHes1=None, Hbox=None, loc='nuc'),
+     KniHcp)
 
 # //Notch Promoter binding / unbinding (18*2 reactions)
 # a[23]=c[22]*2*NP_free*Rnp;		//24. NP_free      + Rnp  --> NP_Rr
@@ -292,7 +310,7 @@ Rule('Hes1_nuclear_transport', pHes1(pHes1=None, Hbox=None, loc='cyt') >> pHes1(
 # a[52]=c[25]*NP_RNa_Rr_Hr;			//53. NP_RNa_Rr_Hr --> NP_RNa_Hr    + Rnp
 
 Rule('dNotch_bind_Rbox', dNotch(Rbox=None) + pRBPJ(nicd=None, Rbox=None, loc='nuc') |
-	dNotch(Rbox=1) % pRBPJ(nicd=None, Rbox=1, loc='nuc'), Kr,Kr_r)
+     dNotch(Rbox=1) % pRBPJ(nicd=None, Rbox=1, loc='nuc'), Kr, Kr_r)
 
 # a[24]=c[24]*NP_free*H2np;			//25. NP_free      + H2np --> NP_Hr
 # a[25]=c[24]*NP_Rr*H2np;			//26. NP_Rr        + H2np --> NP_Rr_Hr
@@ -308,8 +326,9 @@ Rule('dNotch_bind_Rbox', dNotch(Rbox=None) + pRBPJ(nicd=None, Rbox=None, loc='nu
 # a[54]=c[25]*NP_RNa_Rr_Hr;			//55. NP_RNa_Rr_Hr --> NP_RNa_Rr    + H2np
 # a[58]=c[25]*NP_RNa2_Hr;			//59. NP_RNa2_Hr   --> NP_RNa2      + H2np
 
-Rule('dNotch_bind_Hes1_dimer', dNotch(Hbox=None) + pHes1(pHes1=1, Hbox=None, loc='nuc') % pHes1(pHes1=1, Hbox=None, loc='nuc') |
-	dNotch(Hbox=[2,3]) % pHes1(pHes1=1, Hbox=2, loc='nuc') % pHes1(pHes1=1, Hbox=3, loc='nuc'), Kn,Kn_r)
+Rule('dNotch_bind_Hes1_dimer',
+     dNotch(Hbox=None) + pHes1(pHes1=1, Hbox=None, loc='nuc') % pHes1(pHes1=1, Hbox=None, loc='nuc') |
+     dNotch(Hbox=[2, 3]) % pHes1(pHes1=1, Hbox=2, loc='nuc') % pHes1(pHes1=1, Hbox=3, loc='nuc'), Kn, Kn_r)
 
 # a[26]=c[26]*NP_Rr*Nnp;			//27. NP_Rr        + Nnp  --> NP_RNa
 # a[30]=c[26]*NP_Rr_Hr*Nnp;			//31. NP_Rr_Hr     + Nnp  --> NP_RNa_Hr
@@ -326,7 +345,7 @@ Rule('dNotch_bind_Hes1_dimer', dNotch(Hbox=None) + pHes1(pHes1=1, Hbox=None, loc
 # a[57]=c[25]*2*NP_RNa2_Hr;			//58. NP_RNa2_Hr   --> NP_RNa_Rr_Hr + Nnp
 
 Rule('dNotch_pRBPJ_bind_NICD', dNotch(Rbox=1) % pRBPJ(nicd=None, Rbox=1, loc='nuc') + NICD(rbpj=None, loc='nuc') |
-	dNotch(Rbox=1) % pRBPJ(nicd=2, Rbox=1, loc='nuc') % NICD(rbpj=2, loc='nuc'), Ka,Ka_r)
+     dNotch(Rbox=1) % pRBPJ(nicd=2, Rbox=1, loc='nuc') % NICD(rbpj=2, loc='nuc'), Ka, Ka_r)
 
 # // Hes1 promoter binding / unbinding
 # a[59]=c[22]*2*HP_free*Rnp;		//60. HP_free       + Rnp  --> HP_Rr
@@ -356,7 +375,7 @@ Rule('dNotch_pRBPJ_bind_NICD', dNotch(Rbox=1) % pRBPJ(nicd=None, Rbox=1, loc='nu
 # a[134]=c[25]*HP_Rr2_Hr3;			//142. HP_Rr2_Hr3    --> HP_Rr_Hr3     + Rnp
 
 Rule('dHes1_bind_Rbox', dHes1(Rbox=None) + pRBPJ(nicd=None, Rbox=None, loc='nuc') |
-	dHes1(Rbox=1) % pRBPJ(nicd=None, Rbox=1, loc='nuc'), Kr,Kr_r)
+     dHes1(Rbox=1) % pRBPJ(nicd=None, Rbox=1, loc='nuc'), Kr, Kr_r)
 
 # a[60]=c[24]*3*HP_free*H2np;		//61. HP_free       + H2np --> HP_Hr
 # a[62]=c[24]*2*HP_Hr*H2np;			//63. HP_Hr         + H2np --> HP_Hr2
@@ -396,8 +415,9 @@ Rule('dHes1_bind_Rbox', dHes1(Rbox=None) + pRBPJ(nicd=None, Rbox=None, loc='nuc'
 # a[140]=c[25]*2*HP_RNa2_Hr2;		//148. HP_RNa2_Hr2   --> HP_RNa2_Hr    + H2np
 # a[142]=c[25]*3*HP_RNa2_Hr3;		//150. HP_RNa2_Hr3   --> HP_RNa2_Hr2   + H2np
 
-Rule('dHes1_bind_Hes1_dimer', dHes1(Hbox=None) + pHes1(pHes1=1, Hbox=None, loc='nuc') % pHes1(pHes1=1, Hbox=None, loc='nuc') |
-	dHes1(Hbox=[2,3]) % pHes1(pHes1=1, Hbox=2, loc='nuc') % pHes1(pHes1=1, Hbox=3, loc='nuc'), Kn,Kn_r)
+Rule('dHes1_bind_Hes1_dimer',
+     dHes1(Hbox=None) + pHes1(pHes1=1, Hbox=None, loc='nuc') % pHes1(pHes1=1, Hbox=None, loc='nuc') |
+     dHes1(Hbox=[2, 3]) % pHes1(pHes1=1, Hbox=2, loc='nuc') % pHes1(pHes1=1, Hbox=3, loc='nuc'), Kn, Kn_r)
 
 # a[67]=c[22]*HP_Rr*Nnp;			//68. HP_Rr         + Nnp  --> HP_RNa
 # a[70]=c[26]*HP_Rr_Hr*Nnp;			//71. HP_Rr_Hr      + Nnp  --> HP_RNa_Hr
@@ -426,7 +446,7 @@ Rule('dHes1_bind_Hes1_dimer', dHes1(Hbox=None) + pHes1(pHes1=1, Hbox=None, loc='
 # a[141]=c[25]*2*HP_RNa2_Hr3;		//149. HP_RNa2_Hr3   --> HP_RNa_Rr_Hr3 + Nnp
 
 Rule('dHes1_pRBPJ_bind_NICD', dHes1(Rbox=1) % pRBPJ(nicd=None, Rbox=1, loc='nuc') + NICD(rbpj=None, loc='nuc') |
-	dHes1(Rbox=1) % pRBPJ(nicd=2, Rbox=1, loc='nuc') % NICD(rbpj=2, loc='nuc'), Ka,Ka_r)
+     dHes1(Rbox=1) % pRBPJ(nicd=2, Rbox=1, loc='nuc') % NICD(rbpj=2, loc='nuc'), Ka, Ka_r)
 
 # //CBF1 promoter binding / unbinding
 # a[143]=c[22]*3*RP_free*Rnp;		//151. RP_free + Rnp         --> RP_Rr
@@ -480,7 +500,7 @@ Rule('dHes1_pRBPJ_bind_NICD', dHes1(Rbox=1) % pRBPJ(nicd=None, Rbox=1, loc='nuc'
 # a[289]=c[25]*RP_RNa2_Rr_Hr3;		//297. RP_RNa2_Rr_Hr3 		--> RP_RNa2_Hr3 + Rnp
 
 Rule('dRBPJ_bind_Rbox', dRBPJ(Rbox=None) + pRBPJ(nicd=None, Rbox=None, loc='nuc') |
-	dRBPJ(Rbox=1) % pRBPJ(nicd=None, Rbox=1, loc='nuc'), Kr,Kr_r)
+     dRBPJ(Rbox=1) % pRBPJ(nicd=None, Rbox=1, loc='nuc'), Kr, Kr_r)
 
 # a[144]=c[24]*3*RP_free*H2np;		//152. RP_free + H2np        --> RP_Hr
 # a[146]=c[24]*2*RP_Hr*H2np;		//154. RP_Hr + H2np          --> RP_Hr2
@@ -544,8 +564,9 @@ Rule('dRBPJ_bind_Rbox', dRBPJ(Rbox=None) + pRBPJ(nicd=None, Rbox=None, loc='nuc'
 # a[296]=c[25]*2*RP_RNa3_Hr2;		//304. RP_RNa3_Hr2 			--> RP_RNa3_Hr + H2np
 # a[298]=c[25]*3*RP_RNa3_Hr3;		//306. RP_RNa3_Hr3 			--> RP_RNa3_Hr2 + H2np
 
-Rule('dRBPJ_bind_Hes1_dimer', dRBPJ(Hbox=None) + pHes1(pHes1=1, Hbox=None, loc='nuc') % pHes1(pHes1=1, Hbox=None, loc='nuc') |
-	dRBPJ(Hbox=[2,3]) % pHes1(pHes1=1, Hbox=2, loc='nuc') % pHes1(pHes1=1, Hbox=3, loc='nuc'), Kn,Kn_r)
+Rule('dRBPJ_bind_Hes1_dimer',
+     dRBPJ(Hbox=None) + pHes1(pHes1=1, Hbox=None, loc='nuc') % pHes1(pHes1=1, Hbox=None, loc='nuc') |
+     dRBPJ(Hbox=[2, 3]) % pHes1(pHes1=1, Hbox=2, loc='nuc') % pHes1(pHes1=1, Hbox=3, loc='nuc'), Kn, Kn_r)
 
 # a[151]=c[26]*RP_Rr*Nnp;			//159. RP_Rr + Nnp           --> RP_RNa
 # a[154]=c[26]*RP_Rr_Hr*Nnp;		//162. RP_Rr_Hr + Nnp        --> RP_RNa_Hr
@@ -554,7 +575,7 @@ Rule('dRBPJ_bind_Hes1_dimer', dRBPJ(Hbox=None) + pHes1(pHes1=1, Hbox=None, loc='
 # a[169]=c[26]*2*RP_Rr2*Nnp;		//177. RP_Rr2 + Nnp          --> RP_RNa_Rr
 # a[172]=c[26]*2*RP_Rr2_Hr*Nnp;		//180. RP_Rr2_Hr + Nnp       --> RP_RNa_Rr_Hr
 # a[175]=c[26]*2*RP_Rr2_Hr2*Nnp;	//183. RP_Rr2_Hr2 + Nnp      --> RP_RNa_Rr_Hr2
-# a[178]=c[26]*2*RP_Rr2_Hr3*Nnp;	//186. RP_Rr2_Hr3 + Nnp      --> RP_RNa_Rr_Hr3 
+# a[178]=c[26]*2*RP_Rr2_Hr3*Nnp;	//186. RP_Rr2_Hr3 + Nnp      --> RP_RNa_Rr_Hr3
 # a[180]=c[26]*RP_RNa_Rr*Nnp;		//188. RP_RNa_Rr + Nnp       --> RP_RNa2
 # a[183]=c[26]*RP_RNa_Rr_Hr*Nnp;	//191. RP_RNa_Rr_Hr + Nnp    --> RP_RNa2_Hr
 # a[186]=c[26]*RP_RNa_Rr_Hr2*Nnp;	//194. RP_RNa_Rr_Hr2 + Nnp   --> RP_RNa2_Hr2
@@ -598,47 +619,135 @@ Rule('dRBPJ_bind_Hes1_dimer', dRBPJ(Hbox=None) + pHes1(pHes1=1, Hbox=None, loc='
 # a[297]=c[25]*3*RP_RNa3_Hr3;		//305. RP_RNa3_Hr3 			--> RP_RNa2_Rr_Hr3 + Nnp
 
 Rule('dRBPJ_pRBPJ_bind_NICD', dRBPJ(Rbox=1) % pRBPJ(nicd=None, Rbox=1, loc='nuc') + NICD(rbpj=None, loc='nuc') |
-	dRBPJ(Rbox=1) % pRBPJ(nicd=2, Rbox=1, loc='nuc') % NICD(rbpj=2, loc='nuc'), Ka,Ka_r)
+     dRBPJ(Rbox=1) % pRBPJ(nicd=2, Rbox=1, loc='nuc') % NICD(rbpj=2, loc='nuc'), Ka, Ka_r)
 
-Observable('delta',Delta())
-Observable('Rcm',  mRBPJ())
-Observable('Hcm',  mHes1())
-Observable('Nm',   mNotch())
-Observable('Rcp',  pRBPJ(nicd=None,Rbox=None,loc='cyt'))
-Observable('Hcp',  pHes1(pHes1=None,Hbox=None,loc='cyt'))
-Observable('Np',   pNotch())
-Observable('Hnp',  pHes1(pHes1=None,Hbox=None,loc='nuc'))
+Observable('delta', Delta())
+Observable('Rcm', mRBPJ())
+Observable('Hcm', mHes1())
+Observable('Nm', mNotch())
+Observable('Rcp', pRBPJ(nicd=None, Rbox=None, loc='cyt'))
+Observable('Hcp', pHes1(pHes1=None, Hbox=None, loc='cyt'))
+Observable('Np', pNotch())
+Observable('Hnp', pHes1(pHes1=None, Hbox=None, loc='nuc'))
 Observable('H2np', pHes1(pHes1=ANY, Hbox=None, loc='nuc'), match='species')
 
 ### SIMULATION ###
 
-sim = ScipyOdeSimulator(model, verbose=True, integrator_options={'atol' : 1e-8, 'rtol' : 1e-6})
+ScipyOdeSimulator._use_cython = True
+sim = ScipyOdeSimulator(model, verbose=True, integrator_options={'atol': 1e-8, 'rtol': 1e-6})
 # sim = BngSimulator(model, verbose=5)
 
 tspan1 = np.linspace(0, 750, 751)
 x = sim.run(tspan=tspan1)
 
+font = {'family' : 'normal',
+        'weight' : 'bold',
+        'size'   : 22}
+
+plt.rc('font', **font)
+
+# for obs in ['delta', 'Rcm', 'Hcm', 'Nm', 'Rcp', 'Hcp', 'Np', 'Hnp', 'H2np']:
+# 	plt.figure(obs)
+# 	vol = Vnuc if obs in ['Hnp', 'H2np'] else Vcyt # next line puts the Y axis in Molar units
+# 	plt.plot(tspan1, x.observables[obs]/6.022e23/vol, lw=2, label='pre-stimulus', color = 'g')
+#     plt.legend()
+    # if obs == 'H2np':
+	# 	plt.plot(tspan1, 0.5*KaHp.value/KrHp.value*x.observables['Hnp']**2, '--k')
+
 for obs in ['delta', 'Rcm', 'Hcm', 'Nm', 'Rcp', 'Hcp', 'Np', 'Hnp', 'H2np']:
 	plt.figure(obs)
 	vol = Vnuc if obs in ['Hnp', 'H2np'] else Vcyt
-	plt.plot(tspan1, x.observables[obs]/6.022e23/vol, lw=2, label=obs)
-# 	if obs == 'H2np':
-# 		plt.plot(tspan1, 0.5*KaHp.value/KrHp.value*x.observables['Hnp']**2, '--k')
+	plt.plot(tspan1, x.observables[obs]/6.022e23/vol, lw=5, label='pre-stimulus', color = 'g') #this puts the Y axis in Molar units
+	# if obs == 'H2np':
+	# 	plt.plot(tspan1, 0.5*KaHp.value/KrHp.value*x.observables['Hnp']**2, '--k')
 	plt.legend()
 
-tspan2 = np.linspace(750, 100000, (100000-750)+1)
+tspan2 = np.linspace(750, 15000, (15000 - 750) + 1)
 initials = x.species[-1]
 delta_index = [str(sp) for sp in model.species].index('Delta()')
-initials[delta_index] = 1e-3/KfNcp.value # 0.36 #10000
+initials[delta_index] = 1e-4 / KfNcp.value  # 0.36 Leonard's number #10000 their number
 x = sim.run(tspan=tspan2, initials=initials)
 
 for obs in ['delta', 'Rcm', 'Hcm', 'Nm', 'Rcp', 'Hcp', 'Np', 'Hnp', 'H2np']:
+    plt.figure(obs)
+    vol = Vnuc if obs in ['Hnp', 'H2np'] else Vcyt
+    plt.plot(tspan2, x.observables[obs] / 6.022e23 / vol, lw=5, label='Delta stimulus = 1e-4', color = 'b') #label was obs
+# 	if obs == 'H2np':
+# 		plt.plot(tspan2, 0.5*KaHp.value/KrHp.value*x.observables['Hnp']**2, '--k')
+    plt.legend()
+
+tspan1 = np.linspace(0, 750, 751)
+delta_index = [str(sp) for sp in model.species].index('Delta()')
+initials[delta_index] = 0 / KfNcp.value  # 0.36 Leonard's number #10000 their number
+x = sim.run(tspan=tspan1)
+
+for obs in ['delta', 'Rcm', 'Hcm', 'Nm', 'Rcp', 'Hcp', 'Np', 'Hnp', 'H2np']:
 	plt.figure(obs)
 	vol = Vnuc if obs in ['Hnp', 'H2np'] else Vcyt
-	plt.plot(tspan2, x.observables[obs]/6.022e23/vol, lw=2)
+	plt.plot(tspan1, x.observables[obs]/6.022e23/vol, lw=5, color = 'g') #this puts the Y axis in Molar units
+	if obs == 'H2np':
+		plt.plot(tspan1, 0.5*KaHp.value/KrHp.value*x.observables['Hnp']**2, '--k')
+
+
+tspan2 = np.linspace(750, 15000, (15000 - 750) + 1)
+initials = x.species[-1]
+delta_index = [str(sp) for sp in model.species].index('Delta()')
+initials[delta_index] = 1e-3 / KfNcp.value  # 0.36 Leonard's number #10000 their number
+x = sim.run(tspan=tspan2, initials=initials)
+
+for obs in ['delta', 'Rcm', 'Hcm', 'Nm', 'Rcp', 'Hcp', 'Np', 'Hnp', 'H2np']:
+    plt.figure(obs)
+    vol = Vnuc if obs in ['Hnp', 'H2np'] else Vcyt
+    plt.plot(tspan2, x.observables[obs] / 6.022e23 / vol, lw=5, label='Delta stimulus = 1e-3', color = 'm')
+# 	if obs == 'H2np':
+# 		plt.plot(tspan2, 0.5*KaHp.value/KrHp.value*x.observables['Hnp']**2, '--k')
+    plt.legend()
+    # plt.plot.xlabel('Time (s)')
+    # plt.plot.ylabel(str(obs) + '(moles/L)')
+plt.show()
+
+
+
+
+
+###########
+#Generating the bifurcation over increasing and decreasing Delta strengths
+# final_time = 10000
+# Hes1_fwd_steady = []
+# Hes1_rev_steady = []
+# tspan2 = np.linspace(0, final_time, final_time + 1)
+# delta_index = [str(sp) for sp in model.species].index('Delta()')
+
+
+#d is kDelp
+# for d in np.arange(1e-4, 1.1e-3, 1e-4):
+#     print(d)
+#     initials = x.species[-1]
+#     initials[delta_index] = d / KfNcp.value  # 0.36 to 3.6 molecules/min
+#     x = sim.run(tspan=tspan2, initials=initials)
+#     Hes1_fwd_steady.append((x.observables['Hnp'][-1] + x.observables['Hcp'][-1] )/ 6.022e23 / (Vnuc + Vcyt))
+#
+# for d in np.arange(1e-3, 9.9e-5, -1e-4):
+#     print(d)
+#     initials = x.species[-1]
+#     initials[delta_index] = d / KfNcp.value  # 0.36 to 3.6 molecules/min
+#     x = sim.run(tspan=tspan2, initials=initials)
+#     Hes1_rev_steady.append((x.observables['Hnp'][-1] + x.observables['Hcp'][-1] )/ 6.022e23 / (Vnuc + Vcyt))
+# #############
+
+# for obs in ['delta', 'Rcm', 'Hcm', 'Nm', 'Rcp', 'Hcp', 'Np', 'Hnp', 'H2np']:
+# 	plt.figure(obs)
+# 	vol = Vnuc if obs in ['Hnp', 'H2np'] else Vcyt
+# 	plt.plot(tspan2, x.observables[obs]/6.022e23/vol, lw=2)
 # 	if obs == 'H2np':
 # 		plt.plot(tspan2, 0.5*KaHp.value/KrHp.value*x.observables['Hnp']**2, '--k')
 
-plt.show()
+# bifurcation
+# plt.figure()
+# plt.plot(np.arange(1e-4, 1.1e-3, 1e-4), Hes1_fwd_steady, lw=2)
+# plt.plot(np.arange(1e-3, 9.9e-5, -1e-4), Hes1_rev_steady, lw=2)
+# plt.show()
+
+
 
 
