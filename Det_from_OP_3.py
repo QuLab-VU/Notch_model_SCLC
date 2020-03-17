@@ -7,7 +7,7 @@ import sys
 
 Model()
 
-
+# <editor-fold desc="Constants">
 r_cell= (10./2.)/1e6 #m
 r_nucleus = (5./2.)/1e6 #m
 
@@ -21,34 +21,53 @@ print(Vol_nucleus)
 print(Vol_cyto)
 print(pi)
 print(N_A)
-#
+# </editor-fold>
 
-######MONOMERS#######
+# <editor-fold desc="Monomers">
 
-#Hes1
-Monomer('HcmD')
-Monomer('Hcm')
-Monomer('HcpD')
-Monomer('Hcp')
-Monomer('Hnp')#MS:add binding sites or no? As of now, no.
-#Monomer('Hdnp')#MS: rewrite as dimer or no?
+# <editor-fold desc="True species">
+#True species, '_T' represents "true" or current concentration
+Monomer('Hcm_t')
+Monomer('Hcp_t')
+Monomer('Hnp_t')#MS:add binding sites or no? As of now, no.
+#Monomer('Hdnp_r')#MS: rewrite as dimer or no?
 #RBPJ
-Monomer('RcmD')
-Monomer('Rcm')
-Monomer('RcpD')
-Monomer('Rcp')
-Monomer('Rnp')
+Monomer('Rcm_t')
+Monomer('Rcp_t')
+Monomer('Rnp_t')
 #Notch/NICD
-Monomer('NmD')
-Monomer('Nm')
-Monomer('NpD')
-Monomer('Np')
-Monomer('Ncp')
-Monomer('Nnp')
+Monomer('Nm_t')
+Monomer('Np_t')
+Monomer('Ncp_t')
+Monomer('Nnp_t')
+# </editor-fold>
 
-######INITIAL PARAMETERS#######
+get rid:
+#Monomer('X_d', ['delay', 'time'], {'delay': ['y', 'n'], 'time': ['_10', '_20', '_70']})
+
+# <editor-fold desc="Delay/Sham species">
+#Hes1
+Fix the time/delay options
+Monomer('Hcm_d', ['delay', 'time'], {'delay': ['y', 'n'], 'time': ['_235', '_43', '_10', '_20', '_21', '_70']})
+Monomer('Hcp_d', ['delay', 'time'], {'delay': ['y', 'n'], 'time':['_235', '_43', '_10', '_20', '_21', '_70']})
+Monomer('Hnp_d', ['delay', 'time'], {'delay': ['y', 'n'], 'time':['_235', '_43', '_10', '_20', '_21', '_70']})#MS:add binding sites or no? As of now, no.
+#Monomer('Hdnp_d', ['delay', 'time'], {'delay': ['y', 'n'], 'time':['_235', '_43', '_10', '_20', '_21', '_70']})#MS: rewrite as dimer or no?
+#RBPJ
+Monomer('Rcm_d', ['delay', 'time'], {'delay': ['y', 'n'], 'time': ['_235', '_43', '_10', '_20', '_21', '_70']})
+Monomer('Rcp_d', ['delay', 'time'], {'delay': ['y', 'n'], 'time': ['_235', '_43', '_10', '_20', '_21', '_70']})
+Monomer('Rnp_d', ['delay', 'time'], {'delay': ['y', 'n'], 'time': ['_235', '_43', '_10', '_20', '_21', '_70']})
+#Notch/NICD
+Monomer('Nm_d', ['delay', 'time'], {'delay': ['y', 'n'], 'time': ['_235', '_43', '_10', '_20', '_21', '_70']})
+Monomer('Np_d', ['delay', 'time'], {'delay': ['y', 'n'], 'time': ['_235', '_43', '_10', '_20', '_21', '_70']})
+Monomer('Ncp_d', ['delay', 'time'], {'delay': ['y', 'n'], 'time': ['_235', '_43', '_10', '_20', '_21', '_70']})
+Monomer('Nnp_d', ['delay', 'time'], {'delay': ['y', 'n'], 'time': ['_235', '_43', '_10', '_20', '_21', '_70']})
+# </editor-fold>
+
+# </editor-fold>
+
+# <editor-fold desc="Parameters">
+###### PARAMETERS#######
 Parameter('dummy', 1.0)
-
 #Table 1 Parameters
 Parameter('kdHcp', 0.0315)#/min
 Parameter('kdHnp', 0.0315)#/min
@@ -85,53 +104,66 @@ Parameter('kniHcp', 0.1)#/min
 Parameter('kniRcp', 0.1)#/min
 Parameter('kniNcp', 0.1)#/min
 Parameter('KfNcp', 7.6e7/(Vol_cyto*N_A))#/M/min, but converted to 1/molecules/min (in the cytosol)
+#MS: why is KfNCP also listed below
 Parameter('rNbox', 0.3)#no unit
 Parameter('rR', 0.2)#no unit
 
+
 #More Parameters, but not in Table 1
-Parameter('kdRnp', 1.)# MS is this needed? it's not in table 1
+look into this:
+Parameter('kdRnp', 1.)# MS is this needed? it's not in table 1 !!!
 #Parameter('kfNcp', 7.6e7/(N_A*Vol_cyto))#/(M*min)
 Parameter('kDelp', 1e-3)#/min
-
 Parameter('tc', 0.5)
+# </editor-fold>
 
-#New Observables for RfHcm
-
-# Observable('NnpD_obs', )
-# Observable('RnpD_obs', )
-# Observable('HdnpD_obs', )
-
-Parameter('NnpD_obs', 1.)
-Parameter('RnpD_obs', 1.)
-Parameter('HdnpD_obs', 1.)
-
-#######EQUATION######
-
-
-
+ # <editor-fold desc="Initial Parameters">
+# <editor-fold desc="Initial Parameters from OP">
+###### INITIAL PARAMETERS #######
 #initial params left open are those not in Table 2
 #these are from Table 2, column 2 (also see Excel sheet)
+#They are all in molecules/cell
+#Hes1
+
+Parameter('Hcm_t_0', 1)
+Parameter('Hcp_t_0', 41)
+Parameter('Hnp_t_0', 130)#MS:add binding sites or no? As of now, no.
+#Parameter('Hdnp_t_0', )#MS: rewrite as dimer or no?
+#RBPJ
+Parameter('Rcm_t_0', 1.0)
+Parameter('Rcp_t_0', 10)
+Parameter('Rnp_t_0', 422)
+#Notch/NICD
+Parameter('Nm_t_0', 5)
+Parameter('Np_t_0', 269)
+Parameter('Ncp_t_0', 0.0)
+Parameter('Nnp_t_0', 0.0)
+# </editor-fold>
+
+??all of them need an initial parameter??
+
+###DELAY INITIAL PARAMETERS###
+#only these six delay species were mentioned in the ODE's
 #Hes1
 Parameter('HcmD_0', 0.0)#TBD
-Parameter('Hcm_0', 1)
 Parameter('HcpD_0', 0.0)
-Parameter('Hcp_0', 41)
-Parameter('Hnp_0', 130)#MS:add binding sites or no? As of now, no.
-#Parameter('Hdnp_0', )#MS: rewrite as dimer or no?
 #RBPJ
 Parameter('RcmD_0', 0.0)
-Parameter('Rcm_0', 1.0)
 Parameter('RcpD_0', 0.0)
-Parameter('Rcp_0', 10)
-Parameter('Rnp_0', 422)
-#Notch/NICD
+#Notch
 Parameter('NmD_0', 0.0)
-Parameter('Nm_0', 5)
 Parameter('NpD_0', 0.0)
-Parameter('Np_0', 269)
-Parameter('Ncp_0', 0.0)
-Parameter('Nnp_0', 0.0)
 
+
+
+
+
+# </editor-fold>
+
+
+
+# <editor-fold desc="Actual Initials">
+# , ['delay'], {'delay': ['_now', '_235', '_43', '_10', '_20', '_21', '_70']}
 ######INITIALS######
 #Hes1
 Initial(HcmD(), HcmD_0)
@@ -153,7 +185,16 @@ Initial(NpD(), NpD_0)
 Initial(Np(), Np_0)
 Initial(Ncp(), Ncp_0)
 Initial(Nnp(), Nnp_0)
+# </editor-fold>
 
+#New Observables/Parameters for equations
+# Observable('NnpD_obs', X1(delay = '_0'))
+# Observable('RnpD_obs', )
+# Observable('HdnpD_obs', )
+#MS: these shouldn't really be parameters
+Parameter('NnpD_obs_10', 1.)
+Parameter('RnpD_obs_10', 1.)
+Parameter('HdnpD_obs_10', 1.)
 #####OBSERVABLES######
 Observable('Hnp_obs', Hnp())
 
@@ -322,17 +363,6 @@ Expression('RfNm',
             #M/min are original units, crazy equation, MS
 
 
-#Parameter('TmNc', 1.0)#min
-#Parameter('kdNm', 1.0)#/min
-#Parameter('KtrN', 1.0)#/min
-#Parameter('TpNc', 1.0)#min
-#Parameter('kdNp', 1.0)#/min
-
-#Parameter('kniNcp', 1.0)#/min
-#Parameter('kdNcp', 1.0)#/min
-#Parameter('kdNnp', 1.0)#/min
-
-
 Rule('Notch1_ptxa', None >> NmD(), RfNm)
 Rule('Notch1_actual_tx', RcmD() >> Rcm(), Parameter('k_Ncm_tx', 1/TmNc.value))
 Rule('Notch1_mrna_deg', Nm() >> None, kdNm)
@@ -362,23 +392,4 @@ sys.exit()
 #Parameters within RfHcm that are implemented above/from the old code
 #
 
-
-
-
-#Rate equations that are completed
-
-#RfHcm = 1/(1+ 2*Cr*Kr**2*(1+2*Ka*NnpD_obs+2*Ka**2*NnpD_obs**2)*RnpD**2+2*Kr*(RnpD_obs+Ka*NnpD_obs*RnpD_obs)+3*HdnpD_obs*Kn*(1+2*Cnr*Kr*RnpD_obs*(1+Cr*Kr*RnpD_obs+2*Cr*Ka**2*Kr*NnpD_obs**2*RnpD_obs+Ka*(NnpD_obs+2*Cr*Kr*NnpD_obs*RnpD_obs)))+6*Cn*HdnpD_obs**2*Kn**2*(1+2*Cnr*Kr*RnpD_obs*(1+Cr*Kr*RnpD_obs+2*Cr*Ka**2*Kr*NnpD_obs**2*RnpD_obs+Ka*(NnpD_obs+2*Cr*Kr*NnpD_obs*RnpD_obs))) +6*Cn**2*HdnpD_obs**3*Kn**3*(1+2*Cnr*Kr*RnpD*(1+Cr*Kr*RnpD_obs+2*Cr*Ka**2*Kr*NnpD_obs**2*RnpD_obs+Ka*(NnpD_obs+2*Cr*Kr*NnpD_obs*RnpD_obs))))*((1+ 4*Cr*Ka**2*Kr**2*NnpD_obs**2*RnpD_obs**2+ 2*Kr*RnpD_obs*rR+ 2*Cr*Kr**2*RnpD_obs**2*rR**2+  2*Ka*Kr*NnpD_obs*RnpD_obs*(1+2*Cr*Kr*RnpD_obs*rR)+ 3*HdnpD_obs*Kn*rNbox*(1+2*Cnr*Kr*RnpD_obs*(Ka*NnpD_obs+2*Cr*Ka**2*Kr*NnpD_obs**2*RnpD_obs+rR+2*Cr*Ka*Kr*NnpD_obs*RnpD_obs*rR+Cr*Kr*RnpD_obs*rR**2)) + 6*Cn*HdnpD_obs**2*Kn**2*rNbox**2*(1+2*Cnr*Kr*RnpD_obs*(Ka*NnpD_obs+2*Cr*Ka**2*Kr*NnpD_obs**2*RnpD_obs+rR+2*Cr*Ka*Kr*NnpD_obs*RnpD_obs*rR+Cr*Kr*RnpD_obs*rR**2)) + 6*Cn**2*HdnpD_obs**3*Kn**3*rNbox**3*(1+2*Cnr*Kr*RnpD_obs*(Ka*NnpD_obs+2*Cr*Ka**2*Kr*NnpD_obs**2*RnpD_obs+rR+2*Cr*Ka*Kr*NnpD_obs*RnpD_obs*rR+Cr*Kr*RnpD_obs*rR**2)))*Vbh+2*Ka*Kr*NnpD_obs*(1+3*Cnr*HdnpD_obs*Kn*rNbox*(1+2*Cn*HdnpD_obs*Kn*rNbox+2*Cn**2*HdnpD_obs**2*Kn**2*rNbox**2))*RnpD_obs*(tc+2*Cr*Kr*RnpD_obs*(Ka*NnpD_obs+rR*tc))*Vmaxh)
-# alpha = alpha1 + alpha2 + alpha3 + alpha4 + alpha5 + alpha6 + alpha7 + alpha8
-#alpha = (1+ 4*Cr*Ka**2*Kr**2*NnpD_obs**2*RnpD_obs**2+ 2*Kr*RnpD_obs*rR+ 2*Cr*Kr**2*RnpD_obs**2*rR**2+  2*Ka*Kr*NnpD_obs*RnpD_obs*(1+2*Cr*Kr*RnpD_obs*rR)+ 3*HdnpD_obs*Kn*rNbox*(1+2*Cnr*Kr*RnpD_obs*(Ka*NnpD_obs+2*Cr*Ka**2*Kr*NnpD_obs**2*RnpD_obs+rR+2*Cr*Ka*Kr*NnpD_obs*RnpD_obs*rR+Cr*Kr*RnpD_obs*rR**2)) + 6*Cn*HdnpD_obs**2*Kn**2*rNbox**2*(1+2*Cnr*Kr*RnpD_obs*(Ka*NnpD_obs+2*Cr*Ka**2*Kr*NnpD_obs**2*RnpD_obs+rR+2*Cr*Ka*Kr*NnpD_obs*RnpD_obs*rR+Cr*Kr*RnpD_obs*rR**2)) + 6*Cn**2*HdnpD_obs**3*Kn**3*rNbox**3*(1+2*Cnr*Kr*RnpD_obs*(Ka*NnpD_obs+2*Cr*Ka**2*Kr*NnpD_obs**2*RnpD_obs+rR+2*Cr*Ka*Kr*NnpD_obs*RnpD_obs*rR+Cr*Kr*RnpD_obs*rR**2)))
-#RfHcm alpha value
-# alpha1 = 1
-# alpha2 = 4*Cr*Ka**2*Kr**2*NnpD_obs**2*RnpD_obs**2 #MS: check these species/observables
-# alpha3 = 2*Kr*RnpD_obs*rR
-# alpha4 = 2*Cr*Kr**2*RnpD_obs**2*rR**2
-# alpha5 = 2*Ka*Kr*NnpD_obs*RnpD_obs*(1+2*Cr*Kr*RnpD_obs*rR)
-# alpha6 = 3*HdnpD_obs*Kn*rNbox*(1+2*Cnr*Kr*RnpD_obs*(Ka*NnpD_obs+2*Cr*Ka**2*Kr*NnpD_obs**2*RnpD_obs+rR+2*Cr*Ka*Kr*NnpD_obs*RnpD_obs*rR+Cr*Kr*RnpD_obs*rR**2))
-# alpha7 = 6*Cn*HdnpD_obs**2*Kn**2*rNbox**2*(1+2*Cnr*Kr*RnpD_obs*(Ka*NnpD_obs+2*Cr*Ka**2*Kr*NnpD_obs**2*RnpD_obs+rR+2*Cr*Ka*Kr*NnpD_obs*RnpD_obs*rR+Cr*Kr*RnpD_obs*rR**2))
-# alpha8 = 6*Cn**2*HdnpD_obs**3*Kn**3*rNbox**3*(1+2*Cnr*Kr*RnpD_obs*(Ka*NnpD_obs+2*Cr*Ka**2*Kr*NnpD_obs**2*RnpD_obs+rR+2*Cr*Ka*Kr*NnpD_obs*RnpD_obs*rR+Cr*Kr*RnpD_obs*rR**2)))
-#term D
-#D = (1+ 2*Cr*Kr**2*(1+2*Ka*NnpD_obs+2*Ka**2*NnpD_obs**2)*RnpD**2+2*Kr*(RnpD_obs+Ka*NnpD_obs*RnpD_obs)+3*HdnpD_obs*Kn*(1+2*Cnr*Kr*RnpD_obs*(1+Cr*Kr*RnpD_obs+2*Cr*Ka**2*Kr*NnpD_obs**2*RnpD_obs+Ka*(NnpD_obs+2*Cr*Kr*NnpD_obs*RnpD_obs)))+6*Cn*HdnpD_obs**2*Kn**2*(1+2*Cnr*Kr*RnpD_obs*(1+Cr*Kr*RnpD_obs+2*Cr*Ka**2*Kr*NnpD_obs**2*RnpD_obs+Ka*(NnpD_obs+2*Cr*Kr*NnpD_obs*RnpD_obs))) +6*Cn**2*HdnpD_obs**3*Kn**3*(1+2*Cnr*Kr*RnpD*(1+Cr*Kr*RnpD_obs+2*Cr*Ka**2*Kr*NnpD_obs**2*RnpD_obs+Ka*(NnpD_obs+2*Cr*Kr*NnpD_obs*RnpD_obs))))
 

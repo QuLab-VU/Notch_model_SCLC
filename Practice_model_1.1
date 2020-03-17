@@ -1,0 +1,113 @@
+from pysb import *
+from pysb.simulator import ScipyOdeSimulator
+from pysb.simulator import BngSimulator
+import numpy as np
+import matplotlib.pyplot as plt
+import sys
+
+Model()
+
+Monomer('X')
+Monomer('X_d', ['delay', 'time'], {'delay': ['y', 'n'], 'time': ['_10', '_20', '_70']})
+Monomer('Y')
+
+Parameter('Y_0', 500)
+Parameter('X_0', 300)
+Parameter('X_n_10_0', 10)
+Parameter('X_n_20_0', 20)
+Parameter('X_n_70_0', 70)
+Parameter('X_d_10_0', 290)
+Parameter('X_d_20_0', 280)
+Parameter('X_d_70_0', 230)
+
+Initial(Y(), Y_0)
+Initial(X(), X_0)
+Initial(X_d(delay = 'n', time = "_10"), X_n_10_0)
+Initial(X_d(delay = 'n', time = "_20"), X_n_20_0)
+Initial(X_d(delay = 'n', time = "_70"), X_n_70_0)
+Initial(X_d(delay = 'y', time = "_10"), X_d_10_0)
+Initial(X_d(delay = 'y', time = "_20"), X_d_20_0)
+Initial(X_d(delay = 'y', time = "_70"), X_d_70_0)
+
+Parameter('k_x_synth', 1.0)
+Parameter('k_delay_10', 1.0/10.0)
+Parameter('k_delay_20', 1.0/20.0)
+Parameter('k_delay_70', 1.0/70.0)
+
+Rule('X_synth', None >> X(), k_x_synth)
+Rule('X10_synth', None >> X_d(delay = 'n', time = '_10'), k_x_synth)
+Rule('X20_synth', None >> X_d(delay = 'n', time = '_20'), k_x_synth)
+Rule('X70_synth', None >> X_d(delay = 'n', time = '_70'), k_x_synth)
+
+Rule('X10_delay', X_d(delay = 'n', time = '_10') >> X_d(delay = 'y', time = '_10'), k_delay_10)
+Rule('X20_delay', X_d(delay = 'n', time = '_20') >> X_d(delay = 'y', time = '_20'), k_delay_20)
+Rule('X70_delay', X_d(delay = 'n', time = '_70') >> X_d(delay = 'y', time = '_70'), k_delay_70)
+
+
+# <editor-fold desc="Old Stuff">
+# Rule('X0_synth', None >> X0(), k_synth)
+# Rule('X1_synth', None >> X1(delay = '_0'), k_synth)
+# Rule('X2_synth', None >> X2(delay = '_0'), k_synth)
+# Rule('X3_synth', None >> X3(delay = '_0'), k_synth)
+#
+# Rule('X1_delay', X_s(delay = '_0') >> X(delay = '_10'), k_convert_1)
+# Rule('X2_delay', X2(delay = '_0') >> X2(delay = '_20'), k_convert_2)
+# Rule('X3_delay', X3(delay = '_0') >> X3(delay = '_70'), k_convert_3)
+# </editor-fold>
+
+time = ['_10', '_20', '_70']
+Observable('Y_obs', Y())
+Observable('X_obs', X())
+[Observable('X_obs%s'%t, X_d(delay ='y', time = t))for t in time]
+[Observable('X_clone%s_obs'%t, X_d(delay ='n', time = t))for t in time]
+
+# Observable('X10_obs', X_d(delay ='y', time = '_10'))
+# Observable('X20_obs', X_d(delay ='y', time = '_20'))
+# Observable('X70_obs', X_d(delay ='y', time = '_70'))
+
+# Observable('X10_clone_obs', X_d(delay = 'n', time = '_10'))
+# Observable('X20_clone_obs', X_d(delay = 'n', time = '_20'))
+# Observable('X70_clone_obs', X_d(delay = 'n', time = '_70'))
+
+Sim = ScipyOdeSimulator(model, verbose=True)
+#Sim = BngSimulator(model, verbose = True)
+
+tspan = np.arange(0, 301, 1)
+
+x= Sim.run(tspan).observables
+
+
+print('Should match: (commented out')
+# print(x['X_obs'][230])
+# print(x['X1_obs'][240])
+# print(x['X2_obs'][250])
+# print(x['X3_obs'][300])
+
+
+print()
+print(x['X_obs'][-1])
+print([x['X_obs%s'%t][-1] for t in time])
+print('Clones')
+print([x['X_clone%s_obs'%t][-1] for t in time])
+print()
+
+for obs in model.observables:
+    plt.plot(tspan, x[obs.name], label = obs.name, lw = 2)
+
+plt.legend(loc=0)
+
+plt.show()
+
+
+
+
+
+
+# Monomer('X_s', ['delay'], {'delay': ['_10', '_20', '70']})
+# Monomer('X_D', ['delay'], {'delay': ['_10', '_20', '70']})
+
+
+
+
+
+
