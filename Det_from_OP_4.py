@@ -117,14 +117,15 @@ Parameter('kDelp', 1e-3)#/min
 Parameter('tc', 0.5)
 # </editor-fold>
 
- # <editor-fold desc="Initial Parameters">
+# <editor-fold desc="Initial Parameters">
 # <editor-fold desc="Initial Parameters from OP">
 ###### INITIAL PARAMETERS #######
 #initial params left open are those not in Table 2
 #these are from Table 2, column 2 (also see Excel sheet)
 #They are all in molecules/cell
-#Hes1
 
+
+#Hes1
 Parameter('Hcm_t_0', 1)
 Parameter('Hcp_t_0', 41)
 Parameter('Hnp_t_0', 130)#MS:add binding sites or no? As of now, no.
@@ -143,9 +144,18 @@ Parameter('Nnp_t_0', 0.0)
 ??all of them need an initial parameter??
 
 ###DELAY INITIAL PARAMETERS###
+get rid?
 #only these six delay species were mentioned in the ODE's
+
+Monomer('Nnp_d', ['delay', 'time'], {'delay': ['y', 'n'], 'time': ['_235', '_43', '_10', '_20', '_21', '_70']})
+
 #Hes1
-Parameter('HcmD_0', 0.0)#TBD
+Parameter('Hcm_d_235_0', 0.0)# - sham model
+Parameter('Hcm_d_43_0', 0.0)#TBD
+Parameter('Hcm_d_10_0', 0.0)#TBD
+Parameter('Hcm_d_20_0', 0.0)#TBD
+Parameter('Hcm_d_21_0', 0.0)#TBD
+Parameter('Hcm_d_70_0', 0.0)#TBD
 Parameter('HcpD_0', 0.0)
 #RBPJ
 Parameter('RcmD_0', 0.0)
@@ -154,8 +164,20 @@ Parameter('RcpD_0', 0.0)
 Parameter('NmD_0', 0.0)
 Parameter('NpD_0', 0.0)
 
+# #Hes1
+# Parameter('HcmD_0', 0.0)#TBD
+# Parameter('HcpD_0', 0.0)
+# #RBPJ
+# Parameter('RcmD_0', 0.0)
+# Parameter('RcpD_0', 0.0)
+# #Notch
+# Parameter('NmD_0', 0.0)
+# Parameter('NpD_0', 0.0)
 
 # </editor-fold>
+
+
+
 
 
 
@@ -198,6 +220,8 @@ Observable('Hnp_obs', Hnp())
 ######RATE CONSTANT PARAMETERS#######
 #Numbers are placeholders
 #Hes1 params
+
+
 Expression('D', 1+ 2*Cr*Kr**2*(1+2*Ka*NnpD_obs+2*Ka**2*NnpD_obs**2)
            *RnpD_obs**2+2*Kr*(RnpD_obs+Ka*NnpD_obs*RnpD_obs)
            +3*HdnpD_obs*Kn
