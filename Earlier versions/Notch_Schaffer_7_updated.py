@@ -643,7 +643,7 @@ Observable('H2np', pHes1(pHes1=ANY, Hbox=None, loc='nuc'), match='species')
 
 ### SIMULATION ###
 
-ScipyOdeSimulator._use_cython = True
+ScipyOdeSimulator._use_cython = False #was True but we could not get to work
 sim = ScipyOdeSimulator(model, verbose=1, integrator_options={'atol': 1e-8, 'rtol': 1e-6})
 # sim = BngSimulator(model, verbose=5)
 
@@ -734,12 +734,13 @@ plt.figure('Iterating over rNbox values')
 range1 = np.arange(0.03, 0.3, 0.03)
 
 for q, val_1 in enumerate(range1):
-    rNbox.value = val_1
+    #rNbox.value = val_1 #Alex said to remove
+    x = sim.run(tspan=tspan1, param_values={'rNbox': val_1})
     colors = sns.color_palette("Greens", len(range1)).as_hex()
     tspan1 = np.linspace(0, init_time, init_time+1)
     delta_index = [str(sp) for sp in model.species].index('Delta()')
     initials[delta_index] = 0 / KfNcp.value  # 0.36 Leonard's number #10000 their number
-    x = sim.run(tspan=tspan1)
+    #x = sim.run(tspan=tspan1, param_values={'rNbox': val_1}) #Alex helped w this
 
     obs_list_2 = ['delta', 'Rcm', 'Hcm', 'Nm', 'Rcp', 'Hcp', 'Np', 'Hnp', 'H2np']
 
