@@ -643,7 +643,7 @@ Observable('H2np', pHes1(pHes1=ANY, Hbox=None, loc='nuc'), match='species')
 
 ### SIMULATION ###
 
-ScipyOdeSimulator._use_cython = False #was True but we could not get to work
+ScipyOdeSimulator._use_cython = True #was True but we could not get to work
 sim = ScipyOdeSimulator(model, verbose=1, integrator_options={'atol': 1e-8, 'rtol': 1e-6})
 # sim = BngSimulator(model, verbose=5)
 
@@ -668,10 +668,10 @@ obs_list = ['delta', 'Rcm', 'Hcm', 'Nm', 'Rcp', 'Hcp', 'Np', 'Hnp', 'H2np']
 for i, obs in enumerate(obs_list):
     plt.subplot(3,3,i+1, title = obs)
     vol = Vnuc if obs in ['Hnp', 'H2np'] else Vcyt
-    plt.plot(tspan1, x.observables[obs]/6.022e23/vol, lw=2, label='pre-stimulus', color = 'g') #this puts the Y axis in Molar units
+    plt.plot(tspan1, x.observables[obs]/6.022e23/vol, lw=2, color = 'g') #, label='pre-stimulus') #this puts the Y axis in Molar units
     if obs == 'H2np':
         plt.plot(tspan1, 0.5*KaHp.value/KrHp.value*x.observables['Hnp']**2, '--k')
-    plt.legend()
+#     plt.legend(loc=0)
 
 end_of_precal = copy.deepcopy(x.species[-1])
 
@@ -688,14 +688,15 @@ x = sim.run(tspan=tspan2, initials=initials)
 for i, obs in enumerate(obs_list):
     plt.subplot(3,3,i+1, title = obs)
     vol = Vnuc if obs in ['Hnp', 'H2np'] else Vcyt
-    plt.plot(tspan2, x.observables[obs] / 6.022e23 / vol, lw=2, label='Delta stimulus = 1e-4', color = 'b') #label was obs
+    plt.plot(tspan2, x.observables[obs] / 6.022e23 / vol, lw=2, color = 'b') #, label='Delta stimulus = 1e-4') #label was obs
     if obs == 'H2np':
         plt.plot(tspan2, 0.5*KaHp.value/KrHp.value*x.observables['Hnp']**2, '--k')
-    plt.legend()
+#     plt.legend(loc=0)
     plt.ylabel(str(obs) + '(moles/L)')
     if i == len(obs_list) - 2:
         plt.xlabel('Time (s)')
-plt.show()
+plt.tight_layout()
+# plt.show()
 
 # REPEAT with Delta increased to 1*10^-3 ??####
 initials[delta_index] = 1e-3 / KfNcp.value  # 0.36 Leonard's number #10000 their number
@@ -717,14 +718,15 @@ x = sim.run(tspan=tspan2, initials=initials)
 for i, obs in enumerate(obs_list):
     plt.subplot(3,3,i+1, title = obs)
     vol = Vnuc if obs in ['Hnp', 'H2np'] else Vcyt
-    plt.plot(tspan2, x.observables[obs] / 6.022e23 / vol, lw=2, label='Delta stimulus = 1e-3', color = 'm') #label was obs
+    plt.plot(tspan2, x.observables[obs] / 6.022e23 / vol, lw=2, color = 'm') #, label='Delta stimulus = 1e-3') #label was obs
     if obs == 'H2np':
         plt.plot(tspan2, 0.5*KaHp.value/KrHp.value*x.observables['Hnp']**2, '--k')
-    plt.legend()
+#     plt.legend(loc=0)
     #get rid later plt.xlabel('Time (s)')
     plt.ylabel(str(obs) + '(moles/L)')
 #plt.xlabel('Time (s)')
-plt.show()
+plt.tight_layout()
+# plt.show()
 ####END OF "TWO INITIAL SIMULATIONS" SECTION####
 
 
@@ -734,13 +736,13 @@ plt.figure('Iterating over rNbox values')
 range1 = np.arange(0.03, 0.3, 0.03)
 
 for q, val_1 in enumerate(range1):
-    #rNbox.value = val_1 #Alex said to remove
+    rNbox.value = val_1 #Alex said to remove
     x = sim.run(tspan=tspan1, param_values={'rNbox': val_1})
     colors = sns.color_palette("Greens", len(range1)).as_hex()
     tspan1 = np.linspace(0, init_time, init_time+1)
     delta_index = [str(sp) for sp in model.species].index('Delta()')
     initials[delta_index] = 0 / KfNcp.value  # 0.36 Leonard's number #10000 their number
-    #x = sim.run(tspan=tspan1, param_values={'rNbox': val_1}) #Alex helped w this
+    x = sim.run(tspan=tspan1, param_values={'rNbox': val_1}) #Alex helped w this
 
     obs_list_2 = ['delta', 'Rcm', 'Hcm', 'Nm', 'Rcp', 'Hcp', 'Np', 'Hnp', 'H2np']
 
@@ -763,14 +765,15 @@ for q, val_1 in enumerate(range1):
         #plt.figure(obs)
         plt.subplot(3, 3, i + 1, title=obs)
         vol = Vnuc if obs in ['Hnp', 'H2np'] else Vcyt
-        plt.plot(tspan2, x.observables[obs] / 6.022e23 / vol, lw=2, label='Number'+str(q +1), color = colors[q])
+        plt.plot(tspan2, x.observables[obs] / 6.022e23 / vol, lw=2, color = colors[q]) #, label='Number'+str(q +1))
     # 	if obs == 'H2np':
     # 		plt.plot(tspan2, 0.5*KaHp.value/KrHp.value*x.observables['Hnp']**2, '--k')
-        plt.legend()
+#         plt.legend(loc=0)
         plt.ylabel(str(obs) + '(moles/L)')
         if q == len(range1)-1 and i == len(obs_list_2)-2:
             plt.xlabel('Time (s)')
-plt.show()
+plt.tight_layout()
+# plt.show()
 
 
 print("rNbox = " + str(rNbox.value))
@@ -825,6 +828,8 @@ for d, kdelp in enumerate(kdelp_desc):
 plt.figure()
 plt.plot(np.arange(1e-4, 1.1e-3, 1e-4), Hes1_fwd_steady, lw=2)
 plt.plot(np.arange(1e-3, 9.9e-5, -1e-4), Hes1_rev_steady, lw=2)
+
+
 plt.show()
 
 
